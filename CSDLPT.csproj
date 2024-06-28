@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props" Condition="Exists('packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +36,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1620.0\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1620.0\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.SqlServer.Types.160.1000.6\lib\net462\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,17 +73,184 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="addQuestions\AddQuestionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addQuestions\AddQuestionForm.Designer.cs">
+      <DependentUpon>AddQuestionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="datasetCau11.cs">
+      <DependentUpon>datasetCau11.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="datasetCau11.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>datasetCau11.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="feature\FeatureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="feature\FeatureForm.Designer.cs">
+      <DependentUpon>FeatureForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login_Signup\frmDangKy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login_Signup\frmDangKy.Designer.cs">
+      <DependentUpon>frmDangKy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PerFeat\frmGV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PerFeat\frmGV.Designer.cs">
+      <DependentUpon>frmGV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PerFeat\frmSV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PerFeat\frmSV.Designer.cs">
+      <DependentUpon>frmSV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportTN\frmCau11.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportTN\frmCau11.Designer.cs">
+      <DependentUpon>frmCau11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportTN\frmRpCau9.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportTN\frmRpCau9.Designer.cs">
+      <DependentUpon>frmRpCau9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportTN\frmRpKQ.cs">
+      <SubType>Form</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="ReportTN\frmRpKQ.Designer.cs">
+      <DependentUpon>frmRpKQ.cs</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="thi_dangkythi\frmKetQuaThi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="thi_dangkythi\frmKetQuaThi.Designer.cs">
+      <DependentUpon>frmKetQuaThi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="thi_dangkythi\frmLamBaiThi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="thi_dangkythi\frmLamBaiThi.Designer.cs">
+      <DependentUpon>frmLamBaiThi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="thi_dangkythi\frmChuanBiThi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="thi_dangkythi\frmChuanBiThi.Designer.cs">
+      <DependentUpon>frmChuanBiThi.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include=".Designer.cs">
+    <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login_Signup\frmDangNhap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login_Signup\.Designer.cs">
+      <DependentUpon>frmDangNhap.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="thi_dangkythi\frmThi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="thi_dangkythi\frmThi.Designer.cs">
+      <DependentUpon>frmThi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TRACNGHIEMDataSet12.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TRACNGHIEMDataSet12.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TRACNGHIEMDataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TRACNGHIEMDataSet2.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TRACNGHIEMDataSet3.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TRACNGHIEMDataSet3.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TRACNGHIEMDataSet4.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TRACNGHIEMDataSet4.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TRACNGHIEMDataSet5.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TRACNGHIEMDataSet5.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TRACNGHIEMDataSet8.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TRACNGHIEMDataSet8.xsd</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="addQuestions\AddQuestionForm.resx">
+      <DependentUpon>AddQuestionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="feature\FeatureForm.resx">
+      <DependentUpon>FeatureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login_Signup\frmDangKy.resx">
+      <DependentUpon>frmDangKy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PerFeat\frmGV.resx">
+      <DependentUpon>frmGV.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PerFeat\frmSV.resx">
+      <DependentUpon>frmSV.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportTN\frmCau11.resx">
+      <DependentUpon>frmCau11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportTN\frmRpCau9.resx">
+      <DependentUpon>frmRpCau9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportTN\frmRpKQ.aa-DJ.resx">
+      <DependentUpon>frmRpKQ.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportTN\frmRpKQ.resx">
+      <DependentUpon>frmRpKQ.cs</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpCau11.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpCau9.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpXemBD.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="thi_dangkythi\frmKetQuaThi.resx">
+      <DependentUpon>frmKetQuaThi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="thi_dangkythi\frmLamBaiThi.resx">
+      <DependentUpon>frmLamBaiThi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="thi_dangkythi\frmChuanBiThi.resx">
+      <DependentUpon>frmChuanBiThi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login_Signup\frmDangNhap.resx">
+      <DependentUpon>frmDangNhap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -66,7 +260,25 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="thi_dangkythi\frmThi.resx">
+      <DependentUpon>frmThi.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="datasetCau11.xsc">
+      <DependentUpon>datasetCau11.xsd</DependentUpon>
+    </None>
+    <None Include="datasetCau11.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>datasetCau11.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="datasetCau11.xss">
+      <DependentUpon>datasetCau11.xsd</DependentUpon>
+    </None>
+    <None Include="packages.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -76,9 +288,99 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="TRACNGHIEMDataSet12.xsc">
+      <DependentUpon>TRACNGHIEMDataSet12.xsd</DependentUpon>
+    </None>
+    <None Include="TRACNGHIEMDataSet12.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TRACNGHIEMDataSet12.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TRACNGHIEMDataSet12.xss">
+      <DependentUpon>TRACNGHIEMDataSet12.xsd</DependentUpon>
+    </None>
+    <None Include="TRACNGHIEMDataSet2.xsc">
+      <DependentUpon>TRACNGHIEMDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="TRACNGHIEMDataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TRACNGHIEMDataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TRACNGHIEMDataSet2.xss">
+      <DependentUpon>TRACNGHIEMDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="TRACNGHIEMDataSet3.xsc">
+      <DependentUpon>TRACNGHIEMDataSet3.xsd</DependentUpon>
+    </None>
+    <None Include="TRACNGHIEMDataSet3.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TRACNGHIEMDataSet3.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TRACNGHIEMDataSet3.xss">
+      <DependentUpon>TRACNGHIEMDataSet3.xsd</DependentUpon>
+    </None>
+    <None Include="TRACNGHIEMDataSet4.xsc">
+      <DependentUpon>TRACNGHIEMDataSet4.xsd</DependentUpon>
+    </None>
+    <None Include="TRACNGHIEMDataSet4.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TRACNGHIEMDataSet4.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TRACNGHIEMDataSet4.xss">
+      <DependentUpon>TRACNGHIEMDataSet4.xsd</DependentUpon>
+    </None>
+    <None Include="TRACNGHIEMDataSet5.xsc">
+      <DependentUpon>TRACNGHIEMDataSet5.xsd</DependentUpon>
+    </None>
+    <None Include="TRACNGHIEMDataSet5.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TRACNGHIEMDataSet5.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TRACNGHIEMDataSet5.xss">
+      <DependentUpon>TRACNGHIEMDataSet5.xsd</DependentUpon>
+    </None>
+    <None Include="TRACNGHIEMDataSet8.xsc">
+      <DependentUpon>TRACNGHIEMDataSet8.xsd</DependentUpon>
+    </None>
+    <None Include="TRACNGHIEMDataSet8.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TRACNGHIEMDataSet8.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TRACNGHIEMDataSet8.xss">
+      <DependentUpon>TRACNGHIEMDataSet8.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PtitLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\power_on_off_log_out_exit_icon_141949.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5437683.jpg" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\ghi_icon.png" />
+    <Content Include="Resources\reload icon.png" />
+    <Content Include="Resources\sua_icon.png" />
+    <Content Include="Resources\them_icon.png" />
+    <Content Include="Resources\undo_icon.png" />
+    <Content Include="Resources\xoa_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props'))" />
+  </Target>
 </Project>

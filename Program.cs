@@ -15,7 +15,7 @@ namespace TNCSDLPT
         /// </summary>
         public static SqlConnection conn = new SqlConnection();
         public static String connstr;
-        public static String connstr_publisher = @"Data Source=LUONGDATTHIEN\SQLSEVER;Initial Catalog=TN_CSDLPT;Integrated Security=True;Encrypt=False";
+        public static String connstr_publisher = @"Data Source=LUONGDATTHIEN\SQLSEVER;Initial Catalog=TRACNGHIEM1;Integrated Security=True;Encrypt=False";
 
         public static SqlDataReader myReader;
         public static String serverName = "";
@@ -23,7 +23,7 @@ namespace TNCSDLPT
         public static String loginName = "";
         public static String loginPassword = "";
 
-        public static String database = "TN_CSDLPT";
+        public static String database = "TRACNGHIEM1";
         public static String remoteLogin = "HTKN";
         public static String remotePassword = "123456";
 
@@ -33,13 +33,33 @@ namespace TNCSDLPT
         public static String role = "";// mGroup
         public static String staff = "";//mHoten
         public static int brand = 0;//mCoso
+        public static String brand2 = ""; //cosoString
 
+        public static String MaSV = ""; //luu ma sinh vien dang nhap
 
         public static int mChinhanh = 0;
 
         public static BindingSource bds_dspm = new BindingSource();  // giữ bdsPM khi đăng nhập
         
         public static frmMain frmChinh;
+
+        public static bool bienDangNhap = false ;
+        public static String passWordSV = "";
+        public static int lan;
+        public static int tgianLam;
+        public static String monThi;
+        public static String maMonThi;// thong tin de lam bai thi
+        public static String trinhDo;
+        public static int soCauHoi;
+        public static int maDe;
+        public static String maLop;
+
+
+        public static float diemSo = 0;
+        public static String min;
+        public static String sec;
+
+        public static int khoiPhuc = 0;
 
         public static int KetNoi()
         {
@@ -79,6 +99,7 @@ namespace TNCSDLPT
                 return null;
             }
         }
+   
         public static DataTable ExecSqlDataTable(String cmd)
         {
             DataTable dt = new DataTable();
