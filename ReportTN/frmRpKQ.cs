@@ -26,7 +26,7 @@ namespace CSDLPT.ReportTN
             this.rp.RefreshReport();
             this.rp.RefreshReport();
             // do du lieu vao cmb lop
-            String statementCmbLop = "select MALOP from LINK3.TRACNGHIEM1.dbo.LOP";
+            String statementCmbLop = "select MALOP from LINK3.TRACNGHIEM.dbo.LOP";
             Program.myReader = Program.ExecSqlDataReader(statementCmbLop);
             if (Program.myReader == null)
                 return;
@@ -57,7 +57,7 @@ namespace CSDLPT.ReportTN
             //SqlConnection con1 = new SqlConnection();
            // con1.ConnectionString = @"Data Source=DUONG;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
             SqlCommand command = new SqlCommand();
-            command.CommandText = "EXEC LINK0.TRACNGHIEM1.DBO.sp_InBangDiem '"+cmbLop.Text+"', '"+cmbMonhoc.Text+"', '"+cmbLan.Text+"'";
+            command.CommandText = "EXEC LINK0.TRACNGHIEM.DBO.sp_InBangDiem '"+cmbLop.Text+"', '"+cmbMonhoc.Text+"', '"+cmbLan.Text+"'";
             command.Connection = Program.conn;
             System.Data.DataSet ds = new System.Data.DataSet();
             SqlDataAdapter dap = new SqlDataAdapter(command);

@@ -274,6 +274,64 @@ namespace CSDLPT.Login_Signup
                 else if (val == 2)
                     MessageBox.Show("UserName bị trùng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            else if ((txtMATKHAU.Text == txtXacNhanMK.Text) && radTruong.Checked == true)
+            {
+                int val;
+                String com = "sp_TaoTaiKhoan";
+                using (SqlCommand command = new SqlCommand(com, Program.conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@LGNAME", txtLoginnam.Text);
+                    command.Parameters.AddWithValue("@PASS", txtMATKHAU.Text);
+                    command.Parameters.AddWithValue("@USERNAME", txtUserName_MaGV.Text);
+                    command.Parameters.AddWithValue("@ROLE", roleDk);
+                    // Tạo parameter để nhận giá trị trả về từ stored procedure
+                    SqlParameter returnParameter = command.Parameters.Add("@ReturnVal", SqlDbType.Int);
+                    returnParameter.Direction = ParameterDirection.ReturnValue;
+
+                    // Thực thi stored procedure
+                    command.ExecuteNonQuery();
+
+                    // Lấy giá trị trả về từ parameter
+                    val = (int)returnParameter.Value;
+
+
+                }
+                if (val == 0)
+                {
+                    //String com1 = "link1.TRACNGHIEM.DBO.sp_TaoTaiKhoan";
+                    //using (SqlCommand command = new SqlCommand(com1, Program.conn))
+                    //{
+                    //    command.CommandType = CommandType.StoredProcedure;
+                    //    command.Parameters.AddWithValue("@LGNAME", txtLoginnam.Text);
+                    //    command.Parameters.AddWithValue("@PASS", txtMATKHAU.Text);
+                    //    command.Parameters.AddWithValue("@USERNAME", txtUserName_MaGV.Text);
+                    //    command.Parameters.AddWithValue("@ROLE", roleDk);
+                    //    // Tạo parameter để nhận giá trị trả về từ stored procedure
+                    //    SqlParameter returnParameter = command.Parameters.Add("@ReturnVal", SqlDbType.Int);
+                    //    returnParameter.Direction = ParameterDirection.ReturnValue;
+
+                    //    // Thực thi stored procedure
+                    //    command.ExecuteNonQuery();
+
+
+
+
+                    //}
+                    SqlCommand command = new SqlCommand();
+                    command = Program.conn.CreateCommand();
+                    command.CommandText ="exec LINK1.TRACNGHIEM.DBO.sp_TaoTaiKhoan '"+ txtLoginnam.Text + "', '"+ txtMATKHAU.Text+ "', '" + txtUserName_MaGV.Text
+                        + "', '" + roleDk + "'";
+                    
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Đăng ký thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                   
+                else if (val == 1)
+                    MessageBox.Show("LoginName bị trùng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else if (val == 2)
+                    MessageBox.Show("UserName bị trùng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             else if ((txtMATKHAU.Text == txtXacNhanMK.Text) && radSinhVien.Checked == true)
             {
                 try
