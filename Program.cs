@@ -15,7 +15,7 @@ namespace TNCSDLPT
         /// </summary>
         public static SqlConnection conn = new SqlConnection();
         public static String connstr;
-        public static String connstr_publisher = @"Data Source=DESKTOP-T0UE150;Initial Catalog=TRACNGHIEM1;Integrated Security=True;Encrypt=False";
+        public static String connstr_publisher = @"Data Source=LUONGDATTHIEN\SQLSEVER;Initial Catalog=TRACNGHIEM1;Integrated Security=True;Encrypt=False";
 
         public static SqlDataReader myReader;
         public static String serverName = "";
