@@ -127,7 +127,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(1230, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+            //this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // trangChủToolStripMenuItem
             // 
@@ -179,7 +179,7 @@
             this.mnuCVGV.Name = "mnuCVGV";
             this.mnuCVGV.Size = new System.Drawing.Size(114, 20);
             this.mnuCVGV.Text = "Công việc giáo vụ";
-            this.mnuCVGV.Click += new System.EventHandler(this.tínhNăngToolStripMenuItem_Click);
+            //this.mnuCVGV.Click += new System.EventHandler(this.tínhNăngToolStripMenuItem_Click);
             // 
             // tsmnuCongViecGiaoVu
             // 

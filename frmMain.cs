@@ -31,10 +31,10 @@ namespace CSDLPT
 
         }
 
-        private void tínhNăngToolStripMenuItem_Click(object sender, EventArgs e)
+        /*private void tínhNăngToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-        }
+        }*/
         private void thayĐổiThôngTinToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FeatureForm featureForm = new FeatureForm();
@@ -192,10 +192,10 @@ namespace CSDLPT
             formDangNhap.ShowDialog();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        /*private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
-        }
+        }*/
 
         private void frmMain_Load(object sender, EventArgs e)
         {
