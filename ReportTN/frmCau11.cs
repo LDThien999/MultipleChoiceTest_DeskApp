@@ -37,40 +37,130 @@ namespace CSDLPT.ReportTN
         {
 
         }
-
+        String kiemTraCoSo()
+        {
+            String a;
+            if (Program.brand == 0)
+                a = "CS1";
+            else
+                a = "CS2";
+            return a;
+        }
         private void btnXemRP_Click(object sender, EventArgs e)
         {
-            ReportParameterCollection rP = new ReportParameterCollection();
-            rP.Add(new ReportParameter("rpParamDateBD",dateBD.Text));
-            rP.Add(new ReportParameter("rpParamDateKT", dateKT.Text));
-            rp11.LocalReport.SetParameters(rP);
-            SqlCommand command = new SqlCommand();
-            command.CommandText = "EXEC sp_Cau11 '" + dateBD.Text + "', '" + dateKT.Text + "'";
-           // command.CommandText = "EXEC sp_XemDSDangKy '2024-04-01','2024-04-03'";
-            command.Connection = Program.conn;
-            System.Data.DataSet ds = new System.Data.DataSet();
-            SqlDataAdapter dap = new SqlDataAdapter(command);
-            dap.Fill(ds);
-
-            rp11.ProcessingMode = ProcessingMode.Local;
-            rp11.LocalReport.ReportPath = "rpCau11.rdlc";
-
-            if (ds.Tables[0].Rows.Count > 0)
+            if(cmbCoso.Text == "")
             {
-                ReportDataSource rds = new ReportDataSource();
-                rds.Name = "Cau11";
-                rds.Value = ds.Tables[0];
-                rp11.LocalReport.DataSources.Clear();
-                rp11.LocalReport.DataSources.Add(rds);
-                rp11.RefreshReport();
-                lblError.Visible = false;
+                MessageBox.Show("Vui lòng chọn cơ sở!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else
+            else if(cmbCoso.Text =="TẤT CẢ")
             {
-                rp11.LocalReport.DataSources.Clear();
-                rp11.RefreshReport();
-                lblError.Visible = true;
+                ReportParameterCollection rP = new ReportParameterCollection();
+                rP.Add(new ReportParameter("rpParamDateBD", dateBD.Text));
+                rP.Add(new ReportParameter("rpParamDateKT", dateKT.Text));
+                rp11.LocalReport.SetParameters(rP);
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "EXEC sp_Cau11 '" + dateBD.Text + "', '" + dateKT.Text + "'";
+                // command.CommandText = "EXEC sp_XemDSDangKy '2024-04-01','2024-04-03'";
+                command.Connection = Program.conn;
+                System.Data.DataSet ds = new System.Data.DataSet();
+                SqlDataAdapter dap = new SqlDataAdapter(command);
+                dap.Fill(ds);
+
+                rp11.ProcessingMode = ProcessingMode.Local;
+                rp11.LocalReport.ReportPath = "rpCau11.rdlc";
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    ReportDataSource rds = new ReportDataSource();
+                    rds.Name = "Cau11";
+                    rds.Value = ds.Tables[0];
+                    rp11.LocalReport.DataSources.Clear();
+                    rp11.LocalReport.DataSources.Add(rds);
+                    rp11.RefreshReport();
+                    lblError.Visible = false;
+                }
+                else
+                {
+                    rp11.LocalReport.DataSources.Clear();
+                    rp11.RefreshReport();
+                    lblError.Visible = true;
+                }
             }
+            else if(cmbCoso.Text == kiemTraCoSo() )
+            {
+                ReportParameterCollection rP = new ReportParameterCollection();
+                rP.Add(new ReportParameter("rpParamDateBD", dateBD.Text));
+                rP.Add(new ReportParameter("rpParamDateKT", dateKT.Text));
+                rp11.LocalReport.SetParameters(rP);
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "EXEC sp_XemDSDangKy '" + dateBD.Text + "', '" + dateKT.Text + "'";
+                // command.CommandText = "EXEC sp_XemDSDangKy '2024-04-01','2024-04-03'";
+                command.Connection = Program.conn;
+                System.Data.DataSet ds = new System.Data.DataSet();
+                SqlDataAdapter dap = new SqlDataAdapter(command);
+                dap.Fill(ds);
+
+                rp11.ProcessingMode = ProcessingMode.Local;
+                rp11.LocalReport.ReportPath = "rpCau11.rdlc";
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    ReportDataSource rds = new ReportDataSource();
+                    rds.Name = "Cau11";
+                    rds.Value = ds.Tables[0];
+                    rp11.LocalReport.DataSources.Clear();
+                    rp11.LocalReport.DataSources.Add(rds);
+                    rp11.RefreshReport();
+                    lblError.Visible = false;
+                }
+                else
+                {
+                    rp11.LocalReport.DataSources.Clear();
+                    rp11.RefreshReport();
+                    lblError.Visible = true;
+                }
+            }
+            else if (cmbCoso.Text != kiemTraCoSo())
+            {
+                ReportParameterCollection rP = new ReportParameterCollection();
+                rP.Add(new ReportParameter("rpParamDateBD", dateBD.Text));
+                rP.Add(new ReportParameter("rpParamDateKT", dateKT.Text));
+                rp11.LocalReport.SetParameters(rP);
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "EXEC LINK1.TRACNGHIEM.DBO.sp_XemDSDangKy '" + dateBD.Text + "', '" + dateKT.Text + "'";
+                // command.CommandText = "EXEC sp_XemDSDangKy '2024-04-01','2024-04-03'";
+                command.Connection = Program.conn;
+                System.Data.DataSet ds = new System.Data.DataSet();
+                SqlDataAdapter dap = new SqlDataAdapter(command);
+                dap.Fill(ds);
+
+                rp11.ProcessingMode = ProcessingMode.Local;
+                rp11.LocalReport.ReportPath = "rpCau11.rdlc";
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    ReportDataSource rds = new ReportDataSource();
+                    rds.Name = "Cau11";
+                    rds.Value = ds.Tables[0];
+                    rp11.LocalReport.DataSources.Clear();
+                    rp11.LocalReport.DataSources.Add(rds);
+                    rp11.RefreshReport();
+                    lblError.Visible = false;
+                }
+                else
+                {
+                    rp11.LocalReport.DataSources.Clear();
+                    rp11.RefreshReport();
+                    lblError.Visible = true;
+                }
+            }
+
+
+        }
+
+        private void lblError_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -54,33 +54,41 @@ namespace CSDLPT.ReportTN
 
         private void btnXemRP_Click(object sender, EventArgs e)
         {
-            //SqlConnection con1 = new SqlConnection();
-           // con1.ConnectionString = @"Data Source=DUONG;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
-            SqlCommand command = new SqlCommand();
-            command.CommandText = "EXEC LINK0.TRACNGHIEM.DBO.sp_InBangDiem '"+cmbLop.Text+"', '"+cmbMonhoc.Text+"', '"+cmbLan.Text+"'";
-            command.Connection = Program.conn;
-            System.Data.DataSet ds = new System.Data.DataSet();
-            SqlDataAdapter dap = new SqlDataAdapter(command);
-            dap.Fill(ds);
-
-            rp.ProcessingMode = ProcessingMode.Local;
-            rp.LocalReport.ReportPath = "rpXemBD.rdlc";
-
-            if (ds.Tables[0].Rows.Count > 0)
+            if (cmbMonhoc.Text == "" || cmbLop.Text == "" || cmbLan.Text == "")
             {
-                ReportDataSource rds = new ReportDataSource();
-                rds.Name = "XemBangDiem";
-                rds.Value = ds.Tables[0];
-                rp.LocalReport.DataSources.Clear();
-                rp.LocalReport.DataSources.Add(rds);
-                rp.RefreshReport();
-                lblError.Visible = false;
+                MessageBox.Show("Vui lòng không để trống các thông tin trên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
             else
             {
-                rp.LocalReport.DataSources.Clear();
-                rp.RefreshReport();
-                lblError.Visible = true;
+                //SqlConnection con1 = new SqlConnection();
+                // con1.ConnectionString = @"Data Source=DUONG;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "EXEC LINK0.TRACNGHIEM.DBO.sp_InBangDiem '" + cmbLop.Text + "', '" + cmbMonhoc.Text + "', '" + cmbLan.Text + "'";
+                command.Connection = Program.conn;
+                System.Data.DataSet ds = new System.Data.DataSet();
+                SqlDataAdapter dap = new SqlDataAdapter(command);
+                dap.Fill(ds);
+
+                rp.ProcessingMode = ProcessingMode.Local;
+                rp.LocalReport.ReportPath = "rpXemBD.rdlc";
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    ReportDataSource rds = new ReportDataSource();
+                    rds.Name = "XemBangDiem";
+                    rds.Value = ds.Tables[0];
+                    rp.LocalReport.DataSources.Clear();
+                    rp.LocalReport.DataSources.Add(rds);
+                    rp.RefreshReport();
+                    lblError.Visible = false;
+                }
+                else
+                {
+                    rp.LocalReport.DataSources.Clear();
+                    rp.RefreshReport();
+                    lblError.Visible = true;
+                }
             }
 
         }

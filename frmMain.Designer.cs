@@ -45,7 +45,6 @@
             this.viewrpKQ = new System.Windows.Forms.ToolStripMenuItem();
             this.viewrpBD = new System.Windows.Forms.ToolStripMenuItem();
             this.viewrpDSDK = new System.Windows.Forms.ToolStripMenuItem();
-            this.giớiThiệuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.panThongTinTaiKhoan = new System.Windows.Forms.Panel();
             this.panThayDoiMatKhau = new System.Windows.Forms.Panel();
@@ -92,8 +91,6 @@
             this.btnLamBaiThi = new System.Windows.Forms.ToolStripButton();
             this.tslblThi = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnTraCuuDiem = new System.Windows.Forms.ToolStripButton();
-            this.lblTraCuuDiemthi = new System.Windows.Forms.ToolStripLabel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -119,15 +116,13 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.trangChủToolStripMenuItem,
             this.mnuCVGV,
-            this.mnuXemRP,
-            this.giớiThiệuToolStripMenuItem});
+            this.mnuXemRP});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(1230, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // trangChủToolStripMenuItem
             // 
@@ -145,7 +140,7 @@
             // 
             this.tsmnuThongTinCaNhan.Image = ((System.Drawing.Image)(resources.GetObject("tsmnuThongTinCaNhan.Image")));
             this.tsmnuThongTinCaNhan.Name = "tsmnuThongTinCaNhan";
-            this.tsmnuThongTinCaNhan.Size = new System.Drawing.Size(177, 22);
+            this.tsmnuThongTinCaNhan.Size = new System.Drawing.Size(184, 26);
             this.tsmnuThongTinCaNhan.Text = "Thông tin tài khoản";
             this.tsmnuThongTinCaNhan.Click += new System.EventHandler(this.tsmnuThongTinCaNhan_Click);
             // 
@@ -179,7 +174,6 @@
             this.mnuCVGV.Name = "mnuCVGV";
             this.mnuCVGV.Size = new System.Drawing.Size(114, 20);
             this.mnuCVGV.Text = "Công việc giáo vụ";
-            this.mnuCVGV.Click += new System.EventHandler(this.tínhNăngToolStripMenuItem_Click);
             // 
             // tsmnuCongViecGiaoVu
             // 
@@ -247,13 +241,6 @@
             this.viewrpDSDK.Size = new System.Drawing.Size(182, 22);
             this.viewrpDSDK.Text = "Danh sách đăng ký";
             this.viewrpDSDK.Click += new System.EventHandler(this.viewrpDSDK_Click);
-            // 
-            // giớiThiệuToolStripMenuItem
-            // 
-            this.giớiThiệuToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
-            this.giớiThiệuToolStripMenuItem.Name = "giớiThiệuToolStripMenuItem";
-            this.giớiThiệuToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.giớiThiệuToolStripMenuItem.Text = "Giới thiệu";
             // 
             // toolStripContainer1
             // 
@@ -736,12 +723,10 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnLamBaiThi,
             this.tslblThi,
-            this.toolStripSeparator1,
-            this.btnTraCuuDiem,
-            this.lblTraCuuDiemthi});
+            this.toolStripSeparator1});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(245, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(115, 25);
             this.toolStrip1.TabIndex = 25;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -765,21 +750,6 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnTraCuuDiem
-            // 
-            this.btnTraCuuDiem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnTraCuuDiem.Image = ((System.Drawing.Image)(resources.GetObject("btnTraCuuDiem.Image")));
-            this.btnTraCuuDiem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTraCuuDiem.Name = "btnTraCuuDiem";
-            this.btnTraCuuDiem.Size = new System.Drawing.Size(23, 22);
-            this.btnTraCuuDiem.Text = "TRA CỨU ĐIỂM THI";
-            // 
-            // lblTraCuuDiemthi
-            // 
-            this.lblTraCuuDiemthi.Name = "lblTraCuuDiemthi";
-            this.lblTraCuuDiemthi.Size = new System.Drawing.Size(107, 22);
-            this.lblTraCuuDiemthi.Text = "TRA CỨU ĐIỂM THI";
             // 
             // imageList1
             // 
@@ -836,7 +806,6 @@
         private System.Windows.Forms.ToolStripMenuItem trangChủToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuTrangChuDangXuat;
         private System.Windows.Forms.ToolStripMenuItem mnuTrangChuThoat;
-        private System.Windows.Forms.ToolStripMenuItem giớiThiệuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuXemRP;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.Button btnDangNhapMain;
@@ -857,8 +826,6 @@
         private System.Windows.Forms.ToolStripButton btnLamBaiThi;
         private System.Windows.Forms.ToolStripLabel tslblThi;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton btnTraCuuDiem;
-        private System.Windows.Forms.ToolStripLabel lblTraCuuDiemthi;
         private System.Windows.Forms.ToolStripMenuItem tsmnuQuanLySinhVien;
         private System.Windows.Forms.ToolStripMenuItem tsmnuQuanLyGiaoVien;
         private System.Windows.Forms.PictureBox pictureBox2;

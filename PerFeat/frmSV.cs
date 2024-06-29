@@ -78,8 +78,9 @@ namespace CSDLPT.PerFeat
                 }
                 else
                 {
-                    frmMain main = new frmMain();
-                    main.Show();
+                    //frmMain main = new frmMain();
+                    //main.Show();
+                    return;
                 }
             }
         }

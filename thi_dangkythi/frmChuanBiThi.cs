@@ -96,7 +96,7 @@ namespace CSDLPT
             try
             {
                 command = Program.conn.CreateCommand();
-                command.CommandText = "SELECT MAGV,MAMH,MALOP,TRINHDO,NGAYTHI,LAN,SOCAUTHI,THOIGIAN FROM GIAOVIEN_DANGKY" +
+                command.CommandText = "SELECT MAGV,MAMH,MALOP,TRINHDO,NGAYTHI,LAN,SOCAUTHI,THOIGIAN,MAKHOIPHUC FROM GIAOVIEN_DANGKY" +
                     " where MAGV = '" + Program.userName + "'";
                 adapter.SelectCommand = command;
                 table.Clear();

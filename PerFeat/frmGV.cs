@@ -53,7 +53,7 @@ namespace CSDLPT.PerFeat
             SqlDataAdapter da = new SqlDataAdapter(cmd, conn_publisher);
             da.Fill(dt);
             conn_publisher.Close();
-            cbKh.DataSource = Program.bds_dspm;
+            cbKh.DataSource = dt;
             cbKh.DisplayMember = "MAKH";
             cbKh.ValueMember = "MAKH";
         }
@@ -115,7 +115,7 @@ namespace CSDLPT.PerFeat
         public void LoadDataIntoDataGridView(String selectedTable, DataGridView gridview)
         {
             sqlCommand = Program.conn.CreateCommand();
-            sqlCommand.CommandText = "SELECT * FROM " + selectedTable; ;
+            sqlCommand.CommandText = "SELECT * FROM " + selectedTable; 
             adapter.SelectCommand = sqlCommand;
             //table = new DataTable();
             try
@@ -201,8 +201,7 @@ namespace CSDLPT.PerFeat
                 }
                 else
                 {
-                    frmMain main = new frmMain();
-                    main.Show();
+                    return;
                 }
             }
         }

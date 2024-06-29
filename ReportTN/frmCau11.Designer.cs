@@ -30,6 +30,7 @@
         {
             this.lblReportKQ = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblError = new System.Windows.Forms.Label();
             this.btnXemRP = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbCoso = new System.Windows.Forms.ComboBox();
@@ -39,7 +40,6 @@
             this.dateBD = new System.Windows.Forms.DateTimePicker();
             this.grbReport = new System.Windows.Forms.GroupBox();
             this.rp11 = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.lblError = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.grbReport.SuspendLayout();
             this.SuspendLayout();
@@ -49,9 +49,9 @@
             this.lblReportKQ.Font = new System.Drawing.Font("Segoe UI Black", 14.25F, System.Drawing.FontStyle.Bold);
             this.lblReportKQ.ForeColor = System.Drawing.Color.Red;
             this.lblReportKQ.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblReportKQ.Location = new System.Drawing.Point(45, 9);
+            this.lblReportKQ.Location = new System.Drawing.Point(0, 9);
             this.lblReportKQ.Name = "lblReportKQ";
-            this.lblReportKQ.Size = new System.Drawing.Size(1114, 38);
+            this.lblReportKQ.Size = new System.Drawing.Size(1228, 38);
             this.lblReportKQ.TabIndex = 5;
             this.lblReportKQ.Text = "DANH SÁCH ĐĂNG KÝ THI TRẮC NGHIỆM ";
             this.lblReportKQ.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -70,15 +70,27 @@
             this.panel1.Controls.Add(this.dateBD);
             this.panel1.Location = new System.Drawing.Point(39, 105);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 389);
+            this.panel1.Size = new System.Drawing.Size(200, 427);
             this.panel1.TabIndex = 6;
+            // 
+            // lblError
+            // 
+            this.lblError.AutoSize = true;
+            this.lblError.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblError.ForeColor = System.Drawing.Color.Red;
+            this.lblError.Location = new System.Drawing.Point(52, 261);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(93, 15);
+            this.lblError.TabIndex = 7;
+            this.lblError.Text = "Không có dữ liệu!";
+            this.lblError.Click += new System.EventHandler(this.lblError_Click);
             // 
             // btnXemRP
             // 
             this.btnXemRP.BackColor = System.Drawing.Color.LightSalmon;
             this.btnXemRP.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXemRP.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnXemRP.Location = new System.Drawing.Point(32, 284);
+            this.btnXemRP.Location = new System.Drawing.Point(35, 303);
             this.btnXemRP.Name = "btnXemRP";
             this.btnXemRP.Size = new System.Drawing.Size(130, 37);
             this.btnXemRP.TabIndex = 6;
@@ -153,7 +165,7 @@
             this.grbReport.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold);
             this.grbReport.Location = new System.Drawing.Point(260, 82);
             this.grbReport.Name = "grbReport";
-            this.grbReport.Size = new System.Drawing.Size(958, 412);
+            this.grbReport.Size = new System.Drawing.Size(958, 453);
             this.grbReport.TabIndex = 7;
             this.grbReport.TabStop = false;
             this.grbReport.Text = "KẾT QUẢ BÁO CÁO";
@@ -165,19 +177,8 @@
             this.rp11.Location = new System.Drawing.Point(3, 20);
             this.rp11.Name = "rp11";
             this.rp11.ServerReport.BearerToken = null;
-            this.rp11.Size = new System.Drawing.Size(952, 389);
+            this.rp11.Size = new System.Drawing.Size(952, 430);
             this.rp11.TabIndex = 0;
-            // 
-            // lblError
-            // 
-            this.lblError.AutoSize = true;
-            this.lblError.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblError.ForeColor = System.Drawing.Color.Red;
-            this.lblError.Location = new System.Drawing.Point(49, 253);
-            this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(93, 15);
-            this.lblError.TabIndex = 7;
-            this.lblError.Text = "Không có dữ liệu!";
             // 
             // frmCau11
             // 

@@ -31,10 +31,10 @@ namespace CSDLPT
 
         }
 
-        private void tínhNăngToolStripMenuItem_Click(object sender, EventArgs e)
+        /*private void tínhNăngToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-        }
+        }*/
         private void thayĐổiThôngTinToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FeatureForm featureForm = new FeatureForm();
@@ -123,9 +123,14 @@ namespace CSDLPT
                 if (Program.role == "GIANGVIEN")
                 {
                     tsmnuDangKyThi.Enabled = true;
+                    tsmnuThuVienCH.Enabled = true;
                 }
                 else
+                {
+                    tsmnuThuVienCH.Enabled = false;
                     tsmnuDangKyThi.Enabled = false;
+                }
+                    
                 if(Program.role == "COSO")
                 {
                     tsmnuCongViecGiaoVu.Enabled = true;
@@ -192,10 +197,10 @@ namespace CSDLPT
             formDangNhap.ShowDialog();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        /*private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
-        }
+        }*/
 
         private void frmMain_Load(object sender, EventArgs e)
         {
@@ -368,6 +373,7 @@ namespace CSDLPT
                         "where masv = '" + txtUserName.Text + "'";
                     command.ExecuteNonQuery();
                     MessageBox.Show("Thay đổi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    panThayDoiMatKhau.Visible = false;
                 }
                 catch (Exception ex)
                 {
@@ -448,8 +454,12 @@ namespace CSDLPT
                 Program.myReader.Read();
                 Program.soCauHoi = Program.myReader.GetInt32(0);
                 Program.myReader.Close();
+                panThongTinTaiKhoan.Visible = false;
                 frmLamBaiThi f = new frmLamBaiThi();
                 f.ShowDialog();
+                txtKhoiPhuc.Text = "";
+                panThongTinTaiKhoan.Visible= false;
+                picMain.Visible = true;
             }
             else
             {

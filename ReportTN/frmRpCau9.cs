@@ -64,32 +64,40 @@ namespace CSDLPT.ReportTN
 
         private void btnXemRP_Click(object sender, EventArgs e)
         {
-            
-            SqlCommand command = new SqlCommand();
-            command.CommandText = "EXEC LINK0.TRACNGHIEM.DBO.sp_GetBaoCaoTheoSV '" + txtMaSV.Text + "', '" + cmbMonhoc.Text + "', '" + cmbLan.Text + "'";
-            command.Connection = Program.conn;
-            System.Data.DataSet ds = new System.Data.DataSet();
-            SqlDataAdapter dap = new SqlDataAdapter(command);
-            dap.Fill(ds);
-
-            rp9.ProcessingMode = ProcessingMode.Local;
-            rp9.LocalReport.ReportPath = "rpCau9.rdlc";
-
-            if (ds.Tables[0].Rows.Count > 0)
+            if (txtMaSV.Text == "" || cmbLan.Text == "" || cmbMonhoc.Text == "")
             {
-                ReportDataSource rds = new ReportDataSource();
-                rds.Name = "Cau9";
-                rds.Value = ds.Tables[0];
-                rp9.LocalReport.DataSources.Clear();
-                rp9.LocalReport.DataSources.Add(rds);
-                rp9.RefreshReport();
-                lblError.Visible = false;
+
+                MessageBox.Show("Vui lòng không để trống các thông tin trên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
             else
             {
-                rp9.LocalReport.DataSources.Clear();
-                rp9.RefreshReport();
-                lblError.Visible = true;
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "EXEC LINK0.TRACNGHIEM.DBO.sp_GetBaoCaoTheoSV '" + txtMaSV.Text + "', '" + cmbMonhoc.Text + "', '" + cmbLan.Text + "'";
+                command.Connection = Program.conn;
+                System.Data.DataSet ds = new System.Data.DataSet();
+                SqlDataAdapter dap = new SqlDataAdapter(command);
+                dap.Fill(ds);
+
+                rp9.ProcessingMode = ProcessingMode.Local;
+                rp9.LocalReport.ReportPath = "rpCau9.rdlc";
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    ReportDataSource rds = new ReportDataSource();
+                    rds.Name = "Cau9";
+                    rds.Value = ds.Tables[0];
+                    rp9.LocalReport.DataSources.Clear();
+                    rp9.LocalReport.DataSources.Add(rds);
+                    rp9.RefreshReport();
+                    lblError.Visible = false;
+                }
+                else
+                {
+                    rp9.LocalReport.DataSources.Clear();
+                    rp9.RefreshReport();
+                    lblError.Visible = true;
+                }
             }
         }
 
