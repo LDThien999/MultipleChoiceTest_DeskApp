@@ -284,26 +284,55 @@ namespace CSDLPT.Login_Signup
             }
             else if ((txtMATKHAU.Text == txtXacNhanMK.Text) && radTruong.Checked == true)
             {
+                //try
+                //{
+                //    SqlCommand command = new SqlCommand();
+                //    command = Program.conn.CreateCommand();
+                //    command.CommandText = "exec sp_taoTKTruong '" + txtLoginnam.Text + "', '" + txtMATKHAU.Text + "', '" + txtUserName_MaGV.Text
+                //        + "', '" + roleDk + "'";
+
+                //    command.ExecuteNonQuery();
+                //    MessageBox.Show("Đăng ký thành công!", "Thông báo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //    loadData();
+                //    txtUserName_MaGV.Text = "";
+                //    txtLoginnam.Text = "";
+                //    txtMATKHAU.Text = "";
+                //    txtXacNhanMK.Text = "";
+                //}
+                //catch(Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message, "Thông báo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //}
+                SqlCommand command = new SqlCommand();
                 try
                 {
-                    SqlCommand command = new SqlCommand();
-                    command = Program.conn.CreateCommand();
-                    command.CommandText = "exec sp_taoTKTruong '" + txtLoginnam.Text + "', '" + txtMATKHAU.Text + "', '" + txtUserName_MaGV.Text
+                    SqlConnection connMainCS1 = new SqlConnection();
+                    connMainCS1.ConnectionString = @"Data Source=DUONG\MSSQLSERVER01;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+                    if (connMainCS1.State == ConnectionState.Closed) connMainCS1.Open();
+                    command = connMainCS1.CreateCommand();
+                    command.CommandText = "exec sp_TaoTaiKhoan '" + txtLoginnam.Text + "', '" + txtMATKHAU.Text + "', '" + txtUserName_MaGV.Text
                         + "', '" + roleDk + "'";
-
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Đăng ký thành công!", "Thông báo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    loadData();
-                    txtUserName_MaGV.Text = "";
-                    txtLoginnam.Text = "";
-                    txtMATKHAU.Text = "";
-                    txtXacNhanMK.Text = "";
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Thông báo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
 
+                    connMainCS1.Close();
+
+
+                    SqlConnection connMainCS2 = new SqlConnection();
+                    connMainCS2.ConnectionString = @"Data Source=DUONG\MSSQLSERVER02;Initial Catalog=TRACNGHIEM;User ID="+Program.loginName+";password="+
+                        Program.loginPassword;
+                    if (connMainCS2.State == ConnectionState.Closed) connMainCS2.Open();
+                    command = connMainCS2.CreateCommand();
+                    command.CommandText = "exec sp_TaoTaiKhoan '" + txtLoginnam.Text + "', '" + txtMATKHAU.Text + "', '" + txtUserName_MaGV.Text
+                        + "', '" + roleDk + "'";
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Đăng ký thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    connMainCS2.Close();
+                    Program.conn.Open();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
 
             }     
             else if ((txtMATKHAU.Text == txtXacNhanMK.Text) && radSinhVien.Checked == true)

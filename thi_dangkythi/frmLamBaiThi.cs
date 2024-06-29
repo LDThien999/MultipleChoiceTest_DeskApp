@@ -67,7 +67,7 @@ namespace CSDLPT.thi_dangkythi
 
             }
         }
-
+     
         // tao mot mang 1 chieu chua [n] cau hoi ( tuong ung voi 1 doi tuong )
         CauHoi[] deThi = new CauHoi[Program.soCauHoi];
         
@@ -96,7 +96,17 @@ namespace CSDLPT.thi_dangkythi
         {
             
             String statementThi = "";
-            if (Program.khoiPhuc == 0)
+            if(Program.role == "GIANGVIEN")
+            {
+                lblTieuDeBaiThi.Text = Program.monThi;
+                lblMa.Text = Program.userName;
+                lblTen.Text = "Giáo viên: "+Program.staff;
+                lblThoiGian.Text = Program.tgianLam.ToString() + " phút";
+                lblSoCH.Text = Program.soCauHoi.ToString();
+                statementThi = "select bode.cauhoi,mamh,noidung,a,b,c,d,dap_an from bode inner join CT_DANGKYTHI " +
+                    "on bode.cauhoi = CT_DANGKYTHI.CAUHOI where madk = '" + Program.maDe + "'";
+            }
+            else if (Program.khoiPhuc == 0 && Program.role == "Sinh viên")
             {
                 lblTieuDeBaiThi.Text = Program.monThi;
                 lblMa.Text = Program.userName;
@@ -114,6 +124,8 @@ namespace CSDLPT.thi_dangkythi
                 lblTieuDeBaiThi.Text = Program.monThi;
                 lblMa.Text = Program.userName;
                 lblTen.Text = Program.staff;
+                lblThoiGian.Text = Program.tgianLam.ToString() + " phút";
+                lblSoCH.Text = Program.soCauHoi.ToString();
                 //lblThoiGian.Text = Program.tgianLam.ToString() + " phút";
                 //lblSoCH.Text = Program.soCauHoi.ToString();
 
@@ -141,9 +153,9 @@ namespace CSDLPT.thi_dangkythi
                         String d = row["d"].ToString();
                         String dapAn = row["dap_an"].ToString();
                         CauHoi ch = new CauHoi(noidung, a, b, c, d, dapAn);
-                        if(Program.khoiPhuc ==0)
+                        if((Program.khoiPhuc ==0 && Program.role == "Sinh viên") || (Program.khoiPhuc == 0 && Program.role == "GIANGVIEN"))
                             ch.dapAnChon = "";
-                        else
+                        else if(Program.khoiPhuc != 0 && Program.role == "Sinh viên")
                             ch.dapAnChon = row["noidungdachon"].ToString();
                         ch.maCH = maCH;
                         deThi[i] = ch;
@@ -175,9 +187,20 @@ namespace CSDLPT.thi_dangkythi
                     radB.Text = randomElements[1];//deThi[index].B;
                     radC.Text = randomElements[2];//deThi[index].C;
                     radD.Text = randomElements[3];//deThi[index].D;
+                    if (Program.khoiPhuc != 0)
+                    {
+                        showDapAnChon(deThi[index]);
+                        Control[] controls = fpanShowAllCH.Controls.Find("btnCau" + (index + 1), true);
+                        if (controls[0] is Button)
+                        {
+                            Button button = (Button)controls[0];
+
+                            button.BackColor = Color.Gold;
+                        }
+                    }
                     lblCauHoiHienTai.Text = "Câu "+(index+1);
 
-                    if(Program.khoiPhuc == 0)
+                    if(Program.khoiPhuc == 0 && Program.role == "Sinh viên")
                     {
                         SqlCommand command0 = new SqlCommand();
                         command0 = Program.conn.CreateCommand();
@@ -204,41 +227,48 @@ namespace CSDLPT.thi_dangkythi
                             MessageBox.Show(ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                        Program.myReader = Program.ExecSqlDataReader("select top(1) MABD FROM BANGDIEM ORDER BY MABD DESC");
-                        if (Program.myReader == null)
-                            return;
-                        Program.myReader.Read();
-                        maBangDiem = Program.myReader.GetInt32(0);
-                        Program.myReader.Close();
-                        time = Program.tgianLam;
+                        if (Program.role == "Sinh viên")
+                        {
+                            Program.myReader = Program.ExecSqlDataReader("select top(1) MABD FROM BANGDIEM ORDER BY MABD DESC");
+                            if (Program.myReader == null)
+                                return;
+                            Program.myReader.Read();
+                            maBangDiem = Program.myReader.GetInt32(0);
+                            Program.myReader.Close();
+                        }
+                        time = Program.tgianLam; // sua o day
                         
                         SqlCommand command = new SqlCommand();
                         command = Program.conn.CreateCommand();
-                        if (Program.khoiPhuc == 0)
+                        if (Program.role == "Sinh viên")
                         {
-                            command.CommandText = "update BANGDIEM set THOIGIANCONLAI = " + Program.tgianLam.ToString()
-                                + " where mabd = " + maBangDiem;
+                            if (Program.khoiPhuc == 0)
+                            {
+                                command.CommandText = "update BANGDIEM set THOIGIANCONLAI = " + Program.tgianLam.ToString()
+                                    + " where mabd = " + maBangDiem;
+                            }
+                            else
+                            {
+                                command.CommandText = "update BANGDIEM set THOIGIANCONLAI = " + Program.tgianLam.ToString()
+                                    + " where mabd = " + Program.khoiPhuc;
+                            }
+                            command.ExecuteNonQuery();
                         }
-                        else
-                        {
-                            command.CommandText = "update BANGDIEM set THOIGIANCONLAI = " + Program.tgianLam.ToString()
-                                + " where mabd = " + Program.khoiPhuc;
-                        }
-                        command.ExecuteNonQuery();
                     }
-                    else
+                    else if(Program.role == "Sinh viên" && Program.khoiPhuc !=0)
                     {
                         maBangDiem = Program.khoiPhuc;
                         loadAllControlFromPanel();
                     }
-                    time = Program.tgianLam;
+                    time = Program.tgianLam; // sua o day
                     checkBtnLuiTien();
                     if(Program.tgianLam <=9 )
                         lblMin.Text = "0" + Program.tgianLam.ToString();
                     else
                         lblMin.Text = Program.tgianLam.ToString();
                     timer1.Start(); // bat dau tinh gio lam bai
-                    timeTgianCon.Start();
+                    if(Program.role == "Sinh viên")
+                        timeTgianCon.Start();
                 }
             }
         }
@@ -261,17 +291,31 @@ namespace CSDLPT.thi_dangkythi
         void ghiNhanCauTraLoi()
         {
             String tmp = "";
+            String da = "";
             if (deThi[index].dapAnChon == deThi[index].A)
+            {
                 tmp = "A";
+                da = deThi[index].A;
+
+            }
             else if (deThi[index].dapAnChon == deThi[index].B)
+            {
                 tmp = "B";
+                da = deThi[index].B;
+            }
             else if (deThi[index].dapAnChon == deThi[index].C)
+            {
                 tmp = "C";
+                da = deThi[index].C;
+            }
             else if (deThi[index].dapAnChon == deThi[index].D)
+            {
                 tmp = "D";
+                da = deThi[index].D;
+            }
             SqlCommand command = new SqlCommand();
             command = Program.conn.CreateCommand();
-            command.CommandText = "update CT_BAITHI set DAPANCHON ='" + tmp + "', NOIDUNGDACHON='" + deThi[index].dapAnChon + "' "+
+            command.CommandText = "update CT_BAITHI set DAPANCHON ='" + tmp + "', NOIDUNGDACHON='" + da + "' "+
                 "where cauhoi= " + deThi[index].maCH+" and mabd = "+ maBangDiem;
             command.ExecuteNonQuery();
         }
@@ -439,8 +483,9 @@ namespace CSDLPT.thi_dangkythi
 
         void showDapAnChon(CauHoi x)
         {
-      
-                if(radA.Text == x.dapAnChon)
+            if (Program.khoiPhuc == 0)
+            {
+                if (radA.Text == x.dapAnChon)
                 {
                     lblDapAnA.ForeColor = Color.Red;
                     radA.ForeColor = Color.Red;
@@ -465,11 +510,40 @@ namespace CSDLPT.thi_dangkythi
                     radD.Checked = true;
                 }
             }
+            else
+            {
+                if (nameof(x.A) == x.dapAn)
+                {
+                    lblDapAnA.ForeColor = Color.Red;
+                    radA.ForeColor = Color.Red;
+                    radA.Checked = true;
+                }
+                if (nameof(x.B) == x.dapAn)
+                {
+                    lblDapAnB.ForeColor = Color.Red;
+                    radB.ForeColor = Color.Red;
+                    radB.Checked = true;
+                }
+                if (nameof(x.C) == x.dapAn)
+                {
+                    lblDapAnC.ForeColor = Color.Red;
+                    radC.ForeColor = Color.Red;
+                    radC.Checked = true;
+                }
+                if (nameof(x.D) == x.dapAn)
+                {
+                    lblDapAnD.ForeColor = Color.Red;
+                    radD.ForeColor = Color.Red;
+                    radD.Checked = true;
+                }
+            }
+        }
         private void btnTienCauHoi_Click(object sender, EventArgs e)
         {
             
             kiemTraRad();
-            ghiNhanCauTraLoi();
+            if(Program.role == "Sinh viên")
+                ghiNhanCauTraLoi();
             loadAllControlFromPanel();
             index += 1;
             cleanRadioButton();
@@ -489,7 +563,8 @@ namespace CSDLPT.thi_dangkythi
         {
             
             kiemTraRad();
-            ghiNhanCauTraLoi();
+            if(Program.role == "Sinh viên")
+                ghiNhanCauTraLoi();
             loadAllControlFromPanel();
             //if (deThi[index].dapAnChon != "")
             //    fpanShowAllCH.Controls.GetEnumerator(index);
@@ -570,7 +645,7 @@ namespace CSDLPT.thi_dangkythi
             else
                 lblSecond.Text = count.ToString();
 
-            if (lblSecond.Text == "00" && lblMin.Text == "00")
+            if (lblSecond.Text == "00" && lblMin.Text == "00" && Program.role == "Sinh viên")
             {
                 kiemTraRad();
                 ghiNhanCauTraLoi();
@@ -584,8 +659,18 @@ namespace CSDLPT.thi_dangkythi
                 f.ShowDialog();
                 this.Close();
             }
-            
-           
+            else if (lblSecond.Text == "00" && lblMin.Text == "00" && Program.role == "GIANGVIEN")
+            {
+                kiemTraRad();
+              
+                frmKetQuaThi f = new frmKetQuaThi();
+                timer1.Stop();
+                Program.khoiPhuc = 0;
+                f.ShowDialog();
+                this.Close();
+            }
+
+
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -652,46 +737,93 @@ namespace CSDLPT.thi_dangkythi
         //}
         private void btnNopBai_Click(object sender, EventArgs e)
         {
-            kiemTraRad();
-            ghiNhanCauTraLoi();
-            int soCauChuaLam = 0;
-            foreach(Control control in fpanShowAllCH.Controls)
+            if (Program.role == "Sinh viên")
             {
-                
-                if (deThi[int.Parse(control.Text) - 1].dapAnChon == "")
-                    soCauChuaLam++;
-            }
-            if(soCauChuaLam > 0)
-            {
-                DialogResult result = MessageBox.Show("Bạn còn "+ soCauChuaLam +" câu chưa làm, vẫn muốn nộp bài?", "NỘP BÀI?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
+                kiemTraRad();
+                ghiNhanCauTraLoi();
+                int soCauChuaLam = 0;
+                foreach (Control control in fpanShowAllCH.Controls)
                 {
-                    Program.min = lblMin.Text;
-                    Program.sec = lblSecond.Text;
-                    Program.diemSo = tinhDiem();
-                    frmKetQuaThi f = new frmKetQuaThi();
-                    timer1.Stop();
-                    ghiDiemVaoDataBase(Program.diemSo);
-                    Program.khoiPhuc = 0;
-                    f.ShowDialog();
-                    this.Close();
+
+                    if (deThi[int.Parse(control.Text) - 1].dapAnChon == "")
+                        soCauChuaLam++;
+                }
+                if (soCauChuaLam > 0)
+                {
+                    DialogResult result = MessageBox.Show("Bạn còn " + soCauChuaLam + " câu chưa làm, vẫn muốn nộp bài?", "NỘP BÀI?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        Program.min = lblMin.Text;
+                        Program.sec = lblSecond.Text;
+                        Program.diemSo = tinhDiem();
+                        frmKetQuaThi f = new frmKetQuaThi();
+                        timer1.Stop();
+                        ghiDiemVaoDataBase(Program.diemSo);
+                        Program.khoiPhuc = 0;
+                        f.ShowDialog();
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    DialogResult result = MessageBox.Show("Bạn có chắn chắn muốn nộp bài?", "NỘP BÀI?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        Program.min = lblMin.Text;
+                        Program.sec = lblSecond.Text;
+                        Program.diemSo = tinhDiem();
+                        frmKetQuaThi f = new frmKetQuaThi();
+                        timer1.Stop();
+                        ghiDiemVaoDataBase(Program.diemSo);
+                        Program.khoiPhuc = 0;
+                        f.ShowDialog();
+
+                        this.Close();
+                    }
                 }
             }
-            else
+            else if(Program.role == "GIANGVIEN")
             {
-                DialogResult result = MessageBox.Show("Bạn có chắn chắn muốn nộp bài?", "NỘP BÀI?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
+                kiemTraRad();
+               
+                int soCauChuaLam = 0;
+                foreach (Control control in fpanShowAllCH.Controls)
                 {
-                    Program.min = lblMin.Text;
-                    Program.sec = lblSecond.Text;
-                    Program.diemSo = tinhDiem();
-                    frmKetQuaThi f = new frmKetQuaThi();
-                    timer1.Stop();
-                    ghiDiemVaoDataBase(Program.diemSo);
-                    Program.khoiPhuc = 0;
-                    f.ShowDialog();
-                    
-                    this.Close();
+
+                    if (deThi[int.Parse(control.Text) - 1].dapAnChon == "")
+                        soCauChuaLam++;
+                }
+                if (soCauChuaLam > 0)
+                {
+                    DialogResult result = MessageBox.Show("Bạn còn " + soCauChuaLam + " câu chưa làm, vẫn muốn nộp bài?", "NỘP BÀI?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        Program.min = lblMin.Text;
+                        Program.sec = lblSecond.Text;
+                        Program.diemSo = tinhDiem();
+                        frmKetQuaThi f = new frmKetQuaThi();
+                        timer1.Stop();
+                        
+                        Program.khoiPhuc = 0;
+                        f.ShowDialog();
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    DialogResult result = MessageBox.Show("Bạn có chắn chắn muốn nộp bài?", "NỘP BÀI?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                       
+                        Program.diemSo = tinhDiem();
+                        frmKetQuaThi f = new frmKetQuaThi();
+                        timer1.Stop();
+                      
+                        Program.khoiPhuc = 0;
+                        f.ShowDialog();
+
+                        this.Close();
+                    }
                 }
             }
         }

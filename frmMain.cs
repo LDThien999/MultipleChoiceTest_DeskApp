@@ -324,12 +324,12 @@ namespace CSDLPT
 
         private void btnXacNhanDoiMK_Click(object sender, EventArgs e)
         {
-            if(txtPassCu.Text =="" || txtPassMoi.Text =="" || txtXacNhanPassMoi.Text == "")
+            if (txtPassCu.Text == "" || txtPassMoi.Text == "" || txtXacNhanPassMoi.Text == "")
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            else if((txtPassCu.Text.Trim() != Program.loginPassword) && Program.role != "Sinh viên")
+            else if ((txtPassCu.Text.Trim() != Program.loginPassword) && Program.role != "Sinh viên")
             {
                 MessageBox.Show("mật khẩu cũ không chính xác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -339,17 +339,17 @@ namespace CSDLPT
                 MessageBox.Show("mật khẩu cũ không chính xác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            else if(txtPassMoi.Text.Trim() == txtPassCu.Text.Trim())
+            else if (txtPassMoi.Text.Trim() == txtPassCu.Text.Trim())
             {
                 MessageBox.Show("mật khẩu mới trùng với mật khẩu cũ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            else if(txtPassMoi.Text.Trim() != txtXacNhanPassMoi.Text.Trim())
+            else if (txtPassMoi.Text.Trim() != txtXacNhanPassMoi.Text.Trim())
             {
                 MessageBox.Show("mật khẩu xác nhận không trùng khớp!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            else if(Program.role == "Sinh viên")
+            else if (Program.role == "Sinh viên")
             {
                 SqlCommand command = new SqlCommand();
                 try
@@ -366,12 +366,12 @@ namespace CSDLPT
                     MessageBox.Show(ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            else if(Program.role != "Sinh viên")
+            else if (Program.role == "GIANGVIEN" || Program.role == "COSO")
             {
                 SqlConnection connMainCS = new SqlConnection();
                 if (Program.brand2 == "CƠ SỞ 1")
                     connMainCS.ConnectionString = @"Data Source=DUONG\MSSQLSERVER01;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
-                else if(Program.brand2 == "CƠ SỞ 2")
+                else if (Program.brand2 == "CƠ SỞ 2")
                     connMainCS.ConnectionString = @"Data Source=DUONG\MSSQLSERVER02;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
 
                 SqlCommand command = new SqlCommand();
@@ -379,10 +379,46 @@ namespace CSDLPT
                 {
                     if (connMainCS.State == ConnectionState.Closed) connMainCS.Open();
                     command = connMainCS.CreateCommand();
-                    command.CommandText = "ALTER LOGIN " + Program.loginName + " WITH PASSWORD = '"+ txtPassMoi.Text + "'";
+                    command.CommandText = "ALTER LOGIN " + Program.loginName + " WITH PASSWORD = '" + txtPassMoi.Text + "'";
                     command.ExecuteNonQuery();
                     MessageBox.Show("Thay đổi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     connMainCS.Close();
+                    panThayDoiMatKhau.Visible = false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else if (Program.role == "TRUONG"){
+                
+                //SqlConnection connMainCS2 = new SqlConnection();
+                //if (Program.brand2 == "CƠ SỞ 1")
+                //    connMainCS.ConnectionString = @"Data Source=DUONG\MSSQLSERVER01;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+                //else if (Program.brand2 == "CƠ SỞ 2")
+                //    connMainCS.ConnectionString = @"Data Source=DUONG\MSSQLSERVER02;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+
+                SqlCommand command = new SqlCommand();
+                try
+                {
+                    SqlConnection connMainCS1 = new SqlConnection();
+                    connMainCS1.ConnectionString = @"Data Source=DUONG\MSSQLSERVER01;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+                    if (connMainCS1.State == ConnectionState.Closed) connMainCS1.Open();
+                    command = connMainCS1.CreateCommand();
+                    command.CommandText = "ALTER LOGIN " + Program.loginName + " WITH PASSWORD = '" + txtPassMoi.Text + "'";
+                    command.ExecuteNonQuery();
+                   
+                    connMainCS1.Close();
+
+                    SqlConnection connMainCS2 = new SqlConnection();
+                    connMainCS2.ConnectionString = @"Data Source=DUONG\MSSQLSERVER02;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+                    if (connMainCS2.State == ConnectionState.Closed) connMainCS2.Open();
+                    command = connMainCS2.CreateCommand();
+                    command.CommandText = "ALTER LOGIN " + Program.loginName + " WITH PASSWORD = '" + txtPassMoi.Text + "'";
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Thay đổi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    connMainCS2.Close();
+                    panThayDoiMatKhau.Visible = false;
                 }
                 catch (Exception ex)
                 {
@@ -501,6 +537,7 @@ namespace CSDLPT
         {
             frmAddQues f = new frmAddQues();
             f.ShowDialog();
+            this.Hide();
         }
 
         private void mnuTrangChuThoat_Click(object sender, EventArgs e)
