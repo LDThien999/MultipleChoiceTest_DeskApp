@@ -19,6 +19,62 @@ namespace CSDLPT.feature
         private string coso;
         private string originalTextTenLop;
 
+        class ThongTinMon
+        {
+            public string maMH { get; set; }
+            public string tenMH { get; set; }
+            public string TrangThai { get; set; }
+
+            public ThongTinMon(string maMH, string tenMH, string TrangThai)
+            {
+                this.maMH = maMH;
+                this.tenMH = tenMH;
+                this.TrangThai = TrangThai;
+            }
+        }
+
+        class ThongTinKhoa
+        {
+            public string maKH { get; set; }
+            public string tenKH { get; set; }
+            public string maCS { get; set; }
+            public string TrangThai { get; set; }
+
+            public ThongTinKhoa(string maMK, string tenKH, string maCS, string TrangThai)
+            {
+                this.maKH = maMK;
+                this.tenKH = tenKH;
+                this.maCS = maCS;
+                this.TrangThai = TrangThai;
+            }
+        }
+
+        class ThongTinLop
+        {
+            public string maLOP { get; set; }
+            public string tenLOP { get; set; }
+            public string maKH { get; set; }
+            public string TrangThai { get; set; }
+
+            public ThongTinLop(string maLOP, string tenLOP, string maKH, string TrangThai)
+            {
+                this.maLOP = maLOP;
+                this.tenLOP = tenLOP;
+                this.maKH = maKH;
+                this.TrangThai = TrangThai;
+            }
+        }
+
+        // Tạo hai stack undo và redo
+        Stack<ThongTinMon> undoStack = new Stack<ThongTinMon>();
+        Stack<ThongTinMon> redoStack = new Stack<ThongTinMon>();
+
+        Stack<ThongTinKhoa> undoKHOAStack = new Stack<ThongTinKhoa>();
+        Stack<ThongTinKhoa> redoKHOAStack = new Stack<ThongTinKhoa>();
+
+        Stack<ThongTinLop> undoLOPStack = new Stack<ThongTinLop>();
+        Stack<ThongTinLop> redoLOPStack = new Stack<ThongTinLop>();
+
         public FeatureForm()
         {
             InitializeComponent();
@@ -38,6 +94,12 @@ namespace CSDLPT.feature
                 }
                 else
                 {
+                    undoStack.Clear();
+                    redoStack.Clear();
+                    undoKHOAStack.Clear();
+                    redoKHOAStack.Clear();
+                    undoLOPStack.Clear();
+                    redoLOPStack.Clear();
                     frmMain main = new frmMain();
                     main.Show();
                 }
@@ -49,6 +111,7 @@ namespace CSDLPT.feature
             tabControl1 = new TabControl();
             LoadDataIntoDataGridView("MONHOC", dataGridView1);
             BindingTextMONHOC(dataGridView1);
+            checkUnRedoMonHoc();
 
             if (Program.role != "COSO")
             {
@@ -61,9 +124,17 @@ namespace CSDLPT.feature
             btnSave.Visible = false;
             btnSave.Enabled = false;
             btnSave_Add.Visible = false;
+            btnThoatAdd.Visible = false;
 
-            textBox1.ReadOnly = true;
+            txtMaH.ReadOnly = true;
             textBoxTenMon.ReadOnly = true;
+
+            undoStack.Clear();
+            redoStack.Clear();
+            undoKHOAStack.Clear();
+            redoKHOAStack.Clear();
+            undoLOPStack.Clear();
+            redoLOPStack.Clear();
 
             string statement = "select MAKH from GIAOVIEN";
             Program.myReader = Program.ExecSqlDataReader(statement);
@@ -79,12 +150,58 @@ namespace CSDLPT.feature
             LoadTabPage2();
         }
 
+
+
+        void checkUnRedoMonHoc()
+        {
+            if (undoStack.Count > 0)
+                btnKhoiPhuc.Enabled = true;
+            else
+                btnKhoiPhuc.Enabled = false;
+
+            if (redoStack.Count > 0)
+                btnRedo.Enabled = true;
+            else
+                btnRedo.Enabled = false;
+        }
+
+        void checkUnRedoKHOALOP()
+        {
+            btnKhoiPhuc_KhoaLop.Enabled = false;
+            btnRedo_KhoaLop.Enabled=false;
+            string selectedString = ComboBoxKhoaLop.SelectedIndex.ToString();
+            if (selectedString == "0") //KHOA
+            {
+                if (undoKHOAStack.Count > 0)
+                    btnKhoiPhuc_KhoaLop.Enabled = true;
+                else
+                    btnKhoiPhuc_KhoaLop.Enabled = false;
+
+                if (redoKHOAStack.Count > 0)
+                    btnRedo_KhoaLop.Enabled = true;
+                else
+                    btnRedo_KhoaLop.Enabled = false;
+            }
+            else
+            {
+                if (undoLOPStack.Count > 0)
+                    btnKhoiPhuc_KhoaLop.Enabled = true;
+                else
+                    btnKhoiPhuc_KhoaLop.Enabled = false;
+
+                if (redoLOPStack.Count > 0)
+                    btnRedo_KhoaLop.Enabled = true;
+                else
+                    btnRedo_KhoaLop.Enabled = false;
+            }
+        }
+
         //Text - Binding
         private void BindingTextMONHOC(DataGridView gridview)
         {
-            textBox1.DataBindings.Clear();//clearBinding
+            txtMaH.DataBindings.Clear();//clearBinding
             textBoxTenMon.DataBindings.Clear();
-            textBox1.DataBindings.Add("Text", gridview.DataSource, "MAMH"); //Binding textBox
+            txtMaH.DataBindings.Add("Text", gridview.DataSource, "MAMH"); //Binding textBox
             textBoxTenMon.DataBindings.Add("Text", gridview.DataSource, "TENMH");
         }
 
@@ -103,14 +220,14 @@ namespace CSDLPT.feature
         }
         private bool CheckRegexName(string input)
         {
-            string pattern = @"^[a-zA-Z0-9\sđĐảẢấẤầẦậẬẩẨắẮằẰặẶẫẪéÉèÈẻẺẽẼêÊếẾềỀệỆểỂọỌốỐồỒộỘổỔơƠớỚờỜợỢởỞịỊủỦũŨúÚưỨỨựỰửỬừỪýÝỳỲỷỶỹỸ\s]+$";
+            string pattern = @"^\s*$";
             if (Regex.IsMatch(input, pattern))
             {
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
 
@@ -143,10 +260,7 @@ namespace CSDLPT.feature
         }
 
 
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -169,7 +283,7 @@ namespace CSDLPT.feature
             btnSave.Enabled = false;
             btnSave_Add.Enabled = false;
 
-            string trimmedTextBox1 = Regex.Replace(textBox1.Text, @"\s+", "");
+            string trimmedTextBox1 = Regex.Replace(txtMaH.Text, @"\s+", "");
             string trimmedTextBox2 = Regex.Replace(textBoxTenMon.Text, @"\s+", "");
             if (trimmedTextBox1 != "" && trimmedTextBox2 != "")
             {
@@ -186,15 +300,20 @@ namespace CSDLPT.feature
             btnChinhSua.Enabled = false;
             btnXoa.Enabled = false;
             dataGridView1.Enabled = false;
-            textBox1.Clear();
+            txtMaH.Clear();
             textBoxTenMon.Clear();
-            textBox1.ReadOnly = false;
+            txtMaH.ReadOnly = false;
             textBoxTenMon.ReadOnly = false;
+            btnThoatAdd.Visible = true;
+            btnThoatAdd.Enabled = true;
+
+            btnKhoiPhuc.Enabled = false;
+            btnRedo.Enabled = false;
         }
 
         private void btnSave_Add_Click(object sender, EventArgs e)
         {
-            string mamonhoc = textBox1.Text;
+            string mamonhoc = txtMaH.Text;
             string tenmonhoc = textBoxTenMon.Text;
             if (CheckRegexID(mamonhoc) == true
                 && CheckRegexName(tenmonhoc) == true
@@ -214,7 +333,10 @@ namespace CSDLPT.feature
                         {
 
                             MessageBox.Show("Thêm dữ liệu thành công!");
+                            ThongTinMon info = new ThongTinMon(mamonhoc, tenmonhoc, "them");
 
+                            undoStack.Push(info);
+                            checkUnRedoMonHoc();
                         }
                         else
                         {
@@ -233,8 +355,10 @@ namespace CSDLPT.feature
                 btnChinhSua.Enabled = true;
                 btnXoa.Enabled = true;
                 dataGridView1.Enabled = true;
-                textBox1.ReadOnly = true;
+                txtMaH.ReadOnly = true;
                 textBoxTenMon.ReadOnly = true;
+                btnThoatAdd.Visible = false;
+                checkUnRedoMonHoc();
             }
             else
             {
@@ -252,6 +376,7 @@ namespace CSDLPT.feature
             {
                 int selectedRowIndex = dataGridView1.SelectedCells[0].RowIndex;
                 string primaryKeyValue = dataGridView1.Rows[selectedRowIndex].Cells[0].Value.ToString();
+                string tenmonhoc = textBoxTenMon.Text;
                 if (CheckSP_MonHocExistInOtherTable(primaryKeyValue) == true)
                 {
                     string deleteQuery = "DELETE FROM MONHOC WHERE MAMH = @MAMH";
@@ -267,6 +392,11 @@ namespace CSDLPT.feature
                                 LoadDataIntoDataGridView("MONHOC", dataGridView1);
                                 BindingTextMONHOC(dataGridView1);
                                 MessageBox.Show("Xóa hàng thành công!");
+
+                                ThongTinMon info = new ThongTinMon(primaryKeyValue, tenmonhoc, "xoa");
+
+                                undoStack.Push(info);
+                                checkUnRedoMonHoc();
                             }
                             else
                             {
@@ -287,6 +417,32 @@ namespace CSDLPT.feature
 
         }
 
+        //BUTTON THOAT
+        private void btnThoatAdd_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn thoát?", "Xác nhận thoát", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                btnThemMon.Visible = true;
+                btnThemMon.Enabled = true;
+                btnSave_Add.Visible = false;
+                btnChinhSua.Enabled = false;
+                btnChinhSua.Visible = true;
+                btnSave.Visible = false;
+                btnXoa.Enabled = false;
+                btnXoa.Visible = true;
+                dataGridView1.Enabled = true;
+                txtMaH.Clear();
+                textBoxTenMon.Clear();
+                txtMaH.ReadOnly = true;
+                textBoxTenMon.ReadOnly = true;
+
+                LoadDataIntoDataGridView("MONHOC", dataGridView1);
+                BindingTextMONHOC(dataGridView1);
+                checkUnRedoMonHoc();
+            }
+        }
+
         // BUTTON CHINH SUA
         private void btnChinhSua_Click(object sender, EventArgs e)
         {
@@ -295,15 +451,22 @@ namespace CSDLPT.feature
             btnSave.Visible = true;
             btnXoa.Enabled = false;
             btnThemMon.Enabled = false;
+            btnThoatAdd.Visible = true;
+            btnThoatAdd.Enabled = true;
+
+            btnKhoiPhuc.Enabled = false;
+            btnRedo.Enabled = false;
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string mamonhoc = textBox1.Text;
+            string mamonhoc = txtMaH.Text;
             string tenmonhoc = textBoxTenMon.Text;
             if (CheckRegexName(tenmonhoc) == true)
             {
                 if (CheckSP_MonHoc("null", tenmonhoc))
                 {
+                    ThongTinMon infoBeforeUpdate = GetThongTinMonFromDatabase(mamonhoc);
+
                     string sqlQuery = "UPDATE MONHOC SET TENMH = @InputData2 WHERE MAMH = @InputData1";
                     using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
                     {
@@ -315,6 +478,7 @@ namespace CSDLPT.feature
                             if (rowsAffected > 0)
                             {
                                 MessageBox.Show("Chỉnh sửa dữ liệu thành công!");
+                                undoStack.Push(infoBeforeUpdate);
                             }
                             else
                             {
@@ -339,12 +503,146 @@ namespace CSDLPT.feature
                 btnSave.Visible = false;
                 btnThemMon.Enabled = true;
                 textBoxTenMon.ReadOnly = true;
+                btnThoatAdd.Visible = false;
+                checkUnRedoMonHoc();
             }
             else
             {
                 MessageBox.Show("Lỗi: Dữ liệu nhập không hợp lệ!");
             }
         }
+
+        //BUTTON UNDO
+        private void btnKhoiPhuc_Click(object sender, EventArgs e)
+        {
+
+
+            if (undoStack.Count > 0)
+            {
+                ThongTinMon temp = undoStack.Pop();
+
+                if (temp.TrangThai == "xoa")
+                {
+                    themMonHoc(temp);
+                    temp.TrangThai = "them";
+                    redoStack.Push(temp);
+                }
+                else if (temp.TrangThai == "them")
+                {
+                    xoaMonHoc(temp);
+                    temp.TrangThai = "xoa";
+                    redoStack.Push(temp);
+                }
+                else if (temp.TrangThai == "chinhsua")
+                {
+                    redoStack.Push(GetThongTinMonFromDatabase(temp.maMH));
+                    chinhSuaMonHoc(temp);
+                }
+            }
+            LoadDataIntoDataGridView("MONHOC", dataGridView1);
+            BindingTextMONHOC(dataGridView1);
+            checkUnRedoMonHoc();
+
+        }
+
+        //BUTTON REDO
+        private void btnRedo_Click(object sender, EventArgs e)
+        {
+            if (redoStack.Count > 0)
+            {
+                ThongTinMon temp = redoStack.Pop();
+
+                if (temp.TrangThai == "xoa")
+                {
+                    themMonHoc(temp);
+                    temp.TrangThai = "them";
+                    undoStack.Push(temp);
+                }
+                else if (temp.TrangThai == "them")
+                {
+                    xoaMonHoc(temp);
+                    temp.TrangThai = "xoa";
+                    undoStack.Push(temp);
+                }
+                else if (temp.TrangThai == "chinhsua")
+                {
+                    undoStack.Push(GetThongTinMonFromDatabase(temp.tenMH));
+                    chinhSuaMonHoc(temp);
+                }
+            }
+            LoadDataIntoDataGridView("MONHOC", dataGridView1);
+            BindingTextMONHOC(dataGridView1);
+            checkUnRedoMonHoc();
+        }
+
+        private void themMonHoc(ThongTinMon info)
+        {
+            string sqlQuery = "INSERT INTO MONHOC (MAMH, TENMH) VALUES (@maMH, @tenMH);";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@maMH", info.maMH);
+                command.Parameters.AddWithValue("@tenMH", info.tenMH);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private void xoaMonHoc(ThongTinMon info)
+        {
+            string sqlQuery = "DELETE FROM MONHOC WHERE MAMH = @maMH;";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@maMH", info.maMH);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private void chinhSuaMonHoc(ThongTinMon info)
+        {
+            string sqlQuery = "UPDATE MONHOC SET TENMH = @tenMH WHERE MAMH = @maMH;";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@maMH", info.maMH);
+                command.Parameters.AddWithValue("@tenMH", info.tenMH);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+
+
+        ThongTinMon GetThongTinMonFromDatabase(string maMH)
+        {
+            using (SqlCommand command = new SqlCommand("SELECT MAMH, TENMH FROM MONHOC WHERE MAMH = @maMH", Program.conn))
+            {
+                command.Parameters.AddWithValue("@maMH", maMH);
+                try
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        string maMonHoc = reader["MAMH"].ToString();
+                        string tenMonHoc = reader["TENMH"].ToString();
+
+                        reader.Close();
+
+                        ThongTinMon thongTinMon = new ThongTinMon(maMonHoc, tenMonHoc, "chinhsua");
+                        return thongTinMon;
+                    }
+
+                    reader.Close();
+                    return null; // Trả về null nếu không tìm thấy dữ liệu
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: get data from database " + ex.Message);
+                    return null;
+                }
+            }
+        }
+
 
         //SP - Kiem tra mon co ton tai o bang GV_DK va BODE
         private bool CheckSP_MonHocExistInOtherTable(string mamonhoc)
@@ -410,11 +708,19 @@ namespace CSDLPT.feature
         //==========================KHOA - LOP=============================
         private void LoadTabPage2()
         {
+            if(Program.role != "COSO")
+            {
+                panelFuncKHOALOP.Enabled = false;
+                //panelKhoa.Enabled = false;
+                //panelLop.Enabled = false;
+            }
+
             LoadDataIntoDataGridView("KHOA", dataGridViewKHOA);
             LoadDataIntoDataGridView("LOP", dataGridViewLOP);
             BindingTextKHOA(dataGridViewKHOA);
             BindingTextLOP(dataGridViewLOP);
             LoadDataIntoComboBoxMAKH_LOP();
+            checkUnRedoKHOALOP();
 
             string statement = "select MAKH from GIAOVIEN";
             Program.myReader = Program.ExecSqlDataReader(statement);
@@ -437,6 +743,7 @@ namespace CSDLPT.feature
             btnXoa_KhoaLop.Enabled = false;
             btnSave_Add_KHOALOP.Visible = false;
             btnSave_Change_KHOALOP.Visible = false;
+            btnThoatKHOALOP.Visible = false;
 
             textBoxMaKhoa_Khoa.ReadOnly = true;
             textBoxTenKhoa.ReadOnly = true;
@@ -462,6 +769,10 @@ namespace CSDLPT.feature
 
         }
 
+
+
+
+
         //COMBOBOX CHANGE
         private void ComboBoxKhoaLop_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -476,7 +787,7 @@ namespace CSDLPT.feature
                 dataGridViewKHOA.Visible = true;
                 dataGridViewLOP.Enabled = false;
                 dataGridViewLOP.Enabled = false;
-                
+
                 panelKhoa.Visible = true;
                 panelLop.Visible = false;
                 LoadDataIntoDataGridView("KHOA", dataGridViewKHOA);
@@ -484,6 +795,7 @@ namespace CSDLPT.feature
                 BindingTextKHOA(dataGridViewKHOA);
                 BindingTextLOP(dataGridViewLOP);
                 LoadDataIntoComboBoxMAKH_LOP();
+                checkUnRedoKHOALOP();
             }
             else //LOP
             {
@@ -495,7 +807,7 @@ namespace CSDLPT.feature
                 dataGridViewKHOA.Visible = false;
                 dataGridViewLOP.Enabled = true;
                 dataGridViewLOP.Enabled = true;
-                
+
                 panelKhoa.Visible = false;
                 panelLop.Visible = true;
                 LoadDataIntoDataGridView("KHOA", dataGridViewKHOA);
@@ -503,6 +815,8 @@ namespace CSDLPT.feature
                 BindingTextKHOA(dataGridViewKHOA);
                 BindingTextLOP(dataGridViewLOP);
                 LoadDataIntoComboBoxMAKH_LOP();
+                checkUnRedoKHOALOP();
+
             }
         }
 
@@ -646,7 +960,11 @@ namespace CSDLPT.feature
             btnSave_Add_KHOALOP.Visible = true;
             btnSua_KhoaLop.Enabled = false;
             btnXoa_KhoaLop.Enabled = false;
+            btnThoatKHOALOP.Visible = true;
+            btnThoatKHOALOP.Enabled = true;
 
+            btnKhoiPhuc_KhoaLop.Enabled = false;
+            btnRedo_KhoaLop.Enabled=false;
 
             if (ComboBoxKhoaLop.SelectedIndex.ToString() == "0")
             {
@@ -692,6 +1010,10 @@ namespace CSDLPT.feature
                             if (rowsAffected > 0)
                             {
                                 MessageBox.Show("Thêm dữ liệu thành công!");
+
+                                ThongTinKhoa info = new ThongTinKhoa(makhoa, tenkhoa,coso,"them");
+                                undoKHOAStack.Push(info);
+                                checkUnRedoKHOALOP();
                             }
                             else
                             {
@@ -707,12 +1029,14 @@ namespace CSDLPT.feature
                     BindingTextKHOA(dataGridViewKHOA);
                     btnSave_Add_KHOALOP.Visible = false;
                     btnThem_KhoaLop.Visible = true;
+                    btnThoatKHOALOP.Visible = false;
                     ComboBoxKhoaLop.Enabled = true;
                     textBoxMaKhoa_Khoa.ReadOnly = true;
                     textBoxTenKhoa.ReadOnly = true;
                     textBoxMaLop.ReadOnly = true;
                     textBoxTenLop.ReadOnly = true;
                     dataGridViewKHOA.Enabled = true;
+                    checkUnRedoKHOALOP();
                 }
                 else
                 {
@@ -746,6 +1070,10 @@ namespace CSDLPT.feature
                                 if (rowsAffected > 0)
                                 {
                                     MessageBox.Show("Thêm dữ liệu thành công!");
+
+                                    ThongTinLop info = new ThongTinLop(malop, tenlop, makhoa_lop, "them");
+                                    undoLOPStack.Push(info);
+                                    checkUnRedoKHOALOP();
                                 }
                                 else
                                 {
@@ -762,12 +1090,15 @@ namespace CSDLPT.feature
                         BindingTextLOP(dataGridViewLOP);
                         btnSave_Add_KHOALOP.Visible = false;
                         btnThem_KhoaLop.Visible = true;
+                        btnThoatKHOALOP.Visible = false;
                         ComboBoxKhoaLop.Enabled = true;
                         textBoxMaKhoa_Khoa.ReadOnly = true;
                         textBoxTenKhoa.ReadOnly = true;
                         textBoxMaLop.ReadOnly = true;
                         textBoxTenLop.ReadOnly = true;
                         dataGridViewLOP.Enabled = true;
+                        checkUnRedoKHOALOP();
+
                     }
                     else
                     {
@@ -794,6 +1125,8 @@ namespace CSDLPT.feature
                 {
                     int selectedRowIndex = dataGridViewKHOA.SelectedCells[0].RowIndex;
                     string primaryKeyValue = dataGridViewKHOA.Rows[selectedRowIndex].Cells[0].Value.ToString();
+                    string tenkhoa = textBoxTenKhoa.Text;
+                    string macs = comboBoxCOSO.Text;
                     if (CHECKSP_KiemTraKhoa_TonTai_GV_LOP(primaryKeyValue) == true)
                     {
                         if (result == DialogResult.Yes)
@@ -809,6 +1142,11 @@ namespace CSDLPT.feature
                                     LoadDataIntoDataGridView("KHOA", dataGridViewKHOA);
                                     BindingTextKHOA(dataGridViewKHOA);
                                     MessageBox.Show("Xóa hàng thành công!");
+
+                                    ThongTinKhoa info = new ThongTinKhoa(primaryKeyValue, tenkhoa, macs, "xoa");
+                                    undoKHOAStack.Push(info);
+                                    checkUnRedoKHOALOP();
+
                                 }
                                 else
                                 {
@@ -833,6 +1171,8 @@ namespace CSDLPT.feature
                 {
                     int selectedRowIndex = dataGridViewLOP.SelectedCells[0].RowIndex;
                     string primaryKeyValue = dataGridViewLOP.Rows[selectedRowIndex].Cells[0].Value.ToString();
+                    string tenlop = textBoxTenLop.Text;
+                    string maKH = comboBoxMaKhoa_Lop.Text;
                     if (CHECKSP_KiemTraLop_TonTaiSV(primaryKeyValue) == true)
                     {
                         string deleteQuery = "DELETE FROM LOP WHERE MALOP = @MALOP";
@@ -846,6 +1186,11 @@ namespace CSDLPT.feature
                                 LoadDataIntoDataGridView("LOP", dataGridViewLOP);
                                 BindingTextLOP(dataGridViewLOP);
                                 MessageBox.Show("Xóa hàng thành công!");
+
+                                ThongTinLop info = new ThongTinLop(primaryKeyValue, tenlop, maKH, "xoa");
+                                undoLOPStack.Push(info);
+                                checkUnRedoKHOALOP();
+
                             }
                             else
                             {
@@ -919,6 +1264,12 @@ namespace CSDLPT.feature
             btnSua_KhoaLop.Visible = false;
             btnSave_Change_KHOALOP.Visible = true;
             ComboBoxKhoaLop.Enabled = false;
+            btnThoatKHOALOP.Visible = true;
+            btnThoatKHOALOP.Enabled = true;
+
+            btnKhoiPhuc_KhoaLop.Enabled = false;
+            btnRedo_KhoaLop.Enabled =false;
+
             if (ComboBoxKhoaLop.SelectedIndex.ToString() == "0")
             {
                 textBoxMaKhoa_Khoa.ReadOnly = true;
@@ -938,22 +1289,28 @@ namespace CSDLPT.feature
         {
             if (ComboBoxKhoaLop.SelectedIndex.ToString() == "0")
             {
+                string makh = textBoxMaKhoa_Khoa.Text;
                 string tenkhoa = textBoxTenKhoa.Text;
+                string macs = comboBoxCOSO.Text;
                 if (CheckRegexName(textBoxTenKhoa.Text) == true)
                 {
                     if (CheckSP_KhoaTonTai("null", tenkhoa))
                     {
+                        ThongTinKhoa infoBeforeUpdate = GetKhoaInfoFromDatabase(makh);
+
                         string sqlQuery = "UPDATE KHOA SET TENKH = @InputData2 WHERE MAKH = @InputData1";
                         using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
                         {
-                            command.Parameters.AddWithValue("@InputData1", textBoxMaKhoa_Khoa.Text);
-                            command.Parameters.AddWithValue("@InputData2", textBoxTenKhoa.Text);
+                            command.Parameters.AddWithValue("@InputData1", makh);
+                            command.Parameters.AddWithValue("@InputData2", tenkhoa);
                             int rowsAffected = command.ExecuteNonQuery();
                             try
                             {
                                 if (rowsAffected > 0)
                                 {
                                     MessageBox.Show("Chỉnh sửa dữ liệu thành công!");
+                                    undoKHOAStack.Push(infoBeforeUpdate);
+                                    checkUnRedoKHOALOP();
                                 }
                                 else
                                 {
@@ -978,6 +1335,10 @@ namespace CSDLPT.feature
                     btnSave_Change_KHOALOP.Visible = false;
                     btnSua_KhoaLop.Visible = true;
                     btnThem_KhoaLop.Enabled = true;
+                    btnThoatKHOALOP.Visible = false;
+                    checkUnRedoKHOALOP();
+
+
                 }
                 else
                 {
@@ -986,6 +1347,7 @@ namespace CSDLPT.feature
             }
             else
             {
+                string malop = textBoxMaLop.Text;
                 string makhoa_lop = comboBoxMaKhoa_Lop.SelectedItem.ToString();
                 string tenlop = textBoxTenLop.Text;
                 if (CheckRegexName(tenlop) == true)
@@ -998,11 +1360,13 @@ namespace CSDLPT.feature
                         }
                         if (CheckSP_LopTonTai("null", tenlop))
                         {
+                            ThongTinLop infoBeforeUpdate = GetLopInfoFromDatabase(malop);
+
                             string sqlQuery = "UPDATE LOP SET TENLOP = @InputData2, MAKH = @InputData3 WHERE MALOP = @InputData1";
                             using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
                             {
-                                command.Parameters.AddWithValue("@InputData1", textBoxMaLop.Text);
-                                command.Parameters.AddWithValue("@InputData2", textBoxTenLop.Text);
+                                command.Parameters.AddWithValue("@InputData1", malop);
+                                command.Parameters.AddWithValue("@InputData2", tenlop);
                                 command.Parameters.AddWithValue("@InputData3", makhoa_lop);
                                 int rowsAffected = command.ExecuteNonQuery();
                                 try
@@ -1010,6 +1374,8 @@ namespace CSDLPT.feature
                                     if (rowsAffected > 0)
                                     {
                                         MessageBox.Show("Chỉnh sửa dữ liệu thành công!");
+                                        undoLOPStack.Push(infoBeforeUpdate);
+                                        checkUnRedoKHOALOP();
                                     }
                                     else
                                     {
@@ -1039,6 +1405,9 @@ namespace CSDLPT.feature
                     btnSave_Change_KHOALOP.Visible = false;
                     btnSua_KhoaLop.Visible = true;
                     btnThem_KhoaLop.Enabled = true;
+                    btnThoatKHOALOP.Visible = false;
+                    checkUnRedoKHOALOP();
+
 
                 }
                 else
@@ -1047,6 +1416,308 @@ namespace CSDLPT.feature
 
             }
         }
+
+        //BUTTON THOAT KHOA LOP
+        private void btnThoatKHOALOP_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn thoát?", "Xác nhận thoát", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                btnThem_KhoaLop.Enabled = true;
+                btnThem_KhoaLop.Visible = true;
+                btnSave_Add_KHOALOP.Visible = false;
+
+                btnXoa_KhoaLop.Enabled = false;
+                btnXoa_KhoaLop.Visible = true;
+
+                btnSua_KhoaLop.Visible = true;
+                btnSua_KhoaLop.Enabled = false;
+                btnSave_Change_KHOALOP.Visible = false;
+
+                ComboBoxKhoaLop.Enabled = true;
+                btnThoatKHOALOP.Visible = false;
+                if (ComboBoxKhoaLop.SelectedIndex.ToString() == "0")
+                {
+                    textBoxMaKhoa_Khoa.ReadOnly = true;
+                    textBoxTenKhoa.ReadOnly = true;
+                    dataGridViewKHOA.Enabled = true;
+                    LoadDataIntoDataGridView("KHOA", dataGridViewKHOA);
+                    BindingTextKHOA(dataGridViewKHOA);
+                }
+                else
+                {
+                    textBoxMaLop.ReadOnly = true;
+                    textBoxTenLop.ReadOnly = true;
+                    dataGridViewLOP.Enabled = true;
+                    LoadDataIntoDataGridView("LOP", dataGridViewLOP);
+                    BindingTextLOP(dataGridViewLOP);
+                }
+                checkUnRedoKHOALOP();
+            }
+        }
+
+        //BUTTON UNDO KHOA LOP
+        private void btnKhoiPhuc_KhoaLop_Click(object sender, EventArgs e)
+        {
+            string selectedString = ComboBoxKhoaLop.SelectedIndex.ToString();
+            if (selectedString == "0") //KHOA
+            {
+                if (undoKHOAStack.Count > 0)
+                {
+                    ThongTinKhoa temp = undoKHOAStack.Pop();
+
+                    if (temp.TrangThai == "xoa")
+                    {
+                        themKhoa(temp);
+                        temp.TrangThai = "them";
+                        redoKHOAStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "them")
+                    {
+                        xoaKhoa(temp);
+                        temp.TrangThai = "xoa";
+                        redoKHOAStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "chinhsua")
+                    {
+                        redoKHOAStack.Push(GetKhoaInfoFromDatabase((temp.maKH)));
+                        chinhSuaKhoa(temp);
+                    }
+                }
+                LoadDataIntoDataGridView("KHOA", dataGridViewKHOA);
+                BindingTextKHOA(dataGridViewKHOA);
+            }
+            else
+            {
+                if (undoLOPStack.Count > 0)
+                {
+                    ThongTinLop temp = undoLOPStack.Pop();
+
+                    if (temp.TrangThai == "xoa")
+                    {
+                        themLop(temp);
+                        temp.TrangThai = "them";
+                        redoLOPStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "them")
+                    {
+                        xoaLop(temp);
+                        temp.TrangThai = "xoa";
+                        redoLOPStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "chinhsua")
+                    {
+                        redoLOPStack.Push(GetLopInfoFromDatabase((temp.maLOP)));
+                        chinhSuaLop(temp);
+                    }
+                }
+                LoadDataIntoDataGridView("LOP", dataGridViewLOP);
+                BindingTextLOP(dataGridViewLOP);
+            }
+            checkUnRedoKHOALOP();
+        }
+
+        //BUTTON REDO KHOA LOP
+        private void btnRedo_KhoaLop_Click(object sender, EventArgs e)
+        {
+        string selectedString = ComboBoxKhoaLop.SelectedIndex.ToString();
+            if (selectedString == "0") //KHOA
+            {
+                if (redoKHOAStack.Count > 0)
+                {
+                    ThongTinKhoa temp = redoKHOAStack.Pop();
+
+                    if (temp.TrangThai == "xoa")
+                    {
+                        themKhoa(temp);
+                        temp.TrangThai = "them";
+                        undoKHOAStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "them")
+                    {
+                        xoaKhoa(temp);
+                        temp.TrangThai = "xoa";
+                        undoKHOAStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "chinhsua")
+                    {
+                        undoKHOAStack.Push(GetKhoaInfoFromDatabase((temp.maKH)));
+                        chinhSuaKhoa(temp);
+                    }
+                }
+                LoadDataIntoDataGridView("KHOA", dataGridViewKHOA);
+                BindingTextKHOA(dataGridViewKHOA);
+            }
+            else
+            {
+                if (redoLOPStack.Count > 0)
+                {
+                    ThongTinLop temp = redoLOPStack.Pop();
+
+                    if (temp.TrangThai == "xoa")
+                    {
+                        themLop(temp);
+                        temp.TrangThai = "them";
+                        undoLOPStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "them")
+                    {
+                        xoaLop(temp);
+                        temp.TrangThai = "xoa";
+                        undoLOPStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "chinhsua")
+                    {
+                        undoLOPStack.Push(GetLopInfoFromDatabase((temp.maLOP)));
+                        chinhSuaLop(temp);
+                    }
+                }
+                LoadDataIntoDataGridView("LOP", dataGridViewLOP);
+                BindingTextLOP(dataGridViewLOP);
+            }
+            checkUnRedoKHOALOP();
+        }
+
+        private void themKhoa(ThongTinKhoa info)
+        {
+            string sqlQuery = "INSERT INTO KHOA (MAKH, TENKH, MACS) VALUES (@maKH, @tenKH, @maCS);";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@maKH", info.maKH);
+                command.Parameters.AddWithValue("@tenKH", info.tenKH);
+                command.Parameters.AddWithValue("@maCS", info.maCS);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private void xoaKhoa(ThongTinKhoa info)
+        {
+            string sqlQuery = "DELETE FROM KHOA WHERE MAKH = @maKH;";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@maKH", info.maKH);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private void chinhSuaKhoa(ThongTinKhoa info)
+        {
+            string sqlQuery = "UPDATE KHOA SET TENKH = @tenKH, MACS = @maCS WHERE MAKH = @maKH;";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@maKH", info.maKH);
+                command.Parameters.AddWithValue("@tenKH", info.tenKH);
+                command.Parameters.AddWithValue("@maCS", info.maCS);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        ThongTinKhoa GetKhoaInfoFromDatabase(string maKH)
+        {
+            using (SqlCommand command = new SqlCommand("SELECT MAKH, TENKH, MACS FROM KHOA WHERE MAKH = @maKH", Program.conn))
+            {
+                command.Parameters.AddWithValue("@maKH", maKH);
+                try
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        string maKHDb = reader["MAKH"].ToString();
+                        string tenKH = reader["TENKH"].ToString();
+                        string maCS = reader["MACS"].ToString();
+
+                        reader.Close();
+
+                        ThongTinKhoa info = new ThongTinKhoa(maKHDb, tenKH, maCS, "chinhsua");
+                        return info;
+                    }
+
+                    reader.Close();
+                    return null; // Trả về null nếu không tìm thấy dữ liệu
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: get data from database " + ex.Message);
+                    return null;
+                }
+            }
+        }
+
+
+
+        private void themLop(ThongTinLop info)
+        {
+            string sqlQuery = "INSERT INTO LOP (MALOP, TENLOP, MAKH) VALUES (@maLop, @tenLop, @maKH);";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@maLop", info.maLOP);
+                command.Parameters.AddWithValue("@tenLop", info.tenLOP);
+                command.Parameters.AddWithValue("@maKH", info.maKH);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private void xoaLop(ThongTinLop info)
+        {
+            string sqlQuery = "DELETE FROM LOP WHERE MALOP = @maLop;";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@maLop", info.maLOP);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private void chinhSuaLop(ThongTinLop info)
+        {
+            string sqlQuery = "UPDATE LOP SET TENLOP = @tenLop, MAKH = @maKH WHERE MALOP = @maLop;";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@maLop", info.maLOP);
+                command.Parameters.AddWithValue("@tenLop", info.tenLOP);
+                command.Parameters.AddWithValue("@maKH", info.maKH);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        ThongTinLop GetLopInfoFromDatabase(string maLop)
+        {
+            using (SqlCommand command = new SqlCommand("SELECT MALOP, TENLOP, MAKH FROM LOP WHERE MALOP = @maLop", Program.conn))
+            {
+                command.Parameters.AddWithValue("@maLop", maLop);
+                try
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        string maLopDb = reader["MALOP"].ToString();
+                        string tenLop = reader["TENLOP"].ToString();
+                        string maKH = reader["MAKH"].ToString();
+
+                        reader.Close();
+
+                        ThongTinLop info = new ThongTinLop(maLopDb, tenLop, maKH, "chinhsua");
+                        return info;
+                    }
+
+                    reader.Close();
+                    return null; // Trả về null nếu không tìm thấy dữ liệu
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: get data from database " + ex.Message);
+                    return null;
+                }
+            }
+        }
+
 
 
 
@@ -1124,5 +1795,7 @@ namespace CSDLPT.feature
                 return false;
             }
         }
+
+        
     }
 }

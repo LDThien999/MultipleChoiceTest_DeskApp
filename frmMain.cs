@@ -120,18 +120,8 @@ namespace CSDLPT
                     grbThongTin.BackColor = Color.PeachPuff;
                 }
                  
-                if (Program.role == "GIANGVIEN")
-                {
-                    tsmnuDangKyThi.Enabled = true;
-                    tsmnuThuVienCH.Enabled = true;
-                }
-                else
-                {
-                    tsmnuThuVienCH.Enabled = false;
-                    tsmnuDangKyThi.Enabled = false;
-                }
-                    
-                if(Program.role == "COSO")
+            
+                if(Program.role != "GIANGVIEN")
                 {
                     tsmnuCongViecGiaoVu.Enabled = true;
                     tsmnuQuanLySinhVien.Enabled = true;

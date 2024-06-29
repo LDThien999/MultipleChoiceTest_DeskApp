@@ -16,7 +16,7 @@ namespace TNCSDLPT
         public static SqlConnection conn = new SqlConnection();
         public static String connstr;
 
-        public static String connstr_publisher = @"Data Source=DUONG;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+        public static String connstr_publisher = @"Data Source=LUONGDATTHIEN\SQLSEVER;Initial Catalog=TRACNGHIEM1;Integrated Security=True;Encrypt=False";
 
 
         public static SqlDataReader myReader;
@@ -25,7 +25,7 @@ namespace TNCSDLPT
         public static String loginName = "";
         public static String loginPassword = "";
 
-        public static String database = "TRACNGHIEM";
+        public static String database = "TRACNGHIEM1";
         public static String remoteLogin = "HTKN";
         public static String remotePassword = "123456";
 

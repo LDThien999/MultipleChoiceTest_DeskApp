@@ -93,20 +93,41 @@ namespace CSDLPT
         SqlCommand command;
         void loadData()
         {
-            try
+            if (Program.role == "GIANGVIEN")
             {
-                command = Program.conn.CreateCommand();
-                command.CommandText = "SELECT MAGV,MAMH,MALOP,TRINHDO,NGAYTHI,LAN,SOCAUTHI,THOIGIAN,MAKHOIPHUC FROM GIAOVIEN_DANGKY" +
-                    " where MAGV = '" + Program.userName + "'";
-                adapter.SelectCommand = command;
-                table.Clear();
-                adapter.Fill(table);
-                dtgvShowDangKy.DataSource = table;
+                try
+                {
+                    command = Program.conn.CreateCommand();
+                    command.CommandText = "SELECT MAGV,MAMH,MALOP,TRINHDO,NGAYTHI,LAN,SOCAUTHI,THOIGIAN,MAKHOIPHUC FROM GIAOVIEN_DANGKY" +
+                        " where MAGV = '" + Program.userName + "'";
+                    adapter.SelectCommand = command;
+                    table.Clear();
+                    adapter.Fill(table);
+                    dtgvShowDangKy.DataSource = table;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
-            catch(Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                try
+                {
+                    command = Program.conn.CreateCommand();
+                    command.CommandText = "SELECT MAGV,MAMH,MALOP,TRINHDO,NGAYTHI,LAN,SOCAUTHI,THOIGIAN,MAKHOIPHUC FROM GIAOVIEN_DANGKY" 
+                        ;
+                    adapter.SelectCommand = command;
+                    table.Clear();
+                    adapter.Fill(table);
+                    dtgvShowDangKy.DataSource = table;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             
         }
@@ -174,6 +195,11 @@ namespace CSDLPT
 
         private void frmChuanBiThi_Load(object sender, EventArgs e)
         {
+            if(Program.role != "GIANGVIEN")
+            {
+                panChonLua.Enabled = false;
+                panel1.Enabled = false;
+            }
             // an hien cac chuc nang
             panChonLua.Enabled = false;
             checkUnRedo();

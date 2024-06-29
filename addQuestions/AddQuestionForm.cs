@@ -101,6 +101,11 @@ namespace CSDLPT.addQuestion
 
         private void AddQuestionForm_Load(object sender, EventArgs e)
         {
+            if (Program.role != "GIANGVIEN")
+            {
+                panel1.Enabled = false;
+            }
+
             LoadDataIntoDataGridView("BODE", gridViewCauHoi, maGV);
             BindingText(gridViewCauHoi);
             LoadDataIntoComboBox("BODE", "TRINHDO", cbbTrinhDo);
@@ -141,11 +146,11 @@ namespace CSDLPT.addQuestion
             cbbMaMH.Enabled = false;
             cbbMaMH.SelectedItem = null;
 
-            EnableTextBox(txtNoiDung);
-            EnableTextBox(txtA);
-            EnableTextBox(txtB);
-            EnableTextBox(txtC);
-            EnableTextBox(txtD);
+            txtNoiDung.ReadOnly = true;
+            txtA.ReadOnly = true;
+            txtB.ReadOnly = true;
+            txtC.ReadOnly = true;
+            txtD.ReadOnly = true;
             BindingText(gridViewCauHoi);
 
         }
@@ -153,7 +158,7 @@ namespace CSDLPT.addQuestion
         //CUSTOM TETXBOX
         public void EnableTextBox(System.Windows.Forms.TextBox textBox)
         {
-            textBox.Enabled = false;
+            textBox.ReadOnly = true;
             resetTextbox(textBox);
         }
 
@@ -210,7 +215,14 @@ namespace CSDLPT.addQuestion
             gridview.Columns.Clear();
 
             sqlCommand = Program.conn.CreateCommand();
-            sqlCommand.CommandText = "SELECT * FROM " + selectedTable + " WHERE MAGV = @maGV";
+            if (Program.role != "GIANGVIEN")
+            {
+                sqlCommand.CommandText = "SELECT * FROM " + selectedTable;
+            }
+            else
+            {
+                sqlCommand.CommandText = "SELECT * FROM " + selectedTable + " WHERE MAGV = @maGV";
+            }
             sqlCommand.Parameters.AddWithValue("@maGV", maGV);
             adapter.SelectCommand = sqlCommand;
             DataTable table = new DataTable();
@@ -280,16 +292,18 @@ namespace CSDLPT.addQuestion
             btnXoa.Enabled = false;
             btnXoa.Visible = false;
 
+            btnKhoiPhuc.Enabled = false;
+            btnRedo.Enabled = false;
 
-
-            txtNoiDung.Enabled = true;
             cbbMaMH.Enabled = true;
             cbbTrinhDo.Enabled = true;
             cbbDapAn.Enabled = true;
-            txtA.Enabled = true;
-            txtB.Enabled = true;
-            txtC.Enabled = true;
-            txtD.Enabled = true;
+
+            txtNoiDung.ReadOnly = false;
+            txtA.ReadOnly = false;
+            txtB.ReadOnly = false;
+            txtC.ReadOnly = false;
+            txtD.ReadOnly = false;
 
             cbbTrinhDo.SelectedItem = null;
             cbbDapAn.SelectedItem = null;
@@ -362,14 +376,15 @@ namespace CSDLPT.addQuestion
                 btnXoa.Visible = true;
 
 
-                txtNoiDung.Enabled = false;
                 cbbMaMH.Enabled = false;
                 cbbTrinhDo.Enabled = false;
                 cbbDapAn.Enabled = false;
-                txtA.Enabled = false;
-                txtB.Enabled = false;
-                txtC.Enabled = false;
-                txtD.Enabled = false;
+
+                txtNoiDung.ReadOnly = false;
+                txtA.ReadOnly = false;
+                txtB.ReadOnly = false;
+                txtC.ReadOnly = false;
+                txtD.ReadOnly = false;
 
                 cbbTrinhDo.SelectedItem = null;
                 cbbDapAn.SelectedItem = null;
@@ -413,15 +428,18 @@ namespace CSDLPT.addQuestion
                 btnThoatAdd.Visible = true;
                 btnThoatAdd.Enabled = true;
 
+                btnKhoiPhuc.Enabled = false;
+                btnRedo.Enabled = false;
+
                 cbbTrinhDo.Enabled = true;
                 cbbDapAn.Enabled = true;
                 cbbMaMH.Enabled = true;
 
-                txtNoiDung.Enabled = true;
-                txtA.Enabled = true;
-                txtB.Enabled = true;
-                txtC.Enabled = true;
-                txtD.Enabled = true;
+                txtNoiDung.ReadOnly = false;
+                txtA.ReadOnly = false;
+                txtB.ReadOnly = false;
+                txtC.ReadOnly = false;
+                txtD.ReadOnly = false;
             }
             else
             {
@@ -488,14 +506,15 @@ namespace CSDLPT.addQuestion
                 btnXoa.Visible = true;
 
 
-                txtNoiDung.Enabled = false;
                 cbbMaMH.Enabled = false;
                 cbbTrinhDo.Enabled = false;
                 cbbDapAn.Enabled = false;
-                txtA.Enabled = false;
-                txtB.Enabled = false;
-                txtC.Enabled = false;
-                txtD.Enabled = false;
+
+                txtNoiDung.ReadOnly = true;
+                txtA.ReadOnly = true;
+                txtB.ReadOnly = true;
+                txtC.ReadOnly = true;
+                txtD.ReadOnly = true;
 
                 cbbTrinhDo.SelectedItem = null;
                 cbbDapAn.SelectedItem = null;
@@ -598,6 +617,7 @@ namespace CSDLPT.addQuestion
                     undoStack.Push(info);
 
                     btnChinhSua.Enabled = false;
+                    btnXoa.Enabled = false;
                     cbbTrinhDo.SelectedItem = null;
                     cbbDapAn.SelectedItem = null;
                     cbbMaMH.SelectedItem = null;
@@ -649,11 +669,11 @@ namespace CSDLPT.addQuestion
                 cbbMaMH.SelectedItem = null;
                 cbbMaMH.Enabled = false;
 
-                EnableTextBox(txtNoiDung);
-                EnableTextBox(txtA);
-                EnableTextBox(txtB);
-                EnableTextBox(txtC);
-                EnableTextBox(txtD);
+                txtNoiDung.ReadOnly = true;
+                txtA.ReadOnly = true;
+                txtB.ReadOnly = true;
+                txtC.ReadOnly = true;
+                txtD.ReadOnly = true;
 
                 gridViewCauHoi.Enabled = true;
 
@@ -662,6 +682,7 @@ namespace CSDLPT.addQuestion
                 LoadDataIntoComboBox("BODE", "TRINHDO", cbbTrinhDo);
                 LoadDataIntoComboBox("MONHOC", "MAMH", cbbMaMH);
                 LoadDataIntoComboBox("BODE", "DAP_AN", cbbDapAn);
+                checkUnRedo();
             }
         }
 
