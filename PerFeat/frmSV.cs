@@ -251,6 +251,7 @@ namespace CSDLPT.PerFeat
             if(Program.role == "TRUONG")
             {
                 tsCn.Enabled = false;
+                cbCs.Enabled = false;
                 groupInfo.Enabled = false;
             }else if(Program.role == "COSO")
             {
@@ -261,7 +262,7 @@ namespace CSDLPT.PerFeat
         /**
          * Đây là hàm xử lý chuyển cơ sở khi mà user chọn cơ sở trong combo box cơ sở
          */
-        public void chuyenCoSo()
+        /*public void chuyenCoSo()
         {
             //Nếu không chọn gì thì thôi
             if(cbCs.SelectedValue.ToString() == "System.Data.DataRowView")
@@ -299,11 +300,11 @@ namespace CSDLPT.PerFeat
                 BindingText(dgv);
                 layDSCS();
             }
-        }
+        }*/
 
         private void cbCs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            chuyenCoSo();
+            //chuyenCoSo();
         }
 
         //Kiểm tra các trường nhập liệu

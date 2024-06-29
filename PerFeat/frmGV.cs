@@ -459,6 +459,9 @@ namespace CSDLPT.PerFeat
         {
             tt = "sửa";
 
+            //bật groupbox Info và dataGidView
+            setTb(true);
+
             //set các button
             btnThem.Enabled = false;
             btnXoa.Enabled = false;
@@ -468,9 +471,6 @@ namespace CSDLPT.PerFeat
             btnUn.Enabled = true;
             tbMGV.Enabled = false;
             btnRedo.Enabled = false;
-
-            //bật groupbox Info và dataGidView
-            setTb(true);
 
             //lấy hàng được click
             rowIndex = dgv.CurrentRow.Index;

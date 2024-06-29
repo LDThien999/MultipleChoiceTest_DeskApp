@@ -127,7 +127,7 @@ namespace CSDLPT.ReportTN
                 rP.Add(new ReportParameter("rpParamDateKT", dateKT.Text));
                 rp11.LocalReport.SetParameters(rP);
                 SqlCommand command = new SqlCommand();
-                command.CommandText = "EXEC LINK1.TRACNGHIEM.DBO.sp_XemDSDangKy '" + dateBD.Text + "', '" + dateKT.Text + "'";
+                command.CommandText = "EXEC LINK1.TRACNGHIEM1.DBO.sp_XemDSDangKy '" + dateBD.Text + "', '" + dateKT.Text + "'";
                 // command.CommandText = "EXEC sp_XemDSDangKy '2024-04-01','2024-04-03'";
                 command.Connection = Program.conn;
                 System.Data.DataSet ds = new System.Data.DataSet();

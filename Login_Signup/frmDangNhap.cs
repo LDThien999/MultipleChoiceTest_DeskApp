@@ -159,12 +159,21 @@ namespace CSDLPT
                     Program.brand2 = cmbCoso.Text;
                     Program.currentLogin = Program.loginName;
                     Program.currentPassword = Program.loginPassword;
-                    String statement = "EXEC sp_LayThongTinGiaoVien '" + Program.loginName + "'";
-                    Program.myReader = Program.ExecSqlDataReader(statement);
-                    if (Program.myReader == null)
-                        return;
+                    try
+                    {
+                        String statement = "EXEC sp_LayThongTinGiaoVien '" + Program.loginName + "'";
+                        Program.myReader = Program.ExecSqlDataReader(statement);
+                        if (Program.myReader == null)
+                            return;
 
-                    Program.myReader.Read();
+                        Program.myReader.Read();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Loi sp!!!" + ex.Message, "Thông báo", MessageBoxButtons.OK);
+                        return;
+                    }
+                    
                     Program.userName = Program.myReader.GetString(0);// lấy userName
                     if (Convert.IsDBNull(Program.userName))
                     {

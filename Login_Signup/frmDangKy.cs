@@ -26,6 +26,7 @@ namespace CSDLPT.Login_Signup
         String ten;
         void loadData()
         {
+           
             if(radGiangVien.Checked == true)
             {
                 try
@@ -65,7 +66,12 @@ namespace CSDLPT.Login_Signup
 
             private void frmDangKy_Load(object sender, EventArgs e)
             {
-                if(radGiangVien.Checked == false && radSinhVien .Checked == false)
+                if (Program.role == "TRUONG")
+                {
+                    radCoso.Enabled = false;
+                    radTruong.Checked = true;
+                }
+            if (radGiangVien.Checked == false && radSinhVien .Checked == false)
             {
                 btnKiemTra.Visible = false;
                 btnGoiY.Visible = false;
@@ -307,7 +313,8 @@ namespace CSDLPT.Login_Signup
                 try
                 {
                     SqlConnection connMainCS1 = new SqlConnection();
-                    connMainCS1.ConnectionString = @"Data Source=DUONG\MSSQLSERVER01;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+                    connMainCS1.ConnectionString = @"Data Source=LUONGDATTHIEN\COSO1;Initial Catalog=TRACNGHIEM1;User ID=" + Program.loginName + ";password=" +
+                        Program.loginPassword;
                     if (connMainCS1.State == ConnectionState.Closed) connMainCS1.Open();
                     command = connMainCS1.CreateCommand();
                     command.CommandText = "exec sp_TaoTaiKhoan '" + txtLoginnam.Text + "', '" + txtMATKHAU.Text + "', '" + txtUserName_MaGV.Text
@@ -318,7 +325,7 @@ namespace CSDLPT.Login_Signup
 
 
                     SqlConnection connMainCS2 = new SqlConnection();
-                    connMainCS2.ConnectionString = @"Data Source=DUONG\MSSQLSERVER02;Initial Catalog=TRACNGHIEM;User ID="+Program.loginName+";password="+
+                    connMainCS2.ConnectionString = @"Data Source=LUONGDATTHIEN\COSO2;Initial Catalog=TRACNGHIEM1;User ID="+Program.loginName+";password="+
                         Program.loginPassword;
                     if (connMainCS2.State == ConnectionState.Closed) connMainCS2.Open();
                     command = connMainCS2.CreateCommand();

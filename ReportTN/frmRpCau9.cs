@@ -73,7 +73,7 @@ namespace CSDLPT.ReportTN
             else
             {
                 SqlCommand command = new SqlCommand();
-                command.CommandText = "EXEC LINK0.TRACNGHIEM.DBO.sp_GetBaoCaoTheoSV '" + txtMaSV.Text + "', '" + cmbMonhoc.Text + "', '" + cmbLan.Text + "'";
+                command.CommandText = "EXEC LINK0.TRACNGHIEM1.DBO.sp_GetBaoCaoTheoSV '" + txtMaSV.Text + "', '" + cmbMonhoc.Text + "', '" + cmbLan.Text + "'";
                 command.Connection = Program.conn;
                 System.Data.DataSet ds = new System.Data.DataSet();
                 SqlDataAdapter dap = new SqlDataAdapter(command);

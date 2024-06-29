@@ -208,7 +208,7 @@ namespace CSDLPT.feature
         //Regex
         private bool CheckRegexID(string input)
         {
-            string pattern = @"^[a-zA-Z0-9]+$";
+            string pattern = @"^[a-zA-Z0-9-_]+$";
             if (Regex.IsMatch(input, pattern))
             {
                 return true;
@@ -352,8 +352,8 @@ namespace CSDLPT.feature
                 BindingTextMONHOC(dataGridView1);
                 btnSave_Add.Visible = false;
                 btnThemMon.Visible = true;
-                btnChinhSua.Enabled = true;
-                btnXoa.Enabled = true;
+                btnChinhSua.Enabled = false;
+                btnXoa.Enabled = false;
                 dataGridView1.Enabled = true;
                 txtMaH.ReadOnly = true;
                 textBoxTenMon.ReadOnly = true;
@@ -423,6 +423,8 @@ namespace CSDLPT.feature
             DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn thoát?", "Xác nhận thoát", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
+                btnThoatAdd.Visible = false;
+
                 btnThemMon.Visible = true;
                 btnThemMon.Enabled = true;
                 btnSave_Add.Visible = false;
@@ -500,7 +502,9 @@ namespace CSDLPT.feature
                 BindingTextMONHOC(dataGridView1);
                 dataGridView1.Enabled = true;
                 btnChinhSua.Visible = true;
+                btnChinhSua.Enabled = false;
                 btnSave.Visible = false;
+                btnXoa.Enabled = false;
                 btnThemMon.Enabled = true;
                 textBoxTenMon.ReadOnly = true;
                 btnThoatAdd.Visible = false;
@@ -1029,8 +1033,17 @@ namespace CSDLPT.feature
                     BindingTextKHOA(dataGridViewKHOA);
                     btnSave_Add_KHOALOP.Visible = false;
                     btnThem_KhoaLop.Visible = true;
+                    btnThem_KhoaLop.Enabled = true;
+
+                    btnXoa_KhoaLop.Visible = true;
+                    btnXoa_KhoaLop.Enabled = false;
+
+                    btnSua_KhoaLop.Visible = true;
+                    btnSua_KhoaLop.Enabled = false;
                     btnThoatKHOALOP.Visible = false;
+
                     ComboBoxKhoaLop.Enabled = true;
+
                     textBoxMaKhoa_Khoa.ReadOnly = true;
                     textBoxTenKhoa.ReadOnly = true;
                     textBoxMaLop.ReadOnly = true;
@@ -1047,12 +1060,14 @@ namespace CSDLPT.feature
             {
                 string malop = textBoxMaLop.Text;
                 string tenlop = textBoxTenLop.Text;
-                string makhoa_lop = comboBoxMaKhoa_Lop.SelectedItem.ToString();
 
                 if (CheckRegexID(malop) == true
                     && CheckRegexName(tenlop) == true
-                    && malop.Length <= 15)
+                    && malop.Length <= 15
+                    && comboBoxMaKhoa_Lop.SelectedIndex>=0)
                 {
+                    string makhoa_lop = comboBoxMaKhoa_Lop.SelectedItem.ToString();
+
                     if (CheckSP_Lop_TonTaiKhoa(makhoa_lop) == true)
                     {
 
@@ -1090,7 +1105,15 @@ namespace CSDLPT.feature
                         BindingTextLOP(dataGridViewLOP);
                         btnSave_Add_KHOALOP.Visible = false;
                         btnThem_KhoaLop.Visible = true;
+                        btnThem_KhoaLop.Enabled = true;
+
+                        btnXoa_KhoaLop.Visible = true;
+                        btnXoa_KhoaLop.Enabled = false;
+
+                        btnSua_KhoaLop.Visible = true;
+                        btnSua_KhoaLop.Enabled = false;
                         btnThoatKHOALOP.Visible = false;
+
                         ComboBoxKhoaLop.Enabled = true;
                         textBoxMaKhoa_Khoa.ReadOnly = true;
                         textBoxTenKhoa.ReadOnly = true;
@@ -1208,6 +1231,8 @@ namespace CSDLPT.feature
                     }
                 }
             }
+            btnSua_KhoaLop.Enabled = false;
+            btnXoa_KhoaLop.Enabled=false;
         }
 
 
@@ -1294,7 +1319,7 @@ namespace CSDLPT.feature
                 string macs = comboBoxCOSO.Text;
                 if (CheckRegexName(textBoxTenKhoa.Text) == true)
                 {
-                    if (CheckSP_KhoaTonTai("null", tenkhoa))
+                    if (CheckSP_KhoaTonTai(" ", tenkhoa))
                     {
                         ThongTinKhoa infoBeforeUpdate = GetKhoaInfoFromDatabase(makh);
 
@@ -1336,6 +1361,8 @@ namespace CSDLPT.feature
                     btnSua_KhoaLop.Visible = true;
                     btnThem_KhoaLop.Enabled = true;
                     btnThoatKHOALOP.Visible = false;
+                    btnSua_KhoaLop.Enabled = false;
+                    btnXoa_KhoaLop.Enabled = false;
                     checkUnRedoKHOALOP();
 
 
@@ -1356,9 +1383,9 @@ namespace CSDLPT.feature
                     {
                         if (tenlop == originalTextTenLop)
                         {
-                            tenlop = "null";
+                            tenlop = " ";
                         }
-                        if (CheckSP_LopTonTai("null", tenlop))
+                        if (CheckSP_LopTonTai(" ", tenlop))
                         {
                             ThongTinLop infoBeforeUpdate = GetLopInfoFromDatabase(malop);
 
@@ -1406,6 +1433,8 @@ namespace CSDLPT.feature
                     btnSua_KhoaLop.Visible = true;
                     btnThem_KhoaLop.Enabled = true;
                     btnThoatKHOALOP.Visible = false;
+                    btnSua_KhoaLop.Enabled = false;
+                    btnXoa_KhoaLop.Enabled = false;
                     checkUnRedoKHOALOP();
 
 
@@ -1427,8 +1456,8 @@ namespace CSDLPT.feature
                 btnThem_KhoaLop.Visible = true;
                 btnSave_Add_KHOALOP.Visible = false;
 
-                btnXoa_KhoaLop.Enabled = false;
                 btnXoa_KhoaLop.Visible = true;
+                btnXoa_KhoaLop.Enabled = false;
 
                 btnSua_KhoaLop.Visible = true;
                 btnSua_KhoaLop.Enabled = false;
@@ -1782,17 +1811,18 @@ namespace CSDLPT.feature
 
 
                 // trả về 1: đã tồn tại, trả về 0: có thể thêm
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (reader.GetString(0) == "0")
+                    if (reader.Read())
                     {
-                        reader.Close();
-                        return true;
+                        return reader.GetString(0) == "0";
+                    }
+                    else
+                    {
+                        // Nếu không có hàng nào được trả về, xử lý trường hợp này
+                        throw new Exception("Không có dữ liệu được trả về từ stored procedure.");
                     }
                 }
-                reader.Close();
-                return false;
             }
         }
 

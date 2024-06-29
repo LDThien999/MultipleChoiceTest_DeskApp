@@ -209,7 +209,8 @@ namespace CSDLPT
             btnOutChinhSua.Visible = false;
             pictureBox1.Visible = false;
             btnDangKyThi.Visible = false;
-
+            btnTienHanhChinhSua.Enabled = false;
+            btnXoa.Enabled = false;
             picOut.Visible = false;
             btnThoatAdd.Visible = false;
             // cho thong tin giang vien vao grpbox thong tin
@@ -350,6 +351,8 @@ namespace CSDLPT
                         btnRedo.Enabled = true;
                         dtgvShowDangKy.Enabled = true;
                         panChonLua.Enabled = false;
+                        btnTienHanhChinhSua.Enabled = false;
+                        btnXoa.Enabled = false;
                         loadData();
                         checkUnRedo();
                     }
@@ -369,6 +372,8 @@ namespace CSDLPT
             cmbMonThi.Enabled = false;
             cmbLanThi.Enabled = false;
             cmbLopThi.Enabled = false;
+            btnTienHanhChinhSua.Enabled = true;
+            btnXoa.Enabled = true;
             int vitri;
             vitri = dtgvShowDangKy.CurrentRow.Index;
             cmbMonThi.Text = dtgvShowDangKy.Rows[vitri].Cells[1].Value.ToString();
@@ -419,6 +424,8 @@ namespace CSDLPT
                         redoStack.Clear();
                         checkUnRedo();
                         panChonLua.Enabled = false;
+                        btnTienHanhChinhSua.Enabled = false;
+                        btnXoa.Enabled = false;
 
                     }
                     catch (Exception ex)
@@ -539,7 +546,9 @@ namespace CSDLPT
                             loadData();
                             checkUnRedo();
                             panChonLua.Enabled = false;
-                        }
+                            btnTienHanhChinhSua.Enabled = false;
+                            btnXoa.Enabled = false;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -623,6 +632,8 @@ namespace CSDLPT
             cmbTrinhDo.Text = "";
             txtSoCH.Text = "";
             txtThoiGian.Text = "";
+            btnTienHanhChinhSua.Enabled = false;
+            btnXoa.Enabled = false;
         }
 
         private void btnTienHanhChinhSua_Click(object sender, EventArgs e)
@@ -669,6 +680,8 @@ namespace CSDLPT
             btnTienHanhChinhSua.Visible = true;
             btnKhoiPhuc.Enabled = true;
             btnRedo.Enabled = true;
+            btnTienHanhChinhSua.Enabled = false;
+            btnXoa.Enabled = false;
 
 
             //clear het cac box
@@ -846,15 +859,18 @@ namespace CSDLPT
 
         private void dtgvShowDangKy_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Program.myReader = Program.ExecSqlDataReader("select MADK FROM GIAOVIEN_DANGKY WHERE MALOP='"+cmbLopThi.Text+"' AND MAMH='"
-                + cmbMonThi.Text +"' AND LAN='"+cmbLanThi.Text+"'" );
-            if (Program.myReader == null)
-                return;
-            Program.myReader.Read();
-            Program.maDe = Program.myReader.GetInt32(0);
-            Program.myReader.Close();
-            frmLamBaiThi f = new frmLamBaiThi();   
-            f.ShowDialog();
+            if (Program.role == "GIANGVIEN")
+            {
+                Program.myReader = Program.ExecSqlDataReader("select MADK FROM GIAOVIEN_DANGKY WHERE MALOP='" + cmbLopThi.Text + "' AND MAMH='"
+                    + cmbMonThi.Text + "' AND LAN='" + cmbLanThi.Text + "'");
+                if (Program.myReader == null)
+                    return;
+                Program.myReader.Read();
+                Program.maDe = Program.myReader.GetInt32(0);
+                Program.myReader.Close();
+                frmLamBaiThi f = new frmLamBaiThi();
+                f.ShowDialog();
+            }
         }
     }
 }

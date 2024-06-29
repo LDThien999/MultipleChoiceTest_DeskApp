@@ -321,16 +321,20 @@ namespace CSDLPT.addQuestion
         private void btnSaveAdd_Click(object sender, EventArgs e)
         {
             string noidung = txtNoiDung.Text;
-            string maMH = cbbMaMH.SelectedItem.ToString();
-            string trinhdo = cbbTrinhDo.SelectedItem.ToString();
-            string dapan = cbbDapAn.SelectedItem.ToString();
             string a = txtA.Text;
             string b = txtB.Text;
             string c = txtC.Text;
             string d = txtD.Text;
 
-            if (CheckTextBox(noidung) && CheckTextBox(a) && CheckTextBox(b) && CheckTextBox(c) && CheckTextBox(d))
+            if (CheckTextBox(noidung) && CheckTextBox(a) && CheckTextBox(b)
+                && CheckTextBox(c) && CheckTextBox(d)
+                && cbbDapAn.SelectedIndex>=0 && cbbMaMH.SelectedIndex>=0
+                && cbbTrinhDo.SelectedIndex>=0)
             {
+                string maMH = cbbMaMH.SelectedItem.ToString();
+                string trinhdo = cbbTrinhDo.SelectedItem.ToString();
+                string dapan = cbbDapAn.SelectedItem.ToString();
+
                 string sqlQuery = "INSERT INTO BODE (MAMH, TRINHDO, NOIDUNG, A, B, C, D, DAP_AN, MAGV) " +
                               "VALUES (@ip1, @ip2, @ip3, @ip4, @ip5, @ip6, @ip7, @ip8, @ip9); " +
                               "SELECT SCOPE_IDENTITY();";
@@ -450,17 +454,20 @@ namespace CSDLPT.addQuestion
         private void btnSaveChange_Click(object sender, EventArgs e)
         {
             string noidung = txtNoiDung.Text;
-            string maMH = cbbMaMH.SelectedItem.ToString();
-            string trinhdo = cbbTrinhDo.SelectedItem.ToString();
-            string dapan = cbbDapAn.SelectedItem.ToString();
             string a = txtA.Text;
             string b = txtB.Text;
             string c = txtC.Text;
             string d = txtD.Text;
 
             if (CheckTextBox(noidung) && CheckTextBox(a) && CheckTextBox(b)
-                && CheckTextBox(c) && CheckTextBox(d))
+                && CheckTextBox(c) && CheckTextBox(d)
+                && cbbDapAn.SelectedIndex >= 0 && cbbMaMH.SelectedIndex >= 0
+                && cbbTrinhDo.SelectedIndex >= 0)
             {
+                string maMH = cbbMaMH.SelectedItem.ToString();
+                string trinhdo = cbbTrinhDo.SelectedItem.ToString();
+                string dapan = cbbDapAn.SelectedItem.ToString();
+
                 DataGridViewRow selectedRow = gridViewCauHoi.SelectedRows[0];
                 int cauhoi = Convert.ToInt32(selectedRow.Cells[0].Value);
 

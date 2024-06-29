@@ -581,7 +581,7 @@ namespace CSDLPT.thi_dangkythi
             }
         }
 
-        void ghiDiemVaoDataBase(float diem)
+        void ghiDiemVaoDataBase(double diem)
         {
             SqlCommand command = new SqlCommand();
             command = Program.conn.CreateCommand();
@@ -678,11 +678,11 @@ namespace CSDLPT.thi_dangkythi
 
         }
 
-        private float tinhDiem()
+        private double tinhDiem()
         {
-            float diem = 0;
+            double diem = 0;
             string tmp;
-            float diemCoban = ((float)10 / (float)Program.soCauHoi);
+            double diemCoban = ((double)10 / (double)Program.soCauHoi);
             foreach(CauHoi i in deThi)
             {
                 tmp = "";
@@ -697,6 +697,7 @@ namespace CSDLPT.thi_dangkythi
                 if (i.dapAn == tmp)
                     diem = diem + diemCoban;
             }
+            diem = Math.Round(diem,2);
             return diem;
         }
         //void ghiDiemVaoDataBase()

@@ -110,6 +110,7 @@ namespace CSDLPT
                     picStudent.Visible = true;
                     picTeacher.Visible = false;
                     grbThongTin.BackColor = Color.LemonChiffon;
+                    tsmnuCongViecGiaoVu.Enabled = false;
                 }
                 else
                 {
@@ -118,6 +119,7 @@ namespace CSDLPT
                     tslblThi.Enabled = false;
                     btnLamBaiThi.Enabled = false;
                     grbThongTin.BackColor = Color.PeachPuff;
+                    tsmnuCongViecGiaoVu.Enabled = true;
                 }
                  
             
@@ -370,9 +372,9 @@ namespace CSDLPT
             {
                 SqlConnection connMainCS = new SqlConnection();
                 if (Program.brand2 == "CƠ SỞ 1")
-                    connMainCS.ConnectionString = @"Data Source=DUONG\MSSQLSERVER01;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+                    connMainCS.ConnectionString = @"Data Source=LUONGDATTHIEN\COSO1;Initial Catalog=TRACNGHIEM1;Integrated Security=True;Encrypt=False";
                 else if (Program.brand2 == "CƠ SỞ 2")
-                    connMainCS.ConnectionString = @"Data Source=DUONG\MSSQLSERVER02;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+                    connMainCS.ConnectionString = @"Data Source=LUONGDATTHIEN\COSO2;Initial Catalog=TRACNGHIEM1;Integrated Security=True;Encrypt=False";
 
                 SqlCommand command = new SqlCommand();
                 try
@@ -402,7 +404,7 @@ namespace CSDLPT
                 try
                 {
                     SqlConnection connMainCS1 = new SqlConnection();
-                    connMainCS1.ConnectionString = @"Data Source=DUONG\MSSQLSERVER01;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+                    connMainCS1.ConnectionString = @"Data Source=LUONGDATTHIEN\COSO1;Initial Catalog=TRACNGHIEM1;Integrated Security=True;Encrypt=False";
                     if (connMainCS1.State == ConnectionState.Closed) connMainCS1.Open();
                     command = connMainCS1.CreateCommand();
                     command.CommandText = "ALTER LOGIN " + Program.loginName + " WITH PASSWORD = '" + txtPassMoi.Text + "'";
@@ -411,7 +413,7 @@ namespace CSDLPT
                     connMainCS1.Close();
 
                     SqlConnection connMainCS2 = new SqlConnection();
-                    connMainCS2.ConnectionString = @"Data Source=DUONG\MSSQLSERVER02;Initial Catalog=TRACNGHIEM;Integrated Security=True;Encrypt=False";
+                    connMainCS2.ConnectionString = @"Data Source=LUONGDATTHIEN\COSO2;Initial Catalog=TRACNGHIEM1;Integrated Security=True;Encrypt=False";
                     if (connMainCS2.State == ConnectionState.Closed) connMainCS2.Open();
                     command = connMainCS2.CreateCommand();
                     command.CommandText = "ALTER LOGIN " + Program.loginName + " WITH PASSWORD = '" + txtPassMoi.Text + "'";

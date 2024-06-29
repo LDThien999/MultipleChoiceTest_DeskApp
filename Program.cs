@@ -57,7 +57,7 @@ namespace TNCSDLPT
         public static String maLop;
 
 
-        public static float diemSo = 0;
+        public static double diemSo = 0;
         public static String min;
         public static String sec;
 
