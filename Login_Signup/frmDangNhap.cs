@@ -177,7 +177,7 @@ namespace CSDLPT
                     Program.role = Program.myReader.GetString(2);
 
                     Program.myReader.Close();
-                    // Program.conn.Close();
+                    //Program.conn.Close();
                     MessageBox.Show("Đăng nhập thành công!");
                     Program.bienDangNhap = true;
                     frmMain f = new frmMain();
