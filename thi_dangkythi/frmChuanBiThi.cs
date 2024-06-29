@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSDLPT.thi_dangkythi;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -359,6 +360,8 @@ namespace CSDLPT
             {
                 dtgvShowDangKy.Rows[e.RowIndex].Selected = true;
             }
+            Program.soCauHoi = int.Parse(txtSoCH.Text);
+            Program.tgianLam = int.Parse(txtThoiGian.Text);
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
@@ -813,6 +816,19 @@ namespace CSDLPT
         private void cmbLanThi_MouseClick(object sender, MouseEventArgs e)
         {
             xuLyComboBoxLanThi();
+        }
+
+        private void dtgvShowDangKy_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Program.myReader = Program.ExecSqlDataReader("select MADK FROM GIAOVIEN_DANGKY WHERE MALOP='"+cmbLopThi.Text+"' AND MAMH='"
+                + cmbMonThi.Text +"' AND LAN='"+cmbLanThi.Text+"'" );
+            if (Program.myReader == null)
+                return;
+            Program.myReader.Read();
+            Program.maDe = Program.myReader.GetInt32(0);
+            Program.myReader.Close();
+            frmLamBaiThi f = new frmLamBaiThi();   
+            f.ShowDialog();
         }
     }
 }

@@ -610,11 +610,13 @@
             this.dtgvShowDangKy.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvShowDangKy.Location = new System.Drawing.Point(27, 36);
             this.dtgvShowDangKy.Name = "dtgvShowDangKy";
+            this.dtgvShowDangKy.ReadOnly = true;
             this.dtgvShowDangKy.RowHeadersVisible = false;
             this.dtgvShowDangKy.Size = new System.Drawing.Size(908, 218);
             this.dtgvShowDangKy.TabIndex = 0;
             this.dtgvShowDangKy.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvShowDangKy_CellClick);
             this.dtgvShowDangKy.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvShowDangKy_CellContentClick);
+            this.dtgvShowDangKy.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvShowDangKy_CellDoubleClick);
             // 
             // btnExit
             // 

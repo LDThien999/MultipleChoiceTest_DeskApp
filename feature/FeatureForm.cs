@@ -117,6 +117,10 @@ namespace CSDLPT.feature
         //GridView - LoadData
         public void LoadDataIntoDataGridView(String selectedTable, DataGridView gridview)
         {
+            gridview.DataSource = null;
+            gridview.Rows.Clear();
+            gridview.Columns.Clear();
+
             sqlCommand = Program.conn.CreateCommand();
             sqlCommand.CommandText = "SELECT * FROM " + selectedTable; ;
             adapter.SelectCommand = sqlCommand;
@@ -234,7 +238,7 @@ namespace CSDLPT.feature
             }
             else
             {
-                MessageBox.Show("Lỗi: Dữ liệu nhập không hợp lệ!\n (Lưu ý mã môn học dưới 5 ký tự)");
+                MessageBox.Show("Lỗi: Dữ liệu nhập không hợp lệ!");
             }
 
 
@@ -277,7 +281,7 @@ namespace CSDLPT.feature
                 }
                 else
                 {
-                    MessageBox.Show("Không thể xác định hàng");
+                    MessageBox.Show("Không thể xóa môn học! \n Môn học đã được đăng ký");
                 }
             }
 
@@ -458,7 +462,7 @@ namespace CSDLPT.feature
 
         }
 
-        //COMBOBOX_CHANGE
+        //COMBOBOX CHANGE
         private void ComboBoxKhoaLop_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedString = ComboBoxKhoaLop.SelectedIndex.ToString();
@@ -472,10 +476,14 @@ namespace CSDLPT.feature
                 dataGridViewKHOA.Visible = true;
                 dataGridViewLOP.Enabled = false;
                 dataGridViewLOP.Enabled = false;
-                BindingTextKHOA(dataGridViewKHOA);
-                BindingTextLOP(dataGridViewLOP);
+                
                 panelKhoa.Visible = true;
                 panelLop.Visible = false;
+                LoadDataIntoDataGridView("KHOA", dataGridViewKHOA);
+                LoadDataIntoDataGridView("LOP", dataGridViewLOP);
+                BindingTextKHOA(dataGridViewKHOA);
+                BindingTextLOP(dataGridViewLOP);
+                LoadDataIntoComboBoxMAKH_LOP();
             }
             else //LOP
             {
@@ -487,17 +495,22 @@ namespace CSDLPT.feature
                 dataGridViewKHOA.Visible = false;
                 dataGridViewLOP.Enabled = true;
                 dataGridViewLOP.Enabled = true;
-                BindingTextKHOA(dataGridViewKHOA);
-                BindingTextLOP(dataGridViewLOP);
+                
                 panelKhoa.Visible = false;
                 panelLop.Visible = true;
+                LoadDataIntoDataGridView("KHOA", dataGridViewKHOA);
+                LoadDataIntoDataGridView("LOP", dataGridViewLOP);
+                BindingTextKHOA(dataGridViewKHOA);
+                BindingTextLOP(dataGridViewLOP);
+                LoadDataIntoComboBoxMAKH_LOP();
             }
         }
 
         private void LoadDataIntoComboBoxMAKH_LOP()
         {
+            comboBoxMaKhoa_Lop.Items.Clear();
             sqlCommand = Program.conn.CreateCommand();
-            sqlCommand.CommandText = "SELECT MAKH FROM KHOA";
+            sqlCommand.CommandText = "SELECT DISTINCT MAKH FROM KHOA";
             adapter.SelectCommand = sqlCommand;
             DataTable table = new DataTable();
             try

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
@@ -23,6 +24,55 @@ namespace CSDLPT.addQuestion
         private SqlDataAdapter adapter = new SqlDataAdapter();
         private DataTable table = new DataTable();
 
+        class ThongTinDangKy
+        {
+            public string cauhoi { get;set ; }
+            public string TrinhDo { get; set; }
+            public string DapAn { get; set; }
+            public string MaMH { get; set; }
+            public string NoiDung { get; set; }
+            public string A { get; set; }
+            public string B { get; set; }
+            public string C { get; set; }
+            public string D { get; set; }
+            public string TrangThai { get; set; }
+
+            public ThongTinDangKy(string cauhoi, string trinhDo, string dapAn, string maMH, string noidung, string a, string b, string c, string d, string trangThai)
+            {
+                this.cauhoi = cauhoi;
+                TrinhDo = trinhDo;
+                DapAn = dapAn;
+                MaMH = maMH;
+                NoiDung = noidung;
+                A = a;
+                B = b;
+                C = c;
+                D = d;
+                TrangThai = trangThai;
+            }
+        }
+
+
+        // Tạo hai stack undo và redo
+        Stack<ThongTinDangKy> undoStack = new Stack<ThongTinDangKy>();
+        Stack<ThongTinDangKy> redoStack = new Stack<ThongTinDangKy>();
+
+  
+
+
+        void checkUnRedo()
+        {
+            if (undoStack.Count > 0)
+                btnKhoiPhuc.Enabled = true;
+            else
+                btnKhoiPhuc.Enabled = false;
+
+            if (redoStack.Count > 0)
+                btnRedo.Enabled = true;
+            else
+                btnRedo.Enabled = false;
+        }
+
         public frmAddQues()
         {
             InitializeComponent();
@@ -41,6 +91,8 @@ namespace CSDLPT.addQuestion
                 }
                 else
                 {
+                    undoStack.Clear();
+                    redoStack.Clear();
                     frmMain main = new frmMain();
                     main.Show();
                 }
@@ -54,6 +106,7 @@ namespace CSDLPT.addQuestion
             LoadDataIntoComboBox("BODE", "TRINHDO", cbbTrinhDo);
             LoadDataIntoComboBox("MONHOC", "MAMH", cbbMaMH);
             LoadDataIntoComboBox("BODE", "DAP_AN", cbbDapAn);
+            checkUnRedo();
 
 
             string statement = "select MAKH from GIAOVIEN";
@@ -78,7 +131,7 @@ namespace CSDLPT.addQuestion
 
             btnKhoiPhuc.Enabled = false;
             btnRedo.Enabled = false;
-            
+
             cbbTrinhDo.Enabled = false;
             cbbTrinhDo.SelectedItem = null;
 
@@ -112,22 +165,23 @@ namespace CSDLPT.addQuestion
 
         private bool CheckTextBox(string input)
         {
-            string pattern = @"^[a-zA-Z0-9\sàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõô
-                            ồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄ
-                            ÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸ]+$";
+            string pattern = @"^\s*$";
+
             if (Regex.IsMatch(input, pattern))
             {
-                return true;
+                // Nếu chuỗi chỉ gồm khoảng trắng và xuống dòng, trả về false (báo lỗi)
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
 
         //COMBO BOX
         private void LoadDataIntoComboBox(String selectedTable, string selectRow, System.Windows.Forms.ComboBox comboBox)
         {
+            comboBox.Items.Clear();
             sqlCommand = Program.conn.CreateCommand();
             sqlCommand.CommandText = "SELECT DISTINCT " + selectRow + " FROM " + selectedTable; ;
             adapter.SelectCommand = sqlCommand;
@@ -264,7 +318,8 @@ namespace CSDLPT.addQuestion
             if (CheckTextBox(noidung) && CheckTextBox(a) && CheckTextBox(b) && CheckTextBox(c) && CheckTextBox(d))
             {
                 string sqlQuery = "INSERT INTO BODE (MAMH, TRINHDO, NOIDUNG, A, B, C, D, DAP_AN, MAGV) " +
-                                "VALUES (@ip1, @ip2, @ip3, @ip4, @ip5, @ip6, @ip7, @ip8, @ip9)";
+                              "VALUES (@ip1, @ip2, @ip3, @ip4, @ip5, @ip6, @ip7, @ip8, @ip9); " +
+                              "SELECT SCOPE_IDENTITY();";
 
                 using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
                 {
@@ -279,12 +334,17 @@ namespace CSDLPT.addQuestion
                     command.Parameters.AddWithValue("@ip9", maGV);
 
 
-                    int rowsAffected = command.ExecuteNonQuery();
-                    if (rowsAffected > 0)
+                    object res = command.ExecuteScalar();
+                    if (res != null)
                     {
-
                         MessageBox.Show("Thêm dữ liệu thành công!");
+                        int cauhoi = Convert.ToInt32(res);
 
+                        ThongTinDangKy info = new ThongTinDangKy(cauhoi.ToString(), cbbTrinhDo.Text,
+                                cbbDapAn.Text, cbbMaMH.Text, txtNoiDung.Text, txtA.Text, txtB.Text,
+                                txtC.Text, txtD.Text, "them");
+
+                        undoStack.Push(info);
                     }
                     else
                     {
@@ -324,10 +384,11 @@ namespace CSDLPT.addQuestion
                 gridViewCauHoi.Enabled = true;
 
                 LoadDataIntoDataGridView("BODE", gridViewCauHoi, maGV);
+                BindingText(gridViewCauHoi);
                 LoadDataIntoComboBox("BODE", "TRINHDO", cbbTrinhDo);
                 LoadDataIntoComboBox("MONHOC", "MAMH", cbbMaMH);
                 LoadDataIntoComboBox("BODE", "DAP_AN", cbbDapAn);
-
+                checkUnRedo();
             }
             else
             {
@@ -340,7 +401,7 @@ namespace CSDLPT.addQuestion
         private void btnChinhSua_Click(object sender, EventArgs e)
         {
             DataGridViewRow selectedRow = gridViewCauHoi.SelectedRows[0];
-            int cauhoi = Convert.ToInt32(selectedRow.Cells[0].Value);;
+            int cauhoi = Convert.ToInt32(selectedRow.Cells[0].Value); ;
             if (CheckSP_CauHoiTonTaiBangKhac(cauhoi) == true)
             {
                 btnChinhSua.Visible = false;
@@ -364,7 +425,7 @@ namespace CSDLPT.addQuestion
             }
             else
             {
-                MessageBox.Show("Không thể chỉnh sửa, đã tồn tại ràng buộc dữ liệu!");
+                MessageBox.Show("Không thể chỉnh sửa, câu hỏi đã đang sử dụng!");
             }
         }
 
@@ -379,12 +440,15 @@ namespace CSDLPT.addQuestion
             string c = txtC.Text;
             string d = txtD.Text;
 
-            DataGridViewRow selectedRow = gridViewCauHoi.SelectedRows[0];
-            int cauhoi = Convert.ToInt32(selectedRow.Cells[0].Value);;
-
             if (CheckTextBox(noidung) && CheckTextBox(a) && CheckTextBox(b)
                 && CheckTextBox(c) && CheckTextBox(d))
             {
+                DataGridViewRow selectedRow = gridViewCauHoi.SelectedRows[0];
+                int cauhoi = Convert.ToInt32(selectedRow.Cells[0].Value);
+
+                // lay data tu database truoc khi thay doi
+                ThongTinDangKy infoBeforeUpdate = GetInfoFromDatabase(cauhoi);
+
                 string sqlQuery = "UPDATE BODE SET MAMH = @ip1, TRINHDO = @ip2, NOIDUNG = @ip3, A = @ip4," +
                     " B = @ip5, C = @ip6, D = @ip7, DAP_AN = @ip8 WHERE cauhoi = @cauhoi";
 
@@ -406,6 +470,8 @@ namespace CSDLPT.addQuestion
                     {
 
                         MessageBox.Show("Chỉnh sửa dữ liệu thành công!");
+
+                        undoStack.Push(infoBeforeUpdate);
 
                     }
                     else
@@ -448,7 +514,7 @@ namespace CSDLPT.addQuestion
                 LoadDataIntoComboBox("BODE", "TRINHDO", cbbTrinhDo);
                 LoadDataIntoComboBox("MONHOC", "MAMH", cbbMaMH);
                 LoadDataIntoComboBox("BODE", "DAP_AN", cbbDapAn);
-
+                checkUnRedo();
             }
             else
             {
@@ -456,23 +522,63 @@ namespace CSDLPT.addQuestion
             }
         }
 
+        ThongTinDangKy GetInfoFromDatabase(int cauhoi)
+        {
+            using (SqlCommand command = new SqlCommand("SELECT MAMH, TRINHDO, NOIDUNG," +
+                " A, B, C, D, DAP_AN FROM BODE WHERE CAUHOI = @id", Program.conn))
+            {
+                command.Parameters.AddWithValue("@id", cauhoi);
+                try
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        string maMH = reader["MAMH"].ToString();
+                        string trinhDo = reader["TRINHDO"].ToString();
+                        string noiDung = reader["NOIDUNG"].ToString();
+                        string a = reader["A"].ToString();
+                        string b = reader["B"].ToString();
+                        string c = reader["C"].ToString();
+                        string d = reader["D"].ToString();
+                        string dapAn = reader["DAP_AN"].ToString();
+
+                        reader.Close();
+
+                        ThongTinDangKy info = new ThongTinDangKy(cauhoi.ToString(), trinhDo, dapAn, maMH, noiDung, a, b, c, d, "chinhsua");
+                        return info;
+                    }
+
+                    reader.Close();
+                    return null; // Trả về null nếu không tìm thấy dữ liệu
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error:get data from database " + ex.Message);
+                    return null;
+                }
+            }
+        }
         //BUTTON XOA
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+
+            DataGridViewRow selectedRow = gridViewCauHoi.SelectedRows[0];
+            int cauhoi = Convert.ToInt32(selectedRow.Cells[0].Value); ;
+            if (CheckSP_CauHoiTonTaiBangKhac(cauhoi) == true)
             {
-                DataGridViewRow selectedRow = gridViewCauHoi.SelectedRows[0];
-                int cauhoi = Convert.ToInt32(selectedRow.Cells[0].Value);;
-                if (CheckSP_CauHoiTonTaiBangKhac(cauhoi) == true)
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
                 {
                     DeleteData("BODE", "CAUHOI", cauhoi);
                 }
-                else
-                {
-                    MessageBox.Show("Không thể xóa, đã tồn tại ràng buộc dữ liệu!");
-                }
+
             }
+            else
+            {
+                MessageBox.Show("Không thể xóa, đã tồn tại ràng buộc dữ liệu!");
+            }
+
         }
 
         public bool DeleteData(String selectedTable, String idColumn, int idValue)
@@ -484,6 +590,12 @@ namespace CSDLPT.addQuestion
                 {
                     command.ExecuteNonQuery();
                     MessageBox.Show("Dữ liệu đã được xóa!");
+
+                    ThongTinDangKy info = new ThongTinDangKy(idValue.ToString(), cbbTrinhDo.Text,
+                                cbbDapAn.Text, cbbMaMH.Text, txtNoiDung.Text, txtA.Text, txtB.Text,
+                                txtC.Text, txtD.Text, "xoa");
+
+                    undoStack.Push(info);
 
                     btnChinhSua.Enabled = false;
                     cbbTrinhDo.SelectedItem = null;
@@ -503,7 +615,7 @@ namespace CSDLPT.addQuestion
                     LoadDataIntoComboBox("BODE", "TRINHDO", cbbTrinhDo);
                     LoadDataIntoComboBox("MONHOC", "MAMH", cbbMaMH);
                     LoadDataIntoComboBox("BODE", "DAP_AN", cbbDapAn);
-
+                    checkUnRedo();
                     return true;
                 }
                 catch (Exception ex)
@@ -553,6 +665,148 @@ namespace CSDLPT.addQuestion
             }
         }
 
+        //--BUTTON UNDO------//
+        private void btnKhoiPhuc_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn Undo?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+
+                if (undoStack.Count > 0)
+                {
+                    ThongTinDangKy temp = undoStack.Pop();
+
+                    if (temp.TrangThai == "xoa")
+                    {
+                        themDangKy(temp);
+                        temp.TrangThai = "them";
+                        redoStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "them")
+                    {
+                        xoaDangKy(temp);
+                        temp.TrangThai = "xoa";
+                        redoStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "chinhsua")
+                    {
+                        redoStack.Push(GetInfoFromDatabase(int.Parse(temp.cauhoi)));
+                        chinhSuaDangKy(temp);
+                    }
+                }
+                LoadDataIntoDataGridView("BODE", gridViewCauHoi, maGV);
+                BindingText(gridViewCauHoi);
+                LoadDataIntoComboBox("BODE", "TRINHDO", cbbTrinhDo);
+                LoadDataIntoComboBox("MONHOC", "MAMH", cbbMaMH);
+                LoadDataIntoComboBox("BODE", "DAP_AN", cbbDapAn);
+                checkUnRedo();
+            }
+        }
+
+
+        //--BUTTON REDO----//
+        private void btnRedo_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn Redo?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                if (redoStack.Count > 0)
+                {
+                    ThongTinDangKy temp = redoStack.Pop();
+
+                    if (temp.TrangThai == "xoa")
+                    {
+                        themDangKy(temp);
+                        temp.TrangThai = "them";
+                        undoStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "them")
+                    {
+                        xoaDangKy(temp);
+                        temp.TrangThai = "xoa";
+                        undoStack.Push(temp);
+                    }
+                    else if (temp.TrangThai == "chinhsua")
+                    {
+                        undoStack.Push(GetInfoFromDatabase(int.Parse(temp.cauhoi)));
+                        chinhSuaDangKy(temp);
+                    }
+                }
+                LoadDataIntoDataGridView("BODE", gridViewCauHoi, maGV);
+                BindingText(gridViewCauHoi);
+                LoadDataIntoComboBox("BODE", "TRINHDO", cbbTrinhDo);
+                LoadDataIntoComboBox("MONHOC", "MAMH", cbbMaMH);
+                LoadDataIntoComboBox("BODE", "DAP_AN", cbbDapAn);
+                checkUnRedo();
+            }
+        }
+
+        private void themDangKy(ThongTinDangKy info)
+        {
+            string sqlQuery = "INSERT INTO BODE (MAMH, TRINHDO, NOIDUNG, A, B, C, D, DAP_AN, MAGV) " +
+                              "VALUES (@ip1, @ip2, @ip3, @ip4, @ip5, @ip6, @ip7, @ip8, @ip9); " +
+                              "SELECT SCOPE_IDENTITY();"; 
+                            // LAY RA GIA TRI ID CUOI CUNG INSERT
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@ip1", info.MaMH);
+                command.Parameters.AddWithValue("@ip2", info.TrinhDo);
+                command.Parameters.AddWithValue("@ip3", info.NoiDung);
+                command.Parameters.AddWithValue("@ip4", info.A);
+                command.Parameters.AddWithValue("@ip5", info.B);
+                command.Parameters.AddWithValue("@ip6", info.C);
+                command.Parameters.AddWithValue("@ip7", info.D);
+                command.Parameters.AddWithValue("@ip8", info.DapAn);
+                command.Parameters.AddWithValue("@ip9", maGV);
+
+                // Execute lay gia tri id cuoi cung
+                int cauhoi = Convert.ToInt32(command.ExecuteScalar());
+
+                info.cauhoi = cauhoi.ToString();
+            }
+        }
+
+
+        private void xoaDangKy(ThongTinDangKy info)
+        {
+
+            string sqlQuery = "DELETE FROM BODE WHERE CAUHOI = @ip9";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@ip1", info.MaMH);
+                command.Parameters.AddWithValue("@ip2", info.TrinhDo);
+                command.Parameters.AddWithValue("@ip3", info.NoiDung);
+                command.Parameters.AddWithValue("@ip4", info.A);
+                command.Parameters.AddWithValue("@ip5", info.B);
+                command.Parameters.AddWithValue("@ip6", info.C);
+                command.Parameters.AddWithValue("@ip7", info.D);
+                command.Parameters.AddWithValue("@ip8", info.DapAn);
+                command.Parameters.AddWithValue("@ip9", info.cauhoi);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private void chinhSuaDangKy(ThongTinDangKy info)
+        {
+
+            string sqlQuery = "UPDATE BODE SET MAMH = @ip1, TRINHDO = @ip2, NOIDUNG = @ip3, A = @ip4, B = @ip5, C = @ip6, D = @ip7, DAP_AN = @ip8 WHERE CAUHOI = @ip9";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@ip1", info.MaMH);
+                command.Parameters.AddWithValue("@ip2", info.TrinhDo);
+                command.Parameters.AddWithValue("@ip3", info.NoiDung);
+                command.Parameters.AddWithValue("@ip4", info.A);
+                command.Parameters.AddWithValue("@ip5", info.B);
+                command.Parameters.AddWithValue("@ip6", info.C);
+                command.Parameters.AddWithValue("@ip7", info.D);
+                command.Parameters.AddWithValue("@ip8", info.DapAn);
+                command.Parameters.AddWithValue("@ip9", info.cauhoi);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+
         /////------------------------------------------SP--------------------------------------------////////
 
         private bool CheckSP_CauHoiTonTaiBangKhac(int cauhoi)
@@ -582,9 +836,11 @@ namespace CSDLPT.addQuestion
         {
 
         }
+
+        
     }
 
-    
+
 }
 
 

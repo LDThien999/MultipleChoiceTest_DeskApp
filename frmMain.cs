@@ -153,8 +153,6 @@ namespace CSDLPT
                 {
                     mnuXemRP.Enabled = false;
                 }
-                lblTraCuuDiemthi.Visible = true;
-                btnTraCuuDiem.Visible = true;
                 tslblThi.Visible = true;
                 btnLamBaiThi.Visible = true;
                 //if (program.role.trim() == "sinh viên")
@@ -177,8 +175,6 @@ namespace CSDLPT
                 btnDangNhapMain.Visible = true;
                 grbThongTin.Visible = false;
                 tsmnuDangKyThi.Enabled = false;
-                lblTraCuuDiemthi.Visible = false;
-                btnTraCuuDiem.Visible = false;
                 tslblThi.Visible = false;
                 btnLamBaiThi.Visible=false;
                 //tsbtnThi.Enabled = false;
