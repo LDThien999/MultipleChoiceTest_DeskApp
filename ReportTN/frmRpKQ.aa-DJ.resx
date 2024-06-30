@@ -117,27 +117,135 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="rp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="rp.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="rp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1565, 428</value>
+  </data>
+  <data name="grbReport.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 300</value>
+  </data>
+  <data name="grbReport.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="grbReport.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="grbReport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1573, 457</value>
+  </data>
+  <data name="lblReportKQ.Location" type="System.Drawing.Point, System.Drawing">
+    <value>95, 30</value>
+  </data>
+  <data name="lblReportKQ.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="lblReportKQ.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1485, 47</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 111</value>
+  </data>
+  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1563, 162</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lblError.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lblError.Font" type="System.Drawing.Font, System.Drawing">
     <value>Times New Roman, 9pt</value>
   </data>
   <data name="lblError.Location" type="System.Drawing.Point, System.Drawing">
-    <value>538, 68</value>
+    <value>717, 84</value>
+  </data>
+  <data name="lblError.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="lblError.Size" type="System.Drawing.Size, System.Drawing">
-    <value>93, 15</value>
-  </data>
-  <data name="lblError.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>113, 17</value>
   </data>
   <data name="lblError.Text" xml:space="preserve">
     <value>Không có dữ liệu!</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnXemRP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>704, 106</value>
+  </data>
+  <data name="btnXemRP.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="btnXemRP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 37</value>
+  </data>
+  <data name="lblLan.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1156, 33</value>
+  </data>
+  <data name="lblLan.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="lblLan.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 17</value>
+  </data>
+  <data name="cmbLan.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1229, 31</value>
+  </data>
+  <data name="cmbLan.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="cmbLan.Size" type="System.Drawing.Size, System.Drawing">
+    <value>227, 24</value>
+  </data>
+  <data name="lblMonhoc.Location" type="System.Drawing.Point, System.Drawing">
+    <value>575, 34</value>
+  </data>
+  <data name="lblMonhoc.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="lblMonhoc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 17</value>
+  </data>
+  <data name="cmbMonhoc.Location" type="System.Drawing.Point, System.Drawing">
+    <value>672, 31</value>
+  </data>
+  <data name="cmbMonhoc.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="cmbMonhoc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>227, 24</value>
+  </data>
+  <data name="lblLop.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 34</value>
+  </data>
+  <data name="lblLop.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="lblLop.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 17</value>
+  </data>
+  <data name="cmbLop.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 31</value>
+  </data>
+  <data name="cmbLop.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="cmbLop.Size" type="System.Drawing.Size, System.Drawing">
+    <value>227, 24</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 16</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1640, 784</value>
+  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
   </data>

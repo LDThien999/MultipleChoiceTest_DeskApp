@@ -238,6 +238,9 @@
     <EmbeddedResource Include="rpXemBD.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpXemDSBT.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="thi_dangkythi\frmKetQuaThi.resx">
       <DependentUpon>frmKetQuaThi.cs</DependentUpon>
     </EmbeddedResource>

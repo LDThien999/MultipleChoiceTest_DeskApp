@@ -33,6 +33,7 @@
             this.rp = new Microsoft.Reporting.WinForms.ReportViewer();
             this.lblReportKQ = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblError = new System.Windows.Forms.Label();
             this.btnXemRP = new System.Windows.Forms.Button();
             this.lblLan = new System.Windows.Forms.Label();
             this.cmbLan = new System.Windows.Forms.ComboBox();
@@ -40,7 +41,6 @@
             this.cmbMonhoc = new System.Windows.Forms.ComboBox();
             this.lblLop = new System.Windows.Forms.Label();
             this.cmbLop = new System.Windows.Forms.ComboBox();
-            this.lblError = new System.Windows.Forms.Label();
             this.grbReport.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -79,6 +79,12 @@
             this.panel1.Controls.Add(this.lblLop);
             this.panel1.Controls.Add(this.cmbLop);
             this.panel1.Name = "panel1";
+            // 
+            // lblError
+            // 
+            resources.ApplyResources(this.lblError, "lblError");
+            this.lblError.ForeColor = System.Drawing.Color.Red;
+            this.lblError.Name = "lblError";
             // 
             // btnXemRP
             // 
@@ -125,12 +131,6 @@
             resources.ApplyResources(this.cmbLop, "cmbLop");
             this.cmbLop.FormattingEnabled = true;
             this.cmbLop.Name = "cmbLop";
-            // 
-            // lblError
-            // 
-            resources.ApplyResources(this.lblError, "lblError");
-            this.lblError.ForeColor = System.Drawing.Color.Red;
-            this.lblError.Name = "lblError";
             // 
             // frmRpKQ
             // 

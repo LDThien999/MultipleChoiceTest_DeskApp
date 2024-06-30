@@ -684,7 +684,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Cau11</DataSetName>
-            <Top>1.22791in</Top>
+            <Top>1.90291in</Top>
             <Left>0.39458in</Left>
             <Height>0.5in</Height>
             <Width>9.42709in</Width>
@@ -813,7 +813,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>1.93277in</Top>
+            <Top>2.59944in</Top>
             <Left>0.39458in</Left>
             <Height>0.25in</Height>
             <Width>2.46875in</Width>
@@ -828,8 +828,74 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Textbox Name="Textbox6">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>="Người lập báo cáo: "&amp;Parameters!rpParamNguoiBC.Value</Value>
+                    <Style>
+                      <FontFamily>times New Roman</FontFamily>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox6</rd:DefaultName>
+            <Top>1.155in</Top>
+            <Left>0.39458in</Left>
+            <Height>0.25in</Height>
+            <Width>2.46875in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox14">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>="Ngày báo cáo: "&amp;Parameters!rpParamNgayBC.Value</Value>
+                    <Style>
+                      <FontFamily>times New Roman</FontFamily>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox6</rd:DefaultName>
+            <Top>1.43278in</Top>
+            <Left>0.39458in</Left>
+            <Height>0.25in</Height>
+            <Width>2.46875in</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
-        <Height>2.51042in</Height>
+        <Height>3.20209in</Height>
         <Style />
       </Body>
       <Width>10.23834in</Width>
@@ -851,6 +917,14 @@
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="rpParamNguoiBC">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="rpParamNgayBC">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -866,6 +940,16 @@
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>rpParamDateKT</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>rpParamNguoiBC</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>rpParamNgayBC</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

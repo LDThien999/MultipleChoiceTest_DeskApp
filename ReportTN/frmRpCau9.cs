@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -45,12 +46,12 @@ namespace CSDLPT.ReportTN
         {
             
         }
-
+        List<String> mamhs;
         private void frmRpCau9_Load(object sender, EventArgs e)
         {
             lblError.Visible = false;
             // do du lieu vao cb mon hoc
-            String statementCmbMonhoc = "select mamh from MONHOC";
+            String statementCmbMonhoc = "select distinct TENMH from MONHOC";
             Program.myReader = Program.ExecSqlDataReader(statementCmbMonhoc);
             if (Program.myReader == null)
                 return;
@@ -59,7 +60,6 @@ namespace CSDLPT.ReportTN
                 cmbMonhoc.Items.Add(Program.myReader.GetString(0));
             }
             Program.myReader.Close();
-
         }
 
         private void btnXemRP_Click(object sender, EventArgs e)
@@ -72,8 +72,27 @@ namespace CSDLPT.ReportTN
             }
             else
             {
+                string mamh = "";
+                String statement = "select mamh from monhoc where tenmh= N'"+cmbMonhoc.SelectedItem + "'";
+                Program.myReader = Program.ExecSqlDataReader(statement);
+                if (Program.myReader == null)
+                    return;
+                while (Program.myReader.Read())
+                {
+                    mamh = Program.myReader.GetString(0);
+                }
+                Program.myReader.Close();
+                DateTime today = DateTime.Now;
+
+                // Chuyển đổi ngày hiện tại sang định dạng dd/MM/yyyy
+                string formattedDate = today.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                ReportParameterCollection rP1 = new ReportParameterCollection();
+
+                rP1.Add(new ReportParameter("rpParamNguoiBC", Program.staff));
+                rP1.Add(new ReportParameter("rpParamNgayBC", formattedDate));
+                rp9.LocalReport.SetParameters(rP1);
                 SqlCommand command = new SqlCommand();
-                command.CommandText = "EXEC LINK0.TRACNGHIEM1.DBO.sp_GetBaoCaoTheoSV '" + txtMaSV.Text + "', '" + cmbMonhoc.Text + "', '" + cmbLan.Text + "'";
+                command.CommandText = "EXEC LINK0.TRACNGHIEM1.DBO.sp_GetBaoCaoTheoSV '" + txtMaSV.Text + "', '" + mamh + "', '" + cmbLan.Text + "'";
                 command.Connection = Program.conn;
                 System.Data.DataSet ds = new System.Data.DataSet();
                 SqlDataAdapter dap = new SqlDataAdapter(command);

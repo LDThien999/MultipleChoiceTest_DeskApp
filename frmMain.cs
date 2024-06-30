@@ -90,7 +90,9 @@ namespace CSDLPT
 
         private void toolStripContainer1_ContentPanel_Load(object sender, EventArgs e)
         {
+            btnDSBT.Visible = false;
             panThongTinTaiKhoan.Visible = false;
+            panXemDSBT.Visible = false;
             if (Program.bienDangNhap == true)
             {
                 mnuCVGV.Enabled = true;
@@ -111,6 +113,9 @@ namespace CSDLPT
                     picTeacher.Visible = false;
                     grbThongTin.BackColor = Color.LemonChiffon;
                     tsmnuCongViecGiaoVu.Enabled = false;
+                    btnDangKyMain.Visible = false;
+                    btnDSBT.Visible = true;
+                    
                 }
                 else
                 {
@@ -193,6 +198,7 @@ namespace CSDLPT
         private void frmMain_Load(object sender, EventArgs e)
         {
 
+            this.rpXemCT.RefreshReport();
         }
 
         private void đăngToolStripMenuItem_Click(object sender, EventArgs e)
@@ -540,6 +546,88 @@ namespace CSDLPT
             frmAddQues f = new frmAddQues();
             f.ShowDialog();
             this.Hide();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            panXemDSBT.Visible = false;
+            picMain.Visible = true;
+            rpXemCT.LocalReport.DataSources.Clear();
+            rpXemCT.RefreshReport();
+        }
+        void loadDSBT()
+        {
+            try
+            {   
+                SqlCommand command = new SqlCommand();
+                command = Program.conn.CreateCommand();
+                command.CommandText = "select * from bangdiem where masv ='" + Program.userName + "' and diem is not null";
+                adapter.SelectCommand = command;
+                table.Clear();
+                adapter.Fill(table);
+                table.Columns.Remove("rowguid");
+                table.Columns.Remove("MABD");
+                table.Columns.Remove("MASV");
+                dtgvDSBT.DataSource = table;
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+        private void btnDSBT_Click(object sender, EventArgs e)
+        {
+            panXemDSBT.Visible = true;
+            picMain.Visible = false;
+            loadDSBT();
+        }
+
+        private void dtgvDSBT_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //cmbMonThi.Text = dtgvShowDangKy.Rows[vitri].Cells[1].Value.ToString();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                dtgvDSBT.Rows[e.RowIndex].Selected = true;
+            }
+        }
+
+        private void btnXemCT_Click(object sender, EventArgs e)
+        {
+            
+            int vitri;
+            vitri = dtgvDSBT.CurrentRow.Index;
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "EXEC sp_GetBaoCaoTheoSV '" + Program.userName + "', '" + dtgvDSBT.Rows[vitri].Cells[0].Value.ToString() + "', '" + dtgvDSBT.Rows[vitri].Cells[1].Value.ToString() + "'";
+            command.Connection = Program.conn;
+            System.Data.DataSet ds = new System.Data.DataSet();
+            SqlDataAdapter dap = new SqlDataAdapter(command);
+            dap.Fill(ds);
+
+            rpXemCT.ProcessingMode = ProcessingMode.Local;
+            rpXemCT.LocalReport.ReportPath = "rpXemDSBT.rdlc";
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                ReportDataSource rds = new ReportDataSource();
+                rds.Name = "XemDSBT";
+                rds.Value = ds.Tables[0];
+                rpXemCT.LocalReport.DataSources.Clear();
+                rpXemCT.LocalReport.DataSources.Add(rds);
+                rpXemCT.RefreshReport();
+    
+            }
+            else
+            {
+                rpXemCT.LocalReport.DataSources.Clear();
+                rpXemCT.RefreshReport();
+            }
+        }
+
+        private void rpXemCT_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void mnuTrangChuThoat_Click(object sender, EventArgs e)

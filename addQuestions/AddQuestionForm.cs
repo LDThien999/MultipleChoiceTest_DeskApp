@@ -1,5 +1,6 @@
 ﻿using Microsoft.ReportingServices.Diagnostics.Internal;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,7 +27,7 @@ namespace CSDLPT.addQuestion
 
         class ThongTinDangKy
         {
-            public string cauhoi { get;set ; }
+            public string cauhoi { get; set; }
             public string TrinhDo { get; set; }
             public string DapAn { get; set; }
             public string MaMH { get; set; }
@@ -57,7 +58,9 @@ namespace CSDLPT.addQuestion
         Stack<ThongTinDangKy> undoStack = new Stack<ThongTinDangKy>();
         Stack<ThongTinDangKy> redoStack = new Stack<ThongTinDangKy>();
 
-  
+        //Dictionary ho tro undo
+        Dictionary<string, ThongTinDangKy> myDictionary = new Dictionary<string, ThongTinDangKy>();
+
 
 
         void checkUnRedo()
@@ -93,6 +96,8 @@ namespace CSDLPT.addQuestion
                 {
                     undoStack.Clear();
                     redoStack.Clear();
+                    myDictionary.Clear();
+
                     frmMain main = new frmMain();
                     main.Show();
                 }
@@ -112,6 +117,7 @@ namespace CSDLPT.addQuestion
             LoadDataIntoComboBox("MONHOC", "MAMH", cbbMaMH);
             LoadDataIntoComboBox("BODE", "DAP_AN", cbbDapAn);
             checkUnRedo();
+            myDictionary.Clear();
 
 
             string statement = "select MAKH from GIAOVIEN";
@@ -328,8 +334,8 @@ namespace CSDLPT.addQuestion
 
             if (CheckTextBox(noidung) && CheckTextBox(a) && CheckTextBox(b)
                 && CheckTextBox(c) && CheckTextBox(d)
-                && cbbDapAn.SelectedIndex>=0 && cbbMaMH.SelectedIndex>=0
-                && cbbTrinhDo.SelectedIndex>=0)
+                && cbbDapAn.SelectedIndex >= 0 && cbbMaMH.SelectedIndex >= 0
+                && cbbTrinhDo.SelectedIndex >= 0)
             {
                 string maMH = cbbMaMH.SelectedItem.ToString();
                 string trinhdo = cbbTrinhDo.SelectedItem.ToString();
@@ -602,13 +608,18 @@ namespace CSDLPT.addQuestion
             }
             else
             {
-                MessageBox.Show("Không thể xóa, đã tồn tại ràng buộc dữ liệu!");
+                MessageBox.Show("Không thể xóa, câu hỏi đã đang sử dụng!");
             }
 
         }
 
         public bool DeleteData(String selectedTable, String idColumn, int idValue)
         {
+
+            ThongTinDangKy info = new ThongTinDangKy(idValue.ToString(), cbbTrinhDo.Text,
+                        cbbDapAn.Text, cbbMaMH.Text, txtNoiDung.Text, txtA.Text, txtB.Text,
+                        txtC.Text, txtD.Text, "xoa");
+
             using (SqlCommand command = new SqlCommand("DELETE FROM " + selectedTable + " WHERE " + idColumn + " = @id", Program.conn))
             {
                 command.Parameters.AddWithValue("@id", idValue);
@@ -616,10 +627,6 @@ namespace CSDLPT.addQuestion
                 {
                     command.ExecuteNonQuery();
                     MessageBox.Show("Dữ liệu đã được xóa!");
-
-                    ThongTinDangKy info = new ThongTinDangKy(idValue.ToString(), cbbTrinhDo.Text,
-                                cbbDapAn.Text, cbbMaMH.Text, txtNoiDung.Text, txtA.Text, txtB.Text,
-                                txtC.Text, txtD.Text, "xoa");
 
                     undoStack.Push(info);
 
@@ -703,7 +710,6 @@ namespace CSDLPT.addQuestion
                 if (undoStack.Count > 0)
                 {
                     ThongTinDangKy temp = undoStack.Pop();
-
                     if (temp.TrangThai == "xoa")
                     {
                         themDangKy(temp);
@@ -773,8 +779,8 @@ namespace CSDLPT.addQuestion
         {
             string sqlQuery = "INSERT INTO BODE (MAMH, TRINHDO, NOIDUNG, A, B, C, D, DAP_AN, MAGV) " +
                               "VALUES (@ip1, @ip2, @ip3, @ip4, @ip5, @ip6, @ip7, @ip8, @ip9); " +
-                              "SELECT SCOPE_IDENTITY();"; 
-                            // LAY RA GIA TRI ID CUOI CUNG INSERT
+                              "SELECT SCOPE_IDENTITY();";
+            // LAY RA GIA TRI ID CUOI CUNG INSERT
             using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
             {
                 command.Parameters.AddWithValue("@ip1", info.MaMH);
@@ -788,29 +794,56 @@ namespace CSDLPT.addQuestion
                 command.Parameters.AddWithValue("@ip9", maGV);
 
                 // Execute lay gia tri id cuoi cung
-                int cauhoi = Convert.ToInt32(command.ExecuteScalar());
+                string cauhoi = command.ExecuteScalar().ToString();
 
-                info.cauhoi = cauhoi.ToString();
+                ThongTinDangKy thongTinDangKy = new ThongTinDangKy(info.cauhoi,
+                    info.TrinhDo, info.DapAn, info.MaMH, info.NoiDung,
+                    info.A, info.B, info.C, info.D, "chinhsua") ;
+
+                myDictionary.Add(info.cauhoi, thongTinDangKy);
+
+                string temp = "";
+                foreach (var dict in myDictionary)
+                {
+                    if (dict.Key == info.cauhoi)
+                    {
+                        temp = dict.Key;
+                    }
+                }
+                myDictionary[temp].cauhoi = cauhoi;
             }
         }
 
 
         private void xoaDangKy(ThongTinDangKy info)
         {
-
-            string sqlQuery = "DELETE FROM BODE WHERE CAUHOI = @ip9";
+            string sqlQuery = "DELETE FROM BODE WHERE CAUHOI = @ip1";
             using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
             {
-                command.Parameters.AddWithValue("@ip1", info.MaMH);
-                command.Parameters.AddWithValue("@ip2", info.TrinhDo);
-                command.Parameters.AddWithValue("@ip3", info.NoiDung);
-                command.Parameters.AddWithValue("@ip4", info.A);
-                command.Parameters.AddWithValue("@ip5", info.B);
-                command.Parameters.AddWithValue("@ip6", info.C);
-                command.Parameters.AddWithValue("@ip7", info.D);
-                command.Parameters.AddWithValue("@ip8", info.DapAn);
-                command.Parameters.AddWithValue("@ip9", info.cauhoi);
+                command.Parameters.AddWithValue("@ip1", int.Parse(info.cauhoi));
                 command.ExecuteNonQuery();
+
+                //Dictionary<ThongTinDangKy,int > result = new Dictionary<ThongTinDangKy, int>();
+
+                //// Duyệt qua dictionary
+                //foreach (var kvp in myDictionary)
+                //{
+                //    if (!result.ContainsKey(kvp.Value))
+                //    {
+                //        result.Add(kvp.Value, kvp.Key);
+                //    }
+                //    else  //contain key
+                //    {
+                //        if (kvp.Key < result[kvp.Value])
+                //        {
+                //            result[kvp.Value] = kvp.Key;
+                //        }
+                //    }
+                //}
+                //ThongTinDangKy thongTinDangKy = new ThongTinDangKy(info.cauhoi,
+                //    info.TrinhDo, info.DapAn, info.MaMH, info.NoiDung,
+                //    info.A, info.B, info.C, info.D, "chinhsua");
+                //myDictionary.Add(info.cauhoi, thongTinDangKy);
             }
         }
 
@@ -828,10 +861,48 @@ namespace CSDLPT.addQuestion
                 command.Parameters.AddWithValue("@ip6", info.C);
                 command.Parameters.AddWithValue("@ip7", info.D);
                 command.Parameters.AddWithValue("@ip8", info.DapAn);
-                command.Parameters.AddWithValue("@ip9", info.cauhoi);
+                command.Parameters.AddWithValue("@ip9", int.Parse(info.cauhoi));
+
+                command.ExecuteNonQuery();
+
+                int rowsAffected = command.ExecuteNonQuery();
+
+                if (rowsAffected == 0)
+                {
+                string temp = "";
+                    foreach (var dict in myDictionary)
+                    {
+                        if (dict.Key == info.cauhoi)
+                        {
+                            MessageBox.Show("ok");
+                            chinhSuaDangKyWithDict(info, dict.Value.cauhoi);
+                            temp = dict.Key;
+                        }
+                    }
+                    myDictionary.Remove(temp);
+                }
+            }
+
+        }
+
+        private void chinhSuaDangKyWithDict(ThongTinDangKy info, string dictionaryKey)
+        {
+            string sqlQuery = "UPDATE BODE SET MAMH = @ip1, TRINHDO = @ip2, NOIDUNG = @ip3, A = @ip4, B = @ip5, C = @ip6, D = @ip7, DAP_AN = @ip8 WHERE CAUHOI = @ip9";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@ip1", info.MaMH);
+                command.Parameters.AddWithValue("@ip2", info.TrinhDo);
+                command.Parameters.AddWithValue("@ip3", info.NoiDung);
+                command.Parameters.AddWithValue("@ip4", info.A);
+                command.Parameters.AddWithValue("@ip5", info.B);
+                command.Parameters.AddWithValue("@ip6", info.C);
+                command.Parameters.AddWithValue("@ip7", info.D);
+                command.Parameters.AddWithValue("@ip8", info.DapAn);
+                command.Parameters.AddWithValue("@ip9", dictionaryKey);
 
                 command.ExecuteNonQuery();
             }
+
         }
 
 
@@ -865,7 +936,7 @@ namespace CSDLPT.addQuestion
 
         }
 
-        
+
     }
 
 

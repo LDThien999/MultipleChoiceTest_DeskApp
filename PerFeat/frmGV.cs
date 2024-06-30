@@ -81,6 +81,7 @@ namespace CSDLPT.PerFeat
                 tbHo.Text = "";
                 tbTen.Text = "";
                 tbDc.Text = "";
+                cbKh.SelectedIndex = -1;
             }
 
         }

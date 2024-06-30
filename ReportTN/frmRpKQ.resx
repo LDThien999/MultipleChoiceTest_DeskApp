@@ -136,9 +136,6 @@
   <data name="&gt;&gt;lblMonhoc.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="&gt;&gt;grbReport.Name" xml:space="preserve">
-    <value>grbReport</value>
-  </data>
   <data name="grbReport.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI Black, 9pt, style=Bold</value>
   </data>
@@ -204,8 +201,8 @@
   <data name="lblLop.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>30, 90</value>
+  <data name="&gt;&gt;lblError.Name" xml:space="preserve">
+    <value>lblError</value>
   </data>
   <data name="rp.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 20</value>
@@ -215,6 +212,9 @@
   </data>
   <data name="&gt;&gt;lblReportKQ.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="lblMonhoc.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -300,14 +300,8 @@
   <data name="cmbLan.Items" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="lblError.Location" type="System.Drawing.Point, System.Drawing">
-    <value>538, 68</value>
-  </data>
   <data name="lblReportKQ.Text" xml:space="preserve">
     <value>XEM BẢNG ĐIỂM MÔN HỌC</value>
-  </data>
-  <data name="&gt;&gt;lblError.Name" xml:space="preserve">
-    <value>lblError</value>
   </data>
   <data name="&gt;&gt;cmbLop.Name" xml:space="preserve">
     <value>cmbLop</value>
@@ -330,6 +324,9 @@
   <data name="lblReportKQ.Location" type="System.Drawing.Point, System.Drawing">
     <value>71, 24</value>
   </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="lblReportKQ.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
@@ -339,8 +336,8 @@
   <data name="lblReportKQ.Size" type="System.Drawing.Size, System.Drawing">
     <value>1114, 38</value>
   </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>30, 90</value>
   </data>
   <data name="lblReportKQ.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
@@ -351,8 +348,8 @@
   <data name="btnXemRP.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="&gt;&gt;rp.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;grbReport.Name" xml:space="preserve">
+    <value>grbReport</value>
   </data>
   <data name="&gt;&gt;lblReportKQ.Name" xml:space="preserve">
     <value>lblReportKQ</value>
@@ -381,14 +378,17 @@
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmRpKQ</value>
   </data>
-  <data name="grbReport.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="lblError.Location" type="System.Drawing.Point, System.Drawing">
+    <value>538, 68</value>
   </data>
   <data name="lblLop.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 28</value>
   </data>
   <data name="&gt;&gt;cmbMonhoc.ZOrder" xml:space="preserve">
     <value>5</value>
+  </data>
+  <data name="&gt;&gt;rp.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="rp.Size" type="System.Drawing.Size, System.Drawing">
     <value>1174, 348</value>
@@ -407,6 +407,9 @@
   </data>
   <data name="lblLan.Font" type="System.Drawing.Font, System.Drawing">
     <value>Times New Roman, 9pt, style=Bold</value>
+  </data>
+  <data name="grbReport.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;rp.Type" xml:space="preserve">
     <value>Microsoft.Reporting.WinForms.ReportViewer, Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</value>
