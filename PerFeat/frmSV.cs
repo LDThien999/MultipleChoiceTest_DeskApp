@@ -218,7 +218,7 @@ namespace CSDLPT.PerFeat
             //lấy cơ sở đăng nhập và view của mỗi vai trò đăng nhập
             layDSCS();
             roleView();
-            dsLop("select * from LOP");
+            //dsLop("select * from LOP");
 
             //LẤY thông tin vào group box
             string statement = "select MAKH from GIAOVIEN";
@@ -437,6 +437,8 @@ namespace CSDLPT.PerFeat
             //xóa thông tin sau khi chọn thêm
             clearBS();
             clearTB();
+
+            dsLop("select * from LOP");
         }
 
 
@@ -551,6 +553,8 @@ namespace CSDLPT.PerFeat
         {
             tt = "sửa";
             BindingText(dgv);
+
+            dsLop("select * from LOP");
 
             //set các button
             btnThem.Enabled = false;

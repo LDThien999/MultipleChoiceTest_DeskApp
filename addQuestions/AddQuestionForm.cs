@@ -747,7 +747,7 @@ namespace CSDLPT.addQuestion
                 if (redoStack.Count > 0)
                 {
                     ThongTinDangKy temp = redoStack.Pop();
-
+                    
                     if (temp.TrangThai == "xoa")
                     {
                         themDangKy(temp);
@@ -793,12 +793,12 @@ namespace CSDLPT.addQuestion
                 command.Parameters.AddWithValue("@ip8", info.DapAn);
                 command.Parameters.AddWithValue("@ip9", maGV);
 
-                // Execute lay gia tri id cuoi cung
+                //Execute lay gia tri id cuoi cung
                 string cauhoi = command.ExecuteScalar().ToString();
 
                 ThongTinDangKy thongTinDangKy = new ThongTinDangKy(info.cauhoi,
                     info.TrinhDo, info.DapAn, info.MaMH, info.NoiDung,
-                    info.A, info.B, info.C, info.D, "chinhsua") ;
+                    info.A, info.B, info.C, info.D, "chinhsua");
 
                 myDictionary.Add(info.cauhoi, thongTinDangKy);
 
@@ -823,27 +823,21 @@ namespace CSDLPT.addQuestion
                 command.Parameters.AddWithValue("@ip1", int.Parse(info.cauhoi));
                 command.ExecuteNonQuery();
 
-                //Dictionary<ThongTinDangKy,int > result = new Dictionary<ThongTinDangKy, int>();
+                int rowsAffected = command.ExecuteNonQuery();
 
-                //// Duyệt qua dictionary
-                //foreach (var kvp in myDictionary)
-                //{
-                //    if (!result.ContainsKey(kvp.Value))
-                //    {
-                //        result.Add(kvp.Value, kvp.Key);
-                //    }
-                //    else  //contain key
-                //    {
-                //        if (kvp.Key < result[kvp.Value])
-                //        {
-                //            result[kvp.Value] = kvp.Key;
-                //        }
-                //    }
-                //}
-                //ThongTinDangKy thongTinDangKy = new ThongTinDangKy(info.cauhoi,
-                //    info.TrinhDo, info.DapAn, info.MaMH, info.NoiDung,
-                //    info.A, info.B, info.C, info.D, "chinhsua");
-                //myDictionary.Add(info.cauhoi, thongTinDangKy);
+                if (rowsAffected == 0)
+                {
+                    string temp = "";
+                    foreach (var dict in myDictionary)
+                    {
+                        if (dict.Key == info.cauhoi)
+                        {
+                            xoaDangKyWithDict(dict.Value.cauhoi);
+                            temp = dict.Key;
+                        }
+                    }
+                    myDictionary.Remove(temp);
+                }
             }
         }
 
@@ -874,7 +868,6 @@ namespace CSDLPT.addQuestion
                     {
                         if (dict.Key == info.cauhoi)
                         {
-                            MessageBox.Show("ok");
                             chinhSuaDangKyWithDict(info, dict.Value.cauhoi);
                             temp = dict.Key;
                         }
@@ -903,6 +896,16 @@ namespace CSDLPT.addQuestion
                 command.ExecuteNonQuery();
             }
 
+        }
+
+        private void xoaDangKyWithDict(String cauhoi)
+        {
+            string sqlQuery = "DELETE FROM BODE WHERE CAUHOI = @ip1";
+            using (SqlCommand command = new SqlCommand(sqlQuery, Program.conn))
+            {
+                command.Parameters.AddWithValue("@ip1", int.Parse(cauhoi));
+                command.ExecuteNonQuery();
+            }
         }
 
 
