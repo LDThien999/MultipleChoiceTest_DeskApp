@@ -412,13 +412,13 @@
             this.panel1.Location = new System.Drawing.Point(16, 101);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1580, 125);
+            this.panel1.Size = new System.Drawing.Size(1488, 125);
             this.panel1.TabIndex = 17;
             // 
             // btnOutChinhSua
             // 
             this.btnOutChinhSua.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOutChinhSua.Location = new System.Drawing.Point(383, 42);
+            this.btnOutChinhSua.Location = new System.Drawing.Point(341, 42);
             this.btnOutChinhSua.Margin = new System.Windows.Forms.Padding(4);
             this.btnOutChinhSua.Name = "btnOutChinhSua";
             this.btnOutChinhSua.Size = new System.Drawing.Size(100, 28);
@@ -430,7 +430,7 @@
             // btnThoatAdd
             // 
             this.btnThoatAdd.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnThoatAdd.Location = new System.Drawing.Point(383, 40);
+            this.btnThoatAdd.Location = new System.Drawing.Point(341, 40);
             this.btnThoatAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnThoatAdd.Name = "btnThoatAdd";
             this.btnThoatAdd.Size = new System.Drawing.Size(100, 28);
@@ -442,7 +442,7 @@
             // btnTienHanhChinhSua
             // 
             this.btnTienHanhChinhSua.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTienHanhChinhSua.Location = new System.Drawing.Point(717, 43);
+            this.btnTienHanhChinhSua.Location = new System.Drawing.Point(621, 40);
             this.btnTienHanhChinhSua.Margin = new System.Windows.Forms.Padding(4);
             this.btnTienHanhChinhSua.Name = "btnTienHanhChinhSua";
             this.btnTienHanhChinhSua.Size = new System.Drawing.Size(127, 28);
@@ -454,7 +454,7 @@
             // picSave
             // 
             this.picSave.Image = ((System.Drawing.Image)(resources.GetObject("picSave.Image")));
-            this.picSave.Location = new System.Drawing.Point(680, 43);
+            this.picSave.Location = new System.Drawing.Point(584, 40);
             this.picSave.Margin = new System.Windows.Forms.Padding(4);
             this.picSave.Name = "picSave";
             this.picSave.Size = new System.Drawing.Size(29, 27);
@@ -478,7 +478,7 @@
             // picOut
             // 
             this.picOut.Image = ((System.Drawing.Image)(resources.GetObject("picOut.Image")));
-            this.picOut.Location = new System.Drawing.Point(345, 43);
+            this.picOut.Location = new System.Drawing.Point(303, 43);
             this.picOut.Margin = new System.Windows.Forms.Padding(4);
             this.picOut.Name = "picOut";
             this.picOut.Size = new System.Drawing.Size(29, 27);
@@ -489,7 +489,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(1269, 41);
+            this.pictureBox5.Location = new System.Drawing.Point(1235, 37);
             this.pictureBox5.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(29, 27);
@@ -500,7 +500,7 @@
             // picEdit
             // 
             this.picEdit.Image = ((System.Drawing.Image)(resources.GetObject("picEdit.Image")));
-            this.picEdit.Location = new System.Drawing.Point(680, 43);
+            this.picEdit.Location = new System.Drawing.Point(584, 40);
             this.picEdit.Margin = new System.Windows.Forms.Padding(4);
             this.picEdit.Name = "picEdit";
             this.picEdit.Size = new System.Drawing.Size(29, 27);
@@ -522,7 +522,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(1011, 41);
+            this.pictureBox4.Location = new System.Drawing.Point(930, 38);
             this.pictureBox4.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(29, 27);
@@ -533,7 +533,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(345, 43);
+            this.pictureBox2.Location = new System.Drawing.Point(303, 43);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(29, 27);
@@ -555,7 +555,7 @@
             // btnRedo
             // 
             this.btnRedo.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRedo.Location = new System.Drawing.Point(1307, 41);
+            this.btnRedo.Location = new System.Drawing.Point(1273, 37);
             this.btnRedo.Margin = new System.Windows.Forms.Padding(4);
             this.btnRedo.Name = "btnRedo";
             this.btnRedo.Size = new System.Drawing.Size(100, 28);
@@ -567,7 +567,7 @@
             // btnKhoiPhuc
             // 
             this.btnKhoiPhuc.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKhoiPhuc.Location = new System.Drawing.Point(1048, 42);
+            this.btnKhoiPhuc.Location = new System.Drawing.Point(967, 39);
             this.btnKhoiPhuc.Margin = new System.Windows.Forms.Padding(4);
             this.btnKhoiPhuc.Name = "btnKhoiPhuc";
             this.btnKhoiPhuc.Size = new System.Drawing.Size(100, 28);
@@ -579,7 +579,7 @@
             // btnChinhSua
             // 
             this.btnChinhSua.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChinhSua.Location = new System.Drawing.Point(717, 44);
+            this.btnChinhSua.Location = new System.Drawing.Point(621, 41);
             this.btnChinhSua.Margin = new System.Windows.Forms.Padding(4);
             this.btnChinhSua.Name = "btnChinhSua";
             this.btnChinhSua.Size = new System.Drawing.Size(127, 28);
@@ -591,7 +591,7 @@
             // btnXoa
             // 
             this.btnXoa.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnXoa.Location = new System.Drawing.Point(383, 42);
+            this.btnXoa.Location = new System.Drawing.Point(341, 42);
             this.btnXoa.Margin = new System.Windows.Forms.Padding(4);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(100, 28);
@@ -632,7 +632,7 @@
             this.panChonLua.Location = new System.Drawing.Point(16, 234);
             this.panChonLua.Margin = new System.Windows.Forms.Padding(4);
             this.panChonLua.Name = "panChonLua";
-            this.panChonLua.Size = new System.Drawing.Size(1581, 167);
+            this.panChonLua.Size = new System.Drawing.Size(1488, 167);
             this.panChonLua.TabIndex = 18;
             // 
             // grbShowDangKy
@@ -643,7 +643,7 @@
             this.grbShowDangKy.Margin = new System.Windows.Forms.Padding(4);
             this.grbShowDangKy.Name = "grbShowDangKy";
             this.grbShowDangKy.Padding = new System.Windows.Forms.Padding(4);
-            this.grbShowDangKy.Size = new System.Drawing.Size(1287, 343);
+            this.grbShowDangKy.Size = new System.Drawing.Size(1225, 343);
             this.grbShowDangKy.TabIndex = 19;
             this.grbShowDangKy.TabStop = false;
             this.grbShowDangKy.Text = "THÔNG TIN ĐĂNG KÝ";
@@ -660,7 +660,7 @@
             this.dtgvShowDangKy.Name = "dtgvShowDangKy";
             this.dtgvShowDangKy.RowHeadersVisible = false;
             this.dtgvShowDangKy.RowHeadersWidth = 51;
-            this.dtgvShowDangKy.Size = new System.Drawing.Size(1211, 268);
+            this.dtgvShowDangKy.Size = new System.Drawing.Size(1145, 268);
             this.dtgvShowDangKy.TabIndex = 0;
             this.dtgvShowDangKy.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvShowDangKy_CellClick);
             this.dtgvShowDangKy.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvShowDangKy_CellContentClick);
@@ -691,8 +691,8 @@
             // 
             // frmChuanBiThi
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1640, 798);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.btnExit);

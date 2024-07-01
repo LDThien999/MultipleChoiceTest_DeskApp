@@ -295,7 +295,7 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1139, 464);
+            this.dataGridView1.Size = new System.Drawing.Size(1072, 464);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellClick);
@@ -372,7 +372,7 @@
             this.panelFunc.Location = new System.Drawing.Point(27, 57);
             this.panelFunc.Margin = new System.Windows.Forms.Padding(4);
             this.panelFunc.Name = "panelFunc";
-            this.panelFunc.Size = new System.Drawing.Size(1534, 72);
+            this.panelFunc.Size = new System.Drawing.Size(1468, 72);
             this.panelFunc.TabIndex = 18;
             // 
             // btnThoatAdd
@@ -402,7 +402,7 @@
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(679, 18);
+            this.btnSave.Location = new System.Drawing.Point(660, 18);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(127, 28);
@@ -414,7 +414,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(1316, 18);
+            this.pictureBox5.Location = new System.Drawing.Point(1249, 16);
             this.pictureBox5.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(29, 27);
@@ -425,7 +425,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(993, 17);
+            this.pictureBox4.Location = new System.Drawing.Point(949, 17);
             this.pictureBox4.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(29, 27);
@@ -436,7 +436,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(641, 18);
+            this.pictureBox3.Location = new System.Drawing.Point(622, 18);
             this.pictureBox3.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(29, 27);
@@ -469,7 +469,7 @@
             // btnRedo
             // 
             this.btnRedo.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRedo.Location = new System.Drawing.Point(1353, 18);
+            this.btnRedo.Location = new System.Drawing.Point(1286, 16);
             this.btnRedo.Margin = new System.Windows.Forms.Padding(4);
             this.btnRedo.Name = "btnRedo";
             this.btnRedo.Size = new System.Drawing.Size(100, 28);
@@ -481,7 +481,7 @@
             // btnKhoiPhuc
             // 
             this.btnKhoiPhuc.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKhoiPhuc.Location = new System.Drawing.Point(1029, 17);
+            this.btnKhoiPhuc.Location = new System.Drawing.Point(985, 17);
             this.btnKhoiPhuc.Margin = new System.Windows.Forms.Padding(4);
             this.btnKhoiPhuc.Name = "btnKhoiPhuc";
             this.btnKhoiPhuc.Size = new System.Drawing.Size(100, 28);
@@ -493,7 +493,7 @@
             // btnChinhSua
             // 
             this.btnChinhSua.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChinhSua.Location = new System.Drawing.Point(679, 18);
+            this.btnChinhSua.Location = new System.Drawing.Point(660, 18);
             this.btnChinhSua.Margin = new System.Windows.Forms.Padding(4);
             this.btnChinhSua.Name = "btnChinhSua";
             this.btnChinhSua.Size = new System.Drawing.Size(127, 28);
@@ -551,6 +551,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabPage2.Controls.Add(this.panelKhoa);
             this.tabPage2.Controls.Add(this.panelLop);
             this.tabPage2.Controls.Add(this.groupBox1);
@@ -1141,9 +1142,9 @@
             // 
             // FeatureForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1640, 798);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(1613, 798);
             this.Controls.Add(this.tabControl1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FeatureForm";

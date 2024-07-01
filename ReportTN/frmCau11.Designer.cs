@@ -178,7 +178,7 @@
             this.grbReport.Margin = new System.Windows.Forms.Padding(4);
             this.grbReport.Name = "grbReport";
             this.grbReport.Padding = new System.Windows.Forms.Padding(4);
-            this.grbReport.Size = new System.Drawing.Size(1277, 558);
+            this.grbReport.Size = new System.Drawing.Size(1172, 558);
             this.grbReport.TabIndex = 7;
             this.grbReport.TabStop = false;
             this.grbReport.Text = "KẾT QUẢ BÁO CÁO";
@@ -191,13 +191,13 @@
             this.rp11.Margin = new System.Windows.Forms.Padding(4);
             this.rp11.Name = "rp11";
             this.rp11.ServerReport.BearerToken = null;
-            this.rp11.Size = new System.Drawing.Size(1269, 529);
+            this.rp11.Size = new System.Drawing.Size(1164, 529);
             this.rp11.TabIndex = 0;
             // 
             // frmCau11
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1640, 784);
             this.Controls.Add(this.grbReport);
             this.Controls.Add(this.panel1);

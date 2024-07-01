@@ -56,9 +56,9 @@
             this.panel1.Controls.Add(this.cmbMonhoc);
             this.panel1.Controls.Add(this.lblLop);
             this.panel1.Location = new System.Drawing.Point(43, 110);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1563, 162);
+            this.panel1.Size = new System.Drawing.Size(1474, 162);
             this.panel1.TabIndex = 5;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -67,7 +67,7 @@
             this.lblError.AutoSize = true;
             this.lblError.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblError.ForeColor = System.Drawing.Color.Red;
-            this.lblError.Location = new System.Drawing.Point(719, 84);
+            this.lblError.Location = new System.Drawing.Point(643, 80);
             this.lblError.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(113, 17);
@@ -77,7 +77,7 @@
             // txtMaSV
             // 
             this.txtMaSV.Location = new System.Drawing.Point(137, 32);
-            this.txtMaSV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtMaSV.Margin = new System.Windows.Forms.Padding(4);
             this.txtMaSV.Name = "txtMaSV";
             this.txtMaSV.Size = new System.Drawing.Size(205, 22);
             this.txtMaSV.TabIndex = 7;
@@ -88,8 +88,8 @@
             this.btnXemRP.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Bold);
             this.btnXemRP.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnXemRP.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnXemRP.Location = new System.Drawing.Point(704, 106);
-            this.btnXemRP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnXemRP.Location = new System.Drawing.Point(628, 102);
+            this.btnXemRP.Margin = new System.Windows.Forms.Padding(4);
             this.btnXemRP.Name = "btnXemRP";
             this.btnXemRP.Size = new System.Drawing.Size(156, 37);
             this.btnXemRP.TabIndex = 6;
@@ -102,7 +102,7 @@
             this.lblLan.AutoSize = true;
             this.lblLan.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold);
             this.lblLan.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblLan.Location = new System.Drawing.Point(1156, 33);
+            this.lblLan.Location = new System.Drawing.Point(1063, 29);
             this.lblLan.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLan.Name = "lblLan";
             this.lblLan.Size = new System.Drawing.Size(59, 17);
@@ -115,8 +115,8 @@
             this.cmbLan.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.cmbLan.Location = new System.Drawing.Point(1229, 31);
-            this.cmbLan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbLan.Location = new System.Drawing.Point(1136, 27);
+            this.cmbLan.Margin = new System.Windows.Forms.Padding(4);
             this.cmbLan.Name = "cmbLan";
             this.cmbLan.Size = new System.Drawing.Size(227, 24);
             this.cmbLan.TabIndex = 4;
@@ -126,7 +126,7 @@
             this.lblMonhoc.AutoSize = true;
             this.lblMonhoc.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold);
             this.lblMonhoc.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblMonhoc.Location = new System.Drawing.Point(575, 34);
+            this.lblMonhoc.Location = new System.Drawing.Point(517, 35);
             this.lblMonhoc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMonhoc.Name = "lblMonhoc";
             this.lblMonhoc.Size = new System.Drawing.Size(71, 17);
@@ -137,8 +137,8 @@
             // 
             this.cmbMonhoc.Font = new System.Drawing.Font("Times New Roman", 8.25F);
             this.cmbMonhoc.FormattingEnabled = true;
-            this.cmbMonhoc.Location = new System.Drawing.Point(672, 31);
-            this.cmbMonhoc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbMonhoc.Location = new System.Drawing.Point(614, 32);
+            this.cmbMonhoc.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMonhoc.Name = "cmbMonhoc";
             this.cmbMonhoc.Size = new System.Drawing.Size(227, 24);
             this.cmbMonhoc.TabIndex = 2;
@@ -177,10 +177,10 @@
             this.grbReport.Controls.Add(this.rp9);
             this.grbReport.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold);
             this.grbReport.Location = new System.Drawing.Point(33, 299);
-            this.grbReport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grbReport.Margin = new System.Windows.Forms.Padding(4);
             this.grbReport.Name = "grbReport";
-            this.grbReport.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.grbReport.Size = new System.Drawing.Size(1573, 457);
+            this.grbReport.Padding = new System.Windows.Forms.Padding(4);
+            this.grbReport.Size = new System.Drawing.Size(1488, 457);
             this.grbReport.TabIndex = 3;
             this.grbReport.TabStop = false;
             this.grbReport.Text = "KẾT QUẢ BÁO CÁO";
@@ -193,21 +193,21 @@
             this.rp9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rp9.LocalReport.ReportEmbeddedResource = "CSDLPT.rpCau9.rdlc";
             this.rp9.Location = new System.Drawing.Point(4, 25);
-            this.rp9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rp9.Margin = new System.Windows.Forms.Padding(4);
             this.rp9.Name = "rp9";
             this.rp9.ServerReport.BearerToken = null;
-            this.rp9.Size = new System.Drawing.Size(1565, 428);
+            this.rp9.Size = new System.Drawing.Size(1480, 428);
             this.rp9.TabIndex = 0;
             // 
             // frmRpCau9
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1640, 784);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(1682, 1053);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblReportKQ);
             this.Controls.Add(this.grbReport);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmRpCau9";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRpCau9";

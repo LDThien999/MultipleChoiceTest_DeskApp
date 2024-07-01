@@ -98,7 +98,7 @@
             this.lblCauHoi.Location = new System.Drawing.Point(0, 0);
             this.lblCauHoi.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCauHoi.Name = "lblCauHoi";
-            this.lblCauHoi.Size = new System.Drawing.Size(1640, 97);
+            this.lblCauHoi.Size = new System.Drawing.Size(1613, 97);
             this.lblCauHoi.TabIndex = 19;
             this.lblCauHoi.Text = "QUẢN LÝ CÂU HỎI";
             this.lblCauHoi.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -123,10 +123,10 @@
             this.panel1.Controls.Add(this.btnSaveChange);
             this.panel1.Controls.Add(this.btnXoa);
             this.panel1.Controls.Add(this.btnThoatAdd);
-            this.panel1.Location = new System.Drawing.Point(5, 100);
+            this.panel1.Location = new System.Drawing.Point(16, 100);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1562, 86);
+            this.panel1.Size = new System.Drawing.Size(1481, 86);
             this.panel1.TabIndex = 20;
             // 
             // btnSaveAdd
@@ -144,7 +144,7 @@
             // btnChinhSua
             // 
             this.btnChinhSua.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChinhSua.Location = new System.Drawing.Point(740, 26);
+            this.btnChinhSua.Location = new System.Drawing.Point(705, 21);
             this.btnChinhSua.Margin = new System.Windows.Forms.Padding(4);
             this.btnChinhSua.Name = "btnChinhSua";
             this.btnChinhSua.Size = new System.Drawing.Size(127, 28);
@@ -156,7 +156,7 @@
             // picSave
             // 
             this.picSave.Image = ((System.Drawing.Image)(resources.GetObject("picSave.Image")));
-            this.picSave.Location = new System.Drawing.Point(704, 23);
+            this.picSave.Location = new System.Drawing.Point(669, 18);
             this.picSave.Margin = new System.Windows.Forms.Padding(4);
             this.picSave.Name = "picSave";
             this.picSave.Size = new System.Drawing.Size(29, 27);
@@ -180,7 +180,7 @@
             // picOut
             // 
             this.picOut.Image = ((System.Drawing.Image)(resources.GetObject("picOut.Image")));
-            this.picOut.Location = new System.Drawing.Point(368, 26);
+            this.picOut.Location = new System.Drawing.Point(337, 21);
             this.picOut.Margin = new System.Windows.Forms.Padding(4);
             this.picOut.Name = "picOut";
             this.picOut.Size = new System.Drawing.Size(29, 27);
@@ -191,7 +191,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(1388, 25);
+            this.pictureBox5.Location = new System.Drawing.Point(1313, 23);
             this.pictureBox5.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(29, 27);
@@ -202,7 +202,7 @@
             // picEdit
             // 
             this.picEdit.Image = ((System.Drawing.Image)(resources.GetObject("picEdit.Image")));
-            this.picEdit.Location = new System.Drawing.Point(704, 23);
+            this.picEdit.Location = new System.Drawing.Point(669, 18);
             this.picEdit.Margin = new System.Windows.Forms.Padding(4);
             this.picEdit.Name = "picEdit";
             this.picEdit.Size = new System.Drawing.Size(29, 27);
@@ -224,7 +224,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(1063, 25);
+            this.pictureBox4.Location = new System.Drawing.Point(1012, 20);
             this.pictureBox4.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(29, 27);
@@ -235,7 +235,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(368, 25);
+            this.pictureBox2.Location = new System.Drawing.Point(337, 20);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(29, 27);
@@ -257,7 +257,7 @@
             // btnRedo
             // 
             this.btnRedo.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRedo.Location = new System.Drawing.Point(1428, 26);
+            this.btnRedo.Location = new System.Drawing.Point(1353, 24);
             this.btnRedo.Margin = new System.Windows.Forms.Padding(4);
             this.btnRedo.Name = "btnRedo";
             this.btnRedo.Size = new System.Drawing.Size(100, 28);
@@ -269,7 +269,7 @@
             // btnKhoiPhuc
             // 
             this.btnKhoiPhuc.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKhoiPhuc.Location = new System.Drawing.Point(1100, 26);
+            this.btnKhoiPhuc.Location = new System.Drawing.Point(1049, 21);
             this.btnKhoiPhuc.Margin = new System.Windows.Forms.Padding(4);
             this.btnKhoiPhuc.Name = "btnKhoiPhuc";
             this.btnKhoiPhuc.Size = new System.Drawing.Size(100, 28);
@@ -281,7 +281,7 @@
             // btnSaveChange
             // 
             this.btnSaveChange.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveChange.Location = new System.Drawing.Point(740, 25);
+            this.btnSaveChange.Location = new System.Drawing.Point(705, 20);
             this.btnSaveChange.Margin = new System.Windows.Forms.Padding(4);
             this.btnSaveChange.Name = "btnSaveChange";
             this.btnSaveChange.Size = new System.Drawing.Size(127, 28);
@@ -293,7 +293,7 @@
             // btnXoa
             // 
             this.btnXoa.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnXoa.Location = new System.Drawing.Point(404, 26);
+            this.btnXoa.Location = new System.Drawing.Point(373, 21);
             this.btnXoa.Margin = new System.Windows.Forms.Padding(4);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(100, 28);
@@ -305,7 +305,7 @@
             // btnThoatAdd
             // 
             this.btnThoatAdd.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnThoatAdd.Location = new System.Drawing.Point(404, 23);
+            this.btnThoatAdd.Location = new System.Drawing.Point(373, 18);
             this.btnThoatAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnThoatAdd.Name = "btnThoatAdd";
             this.btnThoatAdd.Size = new System.Drawing.Size(100, 28);
@@ -327,11 +327,11 @@
             this.grbThongTinGV.Controls.Add(this.la);
             this.grbThongTinGV.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grbThongTinGV.ForeColor = System.Drawing.Color.OrangeRed;
-            this.grbThongTinGV.Location = new System.Drawing.Point(12, 204);
+            this.grbThongTinGV.Location = new System.Drawing.Point(16, 204);
             this.grbThongTinGV.Margin = new System.Windows.Forms.Padding(4);
             this.grbThongTinGV.Name = "grbThongTinGV";
             this.grbThongTinGV.Padding = new System.Windows.Forms.Padding(4);
-            this.grbThongTinGV.Size = new System.Drawing.Size(287, 278);
+            this.grbThongTinGV.Size = new System.Drawing.Size(283, 278);
             this.grbThongTinGV.TabIndex = 21;
             this.grbThongTinGV.TabStop = false;
             this.grbThongTinGV.Text = "Thông tin giáo viên";
@@ -442,7 +442,7 @@
             this.panel2.Location = new System.Drawing.Point(315, 204);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1253, 279);
+            this.panel2.Size = new System.Drawing.Size(1182, 279);
             this.panel2.TabIndex = 22;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
@@ -462,7 +462,7 @@
             this.cbbDapAn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbDapAn.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.cbbDapAn.FormattingEnabled = true;
-            this.cbbDapAn.Location = new System.Drawing.Point(859, 30);
+            this.cbbDapAn.Location = new System.Drawing.Point(828, 23);
             this.cbbDapAn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbDapAn.Name = "cbbDapAn";
             this.cbbDapAn.Size = new System.Drawing.Size(217, 25);
@@ -483,7 +483,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label10.Location = new System.Drawing.Point(780, 36);
+            this.label10.Location = new System.Drawing.Point(749, 29);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(69, 17);
@@ -497,7 +497,7 @@
             this.txtD.Margin = new System.Windows.Forms.Padding(4);
             this.txtD.Multiline = true;
             this.txtD.Name = "txtD";
-            this.txtD.Size = new System.Drawing.Size(504, 32);
+            this.txtD.Size = new System.Drawing.Size(392, 32);
             this.txtD.TabIndex = 26;
             this.txtD.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -519,7 +519,7 @@
             this.txtC.Margin = new System.Windows.Forms.Padding(4);
             this.txtC.Multiline = true;
             this.txtC.Name = "txtC";
-            this.txtC.Size = new System.Drawing.Size(501, 32);
+            this.txtC.Size = new System.Drawing.Size(392, 32);
             this.txtC.TabIndex = 24;
             this.txtC.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -541,7 +541,7 @@
             this.txtB.Margin = new System.Windows.Forms.Padding(4);
             this.txtB.Multiline = true;
             this.txtB.Name = "txtB";
-            this.txtB.Size = new System.Drawing.Size(501, 32);
+            this.txtB.Size = new System.Drawing.Size(392, 32);
             this.txtB.TabIndex = 22;
             this.txtB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -563,7 +563,7 @@
             this.txtA.Margin = new System.Windows.Forms.Padding(4);
             this.txtA.Multiline = true;
             this.txtA.Name = "txtA";
-            this.txtA.Size = new System.Drawing.Size(501, 32);
+            this.txtA.Size = new System.Drawing.Size(392, 32);
             this.txtA.TabIndex = 20;
             this.txtA.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -628,7 +628,7 @@
             this.panel3.Location = new System.Drawing.Point(5, 489);
             this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1576, 352);
+            this.panel3.Size = new System.Drawing.Size(1512, 352);
             this.panel3.TabIndex = 23;
             // 
             // gridViewCauHoi
@@ -643,16 +643,16 @@
             this.gridViewCauHoi.Name = "gridViewCauHoi";
             this.gridViewCauHoi.RowHeadersVisible = false;
             this.gridViewCauHoi.RowHeadersWidth = 51;
-            this.gridViewCauHoi.Size = new System.Drawing.Size(1552, 249);
+            this.gridViewCauHoi.Size = new System.Drawing.Size(1481, 249);
             this.gridViewCauHoi.TabIndex = 1;
             this.gridViewCauHoi.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellClick);
             this.gridViewCauHoi.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewCauHoi_CellContentClick);
             // 
             // frmAddQues
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1640, 798);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(1613, 798);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.grbThongTinGV);

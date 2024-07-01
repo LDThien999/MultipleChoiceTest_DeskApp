@@ -291,6 +291,11 @@ namespace CSDLPT
                 MessageBox.Show("Số câu hỏi đăng ký cần nằm trong đoạn [10,100]!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            else if(dateNgayThi.Value < DateTime.Now)
+            {
+                MessageBox.Show("Ngày thi vui lòng nhập kể từ ngày hôm nay!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             else
             {
                 String maKhoiPhuc = createMaKhoiPhuc();
@@ -397,8 +402,8 @@ namespace CSDLPT
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            DateTime dayNow = DateTime.Now;
-            if (dayNow >= DateTime.Parse(dateNgayThi.Text))
+            
+            if (DateTime.Now >= dateNgayThi.Value)
             {
                 MessageBox.Show("Đang trong thời gian thi! Không thể xóa", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -477,6 +482,11 @@ namespace CSDLPT
             else if (int.Parse(txtSoCH.Text) < 10 || int.Parse(txtSoCH.Text) > 100)
             {
                 MessageBox.Show("Số câu hỏi đăng ký cần nằm trong đoạn [10,100]!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            else if (dateNgayThi.Value < DateTime.Now)
+            {
+                MessageBox.Show("Ngày thi vui lòng nhập kể từ ngày hôm nay!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             else
@@ -638,24 +648,30 @@ namespace CSDLPT
 
         private void btnTienHanhChinhSua_Click(object sender, EventArgs e)
         {
-            panChonLua.Enabled = true;
-           
-            picEdit.Visible = false;
-            btnTienHanhChinhSua.Visible = false;
+            if (DateTime.Now >= dateNgayThi.Value)
+            {
+                MessageBox.Show("Đang trong thời gian thi! Không thể chỉnh sửa", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                panChonLua.Enabled = true;
 
-            picSave.Visible = true;
-            btnChinhSua.Visible = true;
+                picEdit.Visible = false;
+                btnTienHanhChinhSua.Visible = false;
 
-            btnAddThi.Enabled = false;
-            pictureBox2.Visible = false;
-            btnXoa.Visible = false;
-            picOut.Visible = true;
-            btnOutChinhSua.Visible = true;
-            btnRedo.Enabled = false;
-            btnKhoiPhuc.Enabled = false;
+                picSave.Visible = true;
+                btnChinhSua.Visible = true;
 
-            luuThongTin("chinhsua");
-            
+                btnAddThi.Enabled = false;
+                pictureBox2.Visible = false;
+                btnXoa.Visible = false;
+                picOut.Visible = true;
+                btnOutChinhSua.Visible = true;
+                btnRedo.Enabled = false;
+                btnKhoiPhuc.Enabled = false;
+
+                luuThongTin("chinhsua");
+            }
 
 
         }

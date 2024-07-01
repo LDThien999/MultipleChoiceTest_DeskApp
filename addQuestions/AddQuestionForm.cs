@@ -554,43 +554,7 @@ namespace CSDLPT.addQuestion
             }
         }
 
-        ThongTinDangKy GetInfoFromDatabase(int cauhoi)
-        {
-            using (SqlCommand command = new SqlCommand("SELECT MAMH, TRINHDO, NOIDUNG," +
-                " A, B, C, D, DAP_AN FROM BODE WHERE CAUHOI = @id", Program.conn))
-            {
-                command.Parameters.AddWithValue("@id", cauhoi);
-                try
-                {
-                    SqlDataReader reader = command.ExecuteReader();
 
-                    if (reader.Read())
-                    {
-                        string maMH = reader["MAMH"].ToString();
-                        string trinhDo = reader["TRINHDO"].ToString();
-                        string noiDung = reader["NOIDUNG"].ToString();
-                        string a = reader["A"].ToString();
-                        string b = reader["B"].ToString();
-                        string c = reader["C"].ToString();
-                        string d = reader["D"].ToString();
-                        string dapAn = reader["DAP_AN"].ToString();
-
-                        reader.Close();
-
-                        ThongTinDangKy info = new ThongTinDangKy(cauhoi.ToString(), trinhDo, dapAn, maMH, noiDung, a, b, c, d, "chinhsua");
-                        return info;
-                    }
-
-                    reader.Close();
-                    return null; // Trả về null nếu không tìm thấy dữ liệu
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error:get data from database " + ex.Message);
-                    return null;
-                }
-            }
-        }
         //BUTTON XOA
         private void btnXoa_Click(object sender, EventArgs e)
         {
@@ -722,9 +686,11 @@ namespace CSDLPT.addQuestion
                         temp.TrangThai = "xoa";
                         redoStack.Push(temp);
                     }
+                     
                     else if (temp.TrangThai == "chinhsua")
                     {
-                        redoStack.Push(GetInfoFromDatabase(int.Parse(temp.cauhoi)));
+                        
+                        redoStack.Push(GetOldInfoByUndoRedo(temp));
                         chinhSuaDangKy(temp);
                     }
                 }
@@ -747,7 +713,7 @@ namespace CSDLPT.addQuestion
                 if (redoStack.Count > 0)
                 {
                     ThongTinDangKy temp = redoStack.Pop();
-                    
+
                     if (temp.TrangThai == "xoa")
                     {
                         themDangKy(temp);
@@ -762,7 +728,8 @@ namespace CSDLPT.addQuestion
                     }
                     else if (temp.TrangThai == "chinhsua")
                     {
-                        undoStack.Push(GetInfoFromDatabase(int.Parse(temp.cauhoi)));
+                        
+                        undoStack.Push(GetOldInfoByUndoRedo(temp));
                         chinhSuaDangKy(temp);
                     }
                 }
@@ -772,6 +739,97 @@ namespace CSDLPT.addQuestion
                 LoadDataIntoComboBox("MONHOC", "MAMH", cbbMaMH);
                 LoadDataIntoComboBox("BODE", "DAP_AN", cbbDapAn);
                 checkUnRedo();
+            }
+        }
+        ThongTinDangKy GetInfoFromDatabase(int cauhoi)
+        {
+            using (SqlCommand command = new SqlCommand("SELECT MAMH, TRINHDO, NOIDUNG," +
+                " A, B, C, D, DAP_AN FROM BODE WHERE CAUHOI = @id", Program.conn))
+            {
+                command.Parameters.AddWithValue("@id", cauhoi);
+                try
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        string maMH = reader["MAMH"].ToString();
+                        string trinhDo = reader["TRINHDO"].ToString();
+                        string noiDung = reader["NOIDUNG"].ToString();
+                        string a = reader["A"].ToString();
+                        string b = reader["B"].ToString();
+                        string c = reader["C"].ToString();
+                        string d = reader["D"].ToString();
+                        string dapAn = reader["DAP_AN"].ToString();
+
+                        reader.Close();
+
+                        ThongTinDangKy info = new ThongTinDangKy(cauhoi.ToString(), trinhDo, dapAn, maMH, noiDung, a, b, c, d, "chinhsua");
+                        return info;
+                    }
+
+                    reader.Close();
+                    return null; // Trả về null nếu không tìm thấy dữ liệu
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error:get data from database " + ex.Message);
+                    return null;
+                }
+            }
+        }
+
+        ThongTinDangKy GetOldInfoByUndoRedo(ThongTinDangKy info)
+        {
+            using (SqlCommand command = new SqlCommand("SELECT MAMH, TRINHDO, NOIDUNG," +
+                " A, B, C, D, DAP_AN FROM BODE WHERE CAUHOI = @id", Program.conn))
+            {
+                command.Parameters.AddWithValue("@id", int.Parse(info.cauhoi));
+                int rowCount = 0;
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    try
+                    {
+                        if (reader.Read())
+                        {
+                            string maMH = reader["MAMH"].ToString();
+                            string trinhDo = reader["TRINHDO"].ToString();
+                            string noiDung = reader["NOIDUNG"].ToString();
+                            string a = reader["A"].ToString();
+                            string b = reader["B"].ToString();
+                            string c = reader["C"].ToString();
+                            string d = reader["D"].ToString();
+                            string dapAn = reader["DAP_AN"].ToString();
+
+                            rowCount++;
+                            ThongTinDangKy oldInfor = new ThongTinDangKy(info.cauhoi, trinhDo, dapAn,
+                            maMH, noiDung, a, b, c, d, "chinhsua");
+                            return oldInfor;
+                            
+                        }
+                        reader.Close();
+
+
+                        if (rowCount == 0)
+                        {
+                            string temp = "";
+                            foreach (var dict in myDictionary)
+                            {
+                                if (dict.Key == info.cauhoi)
+                                {
+                                    temp = dict.Key;
+                                }
+                            }
+                            return GetOldInfoByUndoRedoWithDict(temp, myDictionary[temp].cauhoi.ToString());
+                        }
+                        return null;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error:get data from database undoredo " + ex.Message);
+                        return null;
+                    }
+                }
             }
         }
 
@@ -863,7 +921,7 @@ namespace CSDLPT.addQuestion
 
                 if (rowsAffected == 0)
                 {
-                string temp = "";
+                    string temp = "";
                     foreach (var dict in myDictionary)
                     {
                         if (dict.Key == info.cauhoi)
@@ -872,7 +930,6 @@ namespace CSDLPT.addQuestion
                             temp = dict.Key;
                         }
                     }
-                    myDictionary.Remove(temp);
                 }
             }
 
@@ -905,6 +962,47 @@ namespace CSDLPT.addQuestion
             {
                 command.Parameters.AddWithValue("@ip1", int.Parse(cauhoi));
                 command.ExecuteNonQuery();
+            }
+        }
+
+        ThongTinDangKy GetOldInfoByUndoRedoWithDict(string oldCauhoi, string newCauhoi)
+        {
+            using (SqlCommand command = new SqlCommand("SELECT MAMH, TRINHDO, NOIDUNG," +
+                " A, B, C, D, DAP_AN FROM BODE WHERE CAUHOI = @id", Program.conn))
+            {
+                command.Parameters.AddWithValue("@id", int.Parse(newCauhoi));
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    try
+                    {
+                        if (reader.Read())
+                        {
+                            string maMH = reader["MAMH"].ToString();
+                            string trinhDo = reader["TRINHDO"].ToString();
+                            string noiDung = reader["NOIDUNG"].ToString();
+                            string a = reader["A"].ToString();
+                            string b = reader["B"].ToString();
+                            string c = reader["C"].ToString();
+                            string d = reader["D"].ToString();
+                            string dapAn = reader["DAP_AN"].ToString();
+
+
+                            ThongTinDangKy oldInfor = new ThongTinDangKy(oldCauhoi, trinhDo, dapAn,
+                            maMH, noiDung, a, b, c, d, "chinhsua");
+                            return oldInfor;
+                        }
+                        else
+                        {
+                            MessageBox.Show("get info with dict:no info");
+                            return null;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error:get data from database with dict " + ex.Message);
+                        return null;
+                    }
+                }
             }
         }
 
